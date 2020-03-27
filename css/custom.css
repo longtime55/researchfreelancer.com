@@ -1,0 +1,327 @@
+/*
+Theme Name: Worketic
+Theme URI: http://amentotech.com/projects/worketic
+Author: Amentotech
+Author URI:  https://themeforest.net/user/amentotech/portfolio
+Version: 1.0.0
+You can add your custom styling here
+*/
+
+/* Cube CSS class */
+
+.wt-fronttext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(45deg);
+    text-align: center;
+    padding-top: 1.7em;
+    padding-left: 1.7em;
+    transform-origin: center;
+    color: white;
+}
+.wt-toptext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(-45deg);
+    text-align: center;
+    padding-top: 1.7em;
+    padding-right: 6em;
+    transform-origin: center;
+    color: white;
+}
+.wt-lefttext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(45deg);
+    text-align: center;
+    padding-top: 1em;
+    padding-left: 0.5em;
+    transform-origin: center;
+    color: white;
+}
+.wt-righttext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(45deg);
+    text-align: center;
+    padding-top: 1em;
+    padding-left: 1em;
+    transform-origin: center;
+    color: white;
+}
+.wt-bottomtext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(45deg);
+    text-align: center;
+    padding-top: 1em;
+    padding-left: 1em;
+    transform-origin: center;
+    color: white;
+}
+.wt-backtext {
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+    font-size: 30px;
+    transform: rotate(45deg);
+    text-align: center;
+    padding-top: 2em;
+    padding-left: 0.5em;
+    transform-origin: center;
+    color: white;
+}
+.wrap {
+    margin-top: 150px;
+    perspective: 1000px;
+    perspective-origin: 50% 50%;
+    background-size: 80px 80px;
+    /* Background stripes animation */
+}
+@keyframes bganim {
+    from {
+        background-position: 0px;
+    }
+    to {
+        background-position: 80px;
+    }
+}
+.cube {
+    margin: auto;
+    position: relative;
+    height: 200px;
+    width: 200px;
+    transform-style: preserve-3d;
+}
+.cube div {
+    position: absolute;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    opacity: 0.9;
+    background-color: #000;
+    border: solid 1px #eee;
+    color: #fff;
+    font: 10px arial;
+    transition: transform 0.2s ease-in;
+}
+.front {
+    transform: translateZ(100px);
+}
+.back {
+    transform: translateZ(-100px) rotateY(180deg);
+}
+.right {
+    transform: rotateY(-270deg) translateX(100px);
+    transform-origin: top right;
+}
+.left {
+    transform: rotateY(270deg) translateX(-100px);
+    transform-origin: center left;
+}
+.top {
+    transform: rotateX(-270deg) translateY(-100px);
+    transform-origin: top center;
+}
+.bottom {
+    transform: rotateX(270deg) translateY(100px);
+    transform-origin: bottom center;
+}
+@keyframes rotate {
+    from {
+        transform: rotateX(0deg) rotateY(0deg);
+    }
+    to {
+        transform: rotateX(360deg) rotateY(360deg);
+    }
+}
+.cube {
+    animation: rotate 20s infinite linear;
+}
+
+.wt-writebtn:hover {
+    -webkit-box-shadow: 10px 10px 25px 0 rgba(0,0,0,0.25);
+    box-shadow: 10px 10px 25px 0 rgba(0,0,0,0.25);
+}
+.wt-writebtn{
+	padding: 0 46px;
+    position: relative;
+    text-align: center;
+    border-radius: 5px;
+    display: inline-block;
+	vertical-align: middle;
+	color: #fff;
+    font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;
+	text-transform: capitalize;
+	border: none;
+	background: #000000;
+}
+.wt-writebtn:hover, .wt-writebtn {
+    background: #323232;
+}
+.wt-writebtn:hover, .wt-writebtn:focus {
+    color: #fff;
+    background: #000000;
+}
+.wt-topic {
+	font: 700 20px/40px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-info {
+	font: 700 20px/25px 'Poppins', Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+.wt-sitemap {
+    font: 600 18px/25px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-homedesc {
+    font: 500 20px/25px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-desc {
+	font: 50 18px/25px 'Poppins', Arial, Helvetica, sans-serif;
+}
+.wt-normal {
+	font-size: 16px;
+}
+.wt-customtitle {
+	color: #fff;
+	font: 700 40px/50px 'Poppins', Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+.wt-counttitle {
+    color: #fff;
+    font: 700 24px/40px 'Poppins', Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+.wt-sectiontitle p{
+	margin: 0 0 13px;
+	display: block;
+	color: #ff0000;
+	font: 700 30px/40px 'Poppins', Arial, Helvetica, sans-serif;
+	text-transform: capitalize;
+	line-height: 36px;
+}
+.wt-secure-img {
+	float: left;
+    width: 100%;
+}
+.wt-icon-img {
+    font-size: 120px;
+    width: 1em;
+    min-height: 1em;
+    text-align: center;
+    border-radius: 50%;
+    display: inline-block;
+    -webkit-border-radius: 50%;
+    -moz-box-sizing: content-box!important;
+    -webkit-box-sizing: content-box!important;
+    box-sizing: content-box!important;
+}
+.wt-about-rf {
+    float: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 40px;
+    background: repeating-linear-gradient(50deg, #e8e6e6, #f7f7f7fa 1px);
+}
+.wt-sectionbody {
+	float: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 0px 20px;
+}
+.wt-detailcontent {
+    float: left;
+    width: 100%;
+    min-height: 255px;
+    padding: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    border: 1px solid #eff2f5;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-align-content: center;
+    -ms-flex-line-pack: center;
+}
+.wt-mobilevalid {
+    color: #2eca7f;
+    text-align: center;
+    margin-top: 1rem !important;
+    font-size: 90%;
+    text-transform: uppercase;
+}
+.wt-mobileinvalid {
+    color: red;
+    text-align: center;
+    margin-top: 1rem !important;
+    font-size: 90%;
+    text-transform: uppercase;
+}
+.slide-image {
+	width: 540px;
+	/*height: 601px;*/
+	display: block;
+}
+#wrapper {
+	width: 540px;
+	height: 601px;
+	position: absolute;
+}
+#carousel {
+	width: 540px;
+	height: 601px;
+	overflow: hidden;
+}
+#carousel img {
+	display: block;
+	float: left;
+}
+#pager {
+	text-align: left;
+	padding: 20px 0 0 0;
+}
+#pager a {
+	background-color: #356;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	margin-right: 6px;
+	border-radius: 10px;
+	box-shadow: 0 1px 1px #cef;
+}
+#pager a.selected {
+	background-color: #134;
+}
+#pager a span {
+	display: none;
+}
+#thumbs {
+	display: none;
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 150px;
+	height: 75px;
+	padding: 10px;
+	position: absolute;
+	top: 495px;
+	right: 355px;
+	z-index: 10;
+}
+#thumbs img {
+	display: block;
+	float: left;
+}

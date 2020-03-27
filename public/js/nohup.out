@@ -1,0 +1,28 @@
+/home/researchfreelanc/public_html/researchfreelancer.com/js/index.js:10
+const io = require('socket.io')(http);
+                                ^
+
+ReferenceError: http is not defined
+    at Object.<anonymous> (/home/researchfreelanc/public_html/researchfreelancer.com/js/index.js:10:33)
+    at Module._compile (internal/modules/cjs/loader.js:702:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+    at Module.load (internal/modules/cjs/loader.js:612:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+    at startup (internal/bootstrap/node.js:240:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:564:3)
+/home/researchfreelanc/public_html/researchfreelancer.com/js/index.js:10
+const io = require('socket.io')(http);
+                                ^
+
+ReferenceError: http is not defined
+    at Object.<anonymous> (/home/researchfreelanc/public_html/researchfreelancer.com/js/index.js:10:33)
+    at Module._compile (internal/modules/cjs/loader.js:702:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:713:10)
+    at Module.load (internal/modules/cjs/loader.js:612:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:551:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:543:3)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:744:10)
+    at startup (internal/bootstrap/node.js:240:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:564:3)
