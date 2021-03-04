@@ -6,6 +6,7 @@
     <link href="{{ asset('css/emojionearea.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/basictable.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/intltelInput/intlTelInput.css') }}">
+
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 @endpush
 @section('header')
@@ -32,6 +33,8 @@
 @push('scripts')
     <script src="{{ asset('js/chosen.jquery.js') }}"></script>
     <script src="{{ asset('js/jquery.basictable.min.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script>
         jQuery('.chosen-select').chosen();
         jQuery('.wt-tablecategories').basictable({

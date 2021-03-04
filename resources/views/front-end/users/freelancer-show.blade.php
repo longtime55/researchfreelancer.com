@@ -15,14 +15,6 @@
             </div>
         </div>
     </div>
-    @php
-        if (!empty($wallets->currency)) {
-            $symbols = Helper::currencyList($wallets->currency);
-            $user_symbol = $symbols['symbol'];
-        } else {
-            $user_symbol = '';
-        }
-    @endphp
     <div class="wt-main-section wt-paddingtopnull wt-haslayout la-profile-holder" id="user_profile">
         <div class="preloader-section" v-if="loading" v-cloak>
             <div class="preloader-holder">
@@ -75,7 +67,7 @@
                                     @endif
                                     <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
                                         @if (!empty($profile->hourly_rate))
-                                            <li><span><i class="far fa-money-bill-alt"></i> {{ $symbol['symbol'] }}{{{ $profile->hourly_rate }}} {{{ trans('lang.per_hour') }}}</span></li>
+                                            <li><span><i class="far fa-money-bill-alt"></i> {{ $symbol }}{{{ $profile->hourly_rate }}} {{{ trans('lang.per_hour') }}}</span></li>
                                         @endif
                                         @if (!empty($user->location->title))
                                             <li>
@@ -120,12 +112,12 @@
                                         <h4>{{ trans('lang.cancelled_projects') }}</h4>
                                     </div>
                                     <div class="wt-statisticcontent wt-countercolor3">
-                                        <h3 data-from="0" data-to="{{ !empty($wallets->amount) ? $wallets->amount : 0 }}" data-speed="8000" data-refresh-interval="100">{{ !empty($wallets->amount) ? $user_symbol."".$wallets->amount : $user_symbol.'0.00' }}</h3>
+                                        <h3 data-from="0" data-to="{{ $amount }}" data-speed="8000" data-refresh-interval="100">{{ empty($amount) ? $symbol.'0.00' : $symbol."".$amount }}</h3>
                                         <h4>{{ trans('lang.total_earnings') }}</h4>
                                     </div>
                                     <div class="wt-description">
-                                        <p>{{ trans('lang.hire_me_note') }}</p>
-                                        <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.hire_me') }}}</a>
+                                        <p>{{ trans('lang.send_offer_note') }}</p>
+                                        <a href="javascript:void(0);" @click.prevent='sendOffer("{{$auth_user}}")' class="wt-btn">{{{ trans('lang.btn_send_offer') }}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +167,7 @@
                                                         <div class="dc-title">
                                                             <a href="{{{ url('profile/'.$user->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($user->id)}}}</a>
                                                             <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                            <span><strong>{{ $symbol['symbol'] }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
+                                                            <span><strong>{{ $symbol }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                         </div>
                                                     </div>
                                                     <div class="wt-freelancers-rating">
@@ -235,38 +227,28 @@
                                                                 <h3>{{{ $job->title }}}</h3>
                                                             </div>
                                                             <ul class="wt-userlisting-breadcrumb">
-                                                                @if (!empty($job->rlevels) && $job->rlevels->count() > 0)
-                                                                    @foreach ($job->rlevels as $rlevel)
-                                                                        <li><span><i class="fa fa-dollar-sign"></i><i class="fa fa-dollar-sign"></i> {{{ $rlevel->title }}}</span></li>
-                                                                    @endforeach
-                                                                @endif
-                                                                @if (!empty($job->location))
-                                                                    <li>
-                                                                        <span>
-                                                                            <img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $job->location->title }}}
-                                                                        </span>
-                                                                    </li>
-                                                                @endif
-                                                                @if (!empty($job->created_at) && !empty($job->updated_at))
-                                                                    <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($job->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($job->updated_at)->format('M Y') }}</span></li>
-                                                                @endif
-                                                                @if (!empty($review->avg_rating))
-                                                                    <li>
-                                                                        <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
-                                                                        {{-- <vue-stars
-                                                                        :name="'rating[{{$key}}][rate]'"
-                                                                        :active-color="'#fecb02'"
-                                                                        :inactive-color="'#999999'"
-                                                                        :shadow-color="'#ffff00'"
-                                                                        :hover-color="'#fecb02'"
-                                                                        :max="5"
-                                                                        :value="{{$review->avg_rating}}"
-                                                                        :readonly="true"
-                                                                        :char="'★'"
-                                                                        id="rating-{{$key}}"
-                                                                        /> --}}
-                                                                    </li>
-                                                                @endif
+                                                                <li><span><i class="fa fa-dollar-sign"></i><i class="fa fa-dollar-sign"></i> {{{ \App\Helper::getProjectLevel($job->project_level) }}}</span></li>
+                                                                <li>
+                                                                    <span>
+                                                                        <img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.flag_img') }}}"> {{{ $job->location->title }}}
+                                                                    </span>
+                                                                </li>
+                                                                <li><span><i class="far fa-calendar"></i> {{ Carbon\Carbon::parse($job->created_at)->format('M Y') }} - {{ Carbon\Carbon::parse($job->updated_at)->format('M Y') }}</span></li>
+                                                                <li>
+                                                                    <span class="wt-stars"><span style="width: {{ $stars }}%;"></span></span>
+                                                                    {{-- <vue-stars
+                                                                    :name="'rating[{{$key}}][rate]'"
+                                                                    :active-color="'#fecb02'"
+                                                                    :inactive-color="'#999999'"
+                                                                    :shadow-color="'#ffff00'"
+                                                                    :hover-color="'#fecb02'"
+                                                                    :max="5"
+                                                                    :value="{{$review->avg_rating}}"
+                                                                    :readonly="true"
+                                                                    :char="'★'"
+                                                                    id="rating-{{$key}}"
+                                                                    /> --}}
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>

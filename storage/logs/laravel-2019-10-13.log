@@ -1,0 +1,342 @@
+[2019-10-13 06:05:47] local.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 06:35:37] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 06:41:59] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 06:56:12] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 06:56:42] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 08:00:11] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 08:06:35] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 08:13:01] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 
+[2019-10-13 08:16:18] production.ERROR: SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' (SQL: select * from information_schema.tables where table_schema = forge and table_name = services) at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:664, Doctrine\\DBAL\\Driver\\PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:31, PDOException(code: 1044): SQLSTATE[HY000] [1044] Access denied for user ''@'localhost' to database 'forge' at F:\\xampp\\htdocs\esearchfreelancer\\vendor\\doctrine\\dbal\\lib\\Doctrine\\DBAL\\Driver\\PDOConnection.php:27)
+[stacktrace]
+#0 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(624): Illuminate\\Database\\Connection->runQueryCallback('select * from i...', Array, Object(Closure))
+#1 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(333): Illuminate\\Database\\Connection->run('select * from i...', Array, Object(Closure))
+#2 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Schema\\MySqlBuilder.php(18): Illuminate\\Database\\Connection->select('select * from i...', Array)
+#3 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Support\\Facades\\Facade.php(237): Illuminate\\Database\\Schema\\MySqlBuilder->hasTable('services')
+#4 F:\\xampp\\htdocs\esearchfreelancer\\app\\Helper.php(2715): Illuminate\\Support\\Facades\\Facade::__callStatic('hasTable', Array)
+#5 F:\\xampp\\htdocs\esearchfreelancer\outes\\web.php(64): App\\Helper::getAccessType()
+#6 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(417): require('F:\\\\xampp\\\\htdocs...')
+#7 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(373): Illuminate\\Routing\\Router->loadRoutes('F:\\\\xampp\\\\htdocs...')
+#8 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\RouteRegistrar.php(121): Illuminate\\Routing\\Router->group(Array, 'F:\\\\xampp\\\\htdocs...')
+#9 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(56): Illuminate\\Routing\\RouteRegistrar->group('F:\\\\xampp\\\\htdocs...')
+#10 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(40): App\\Providers\\RouteServiceProvider->mapWebRoutes()
+#11 [internal function]: App\\Providers\\RouteServiceProvider->map()
+#12 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#13 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#14 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#15 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#16 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(77): Illuminate\\Container\\Container->call(Array)
+#17 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider.php(36): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->loadRoutes()
+#18 F:\\xampp\\htdocs\esearchfreelancer\\app\\Providers\\RouteServiceProvider.php(28): Illuminate\\Foundation\\Support\\Providers\\RouteServiceProvider->boot()
+#19 [internal function]: App\\Providers\\RouteServiceProvider->boot()
+#20 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(29): call_user_func_array(Array, Array)
+#21 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(87): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#22 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\BoundMethod.php(31): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#23 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Container\\Container.php(572): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#24 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(819): Illuminate\\Container\\Container->call(Array)
+#25 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(802): Illuminate\\Foundation\\Application->bootProvider(Object(App\\Providers\\RouteServiceProvider))
+#26 [internal function]: Illuminate\\Foundation\\Application->Illuminate\\Foundation\\{closure}(Object(App\\Providers\\RouteServiceProvider), 36)
+#27 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(803): array_walk(Array, Object(Closure))
+#28 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Bootstrap\\BootProviders.php(17): Illuminate\\Foundation\\Application->boot()
+#29 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(211): Illuminate\\Foundation\\Bootstrap\\BootProviders->bootstrap(Object(Illuminate\\Foundation\\Application))
+#30 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(162): Illuminate\\Foundation\\Application->bootstrapWith(Array)
+#31 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(146): Illuminate\\Foundation\\Http\\Kernel->bootstrap()
+#32 F:\\xampp\\htdocs\esearchfreelancer\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#33 F:\\xampp\\htdocs\esearchfreelancer\\public\\index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#34 {main}
+"} 

@@ -1,10 +1,10 @@
 <aside id="wt-sidebar" class="wt-sidebar">
-    @php $symbol = Helper::currencyList($job->currency) ? Helper::currencyList($job->currency) : $symbol; @endphp
+
     <div class="wt-proposalsr">
         <div class="wt-proposalsrcontent">
             <span class="wt-proposalsicon"><i class="fa fa-angle-double-down"></i><i class="fa fa-money"></i></span>
             <div class="wt-title">
-                <h3>{{ $symbol['symbol'] }}</i> {{{ $job->price }}}</h3>
+                <h3>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</h3>
                 <span>{{ trans('lang.client_budget') }}</span>
             </div>
         </div>

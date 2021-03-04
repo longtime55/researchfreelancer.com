@@ -55,26 +55,6 @@ class Citation extends Model
     {
         return $this->morphedByMany('App\User', 'citable');
     }
-    
-    /**
-     * Get all of the jobs that are assigned this citation.
-     *
-     * @return relation
-     */
-    public function jobs()
-    {
-        return $this->morphedByMany('App\Job', 'citable');
-    }
-
-    /**
-     * Get all of the services that are assigned this citation.
-     *
-     * @return relation
-     */
-    public function services()
-    {
-        return $this->morphedByMany('App\Service', 'citable');
-    }
 
     /**
      * Set slug before saving in DB
@@ -154,8 +134,8 @@ class Citation extends Model
             if ($cits->title != $request['citation_title']) {
                 $cits->slug  =  filter_var($request['citation_title'], FILTER_SANITIZE_STRING);
             }
-            $cits->title = filter_var($request['citation_title'], FILTER_SANITIZE_STRING);
-            $cits->abstract = filter_var($request['citation_abstract'], FILTER_SANITIZE_STRING);
+            $cats->title = filter_var($request['citation_title'], FILTER_SANITIZE_STRING);
+            $cats->abstract = filter_var($request['citation_abstract'], FILTER_SANITIZE_STRING);
             $old_path = Helper::PublicPath() . '/uploads/citations/temp';
             if (!empty($request['uploaded_image'])) {
                 $filename = $request['uploaded_image'];
@@ -169,9 +149,9 @@ class Citation extends Model
                     rename($old_path . '/small-' . $request['uploaded_image'], $new_path . '/small-' . $filename);
                     rename($old_path . '/medium-' . $request['uploaded_image'], $new_path . '/medium-' . $filename);
                 }
-                $cits->image = filter_var($filename, FILTER_SANITIZE_STRING);
+                $cats->image = filter_var($filename, FILTER_SANITIZE_STRING);
             } else {
-                $cits->image = null;
+                $cats->image = null;
             }
             return $cits->save();
         }

@@ -11,16 +11,6 @@ use DB;
 use App\SiteManagement;
 use App\Helper;
 
-use App\Job;
-use App\Category;
-use App\Skill;
-use App\FreelancerLevel;
-use App\ResearchLevel;
-use App\Citation;
-use App\Package;
-use App\Mail\FreelancerEmailMailable;
-use App\EmailTemplate;
-
 class Kernel extends ConsoleKernel
 {
     /**

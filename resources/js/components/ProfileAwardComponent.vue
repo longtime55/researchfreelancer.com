@@ -89,7 +89,7 @@ export default{
                 error_message:this.server_errors,
                 award: {
                     image_uploaded: false,
-                    award_title: '',
+                    award_title: this.ph_award_title,
                     award_hidden_image:'',
                     award_url:'Award url here',
                     date:'Select Award date',

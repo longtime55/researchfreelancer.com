@@ -34,7 +34,6 @@ class CreateProposalsTable extends Migration
                 $table->integer('freelancer_id');
                 $table->integer('job_id');
                 $table->text('content');
-                $table->text('currency')->nullable();
                 $table->integer('amount');
                 $table->string('completion_time');
                 $table->text('attachments')->nullable();

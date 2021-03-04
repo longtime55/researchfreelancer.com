@@ -95,17 +95,17 @@
                                     </div>
                                     <div v-if="freelancer_options" v-cloak>
                                         <div class="form-group">
-                                            {!! Form::text('freelancer[no_of_credits]', null, array('class' => 'form-control', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_credits'), 'v-model'=>'package.conneects')) !!}
+                                            {!! Form::text('freelancer[no_of_connects]', null, array('class' => 'form-control', 'placeholder' => trans('lang.no_of_connects'), 'v-model'=>'package.conneects')) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::number( 'freelancer[no_of_services]', null, ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_services'), 'v-model'=>'package.services'] ) !!}
+                                        </div>
+                                        <div class="form-group">
+                                            {!! Form::number( 'freelancer[no_of_featured_services]', null, ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_featured_services'), 'v-model'=>'package.featured_services'] ) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::text('freelancer[no_of_skills]', null, array('class' => 'form-control', 'placeholder' => trans('lang.no_of_skills'), 'v-model'=>'package.skills')) !!}
                                         </div>
-                                        <div class="form-group">
-                                            {!! Form::number( 'freelancer[no_of_categories]', null, ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_categories'), 'v-model'=>'package.services'] ) !!}
-                                        </div>
-                                        <!--<div class="form-group">-->
-                                        <!--    {!! Form::number( 'freelancer[no_of_featured_services]', null, ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_featured_services'), 'v-model'=>'package.featured_services'] ) !!}-->
-                                        <!--</div>-->
                                         <div class="form-group">
                                             <span class="wt-select">
                                                 <select name="freelancer[duration]">

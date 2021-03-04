@@ -71,10 +71,6 @@ class AdminEmailMailable extends Mailable
             $email_message = $this->prepareAdminEmailJobCompleted($this->email_params);
         } elseif ($this->type == 'admin_email_dispute_raised') {
             $email_message = $this->prepareAdminEmailDisputeRaised($this->email_params);
-        } elseif ($this->type == 'admin_email_milestone_released') {
-            $email_message = $this->prepareAdminEmailMilestoneReleased($this->email_params);
-        } elseif ($this->type == 'admin_email_milestone_canceled') {
-            $email_message = $this->prepareAdminEmailMilestoneCanceled($this->email_params);
         }
         $message = $this->from($from_email, $from_email_id)
             ->subject($subject)->view('emails.index')
@@ -482,7 +478,7 @@ class AdminEmailMailable extends Mailable
         }
 
         $email_content_default =    "Hello,
-                                    An Employer <a href='%employer_link%'>%employer_name%</a> has been cancelled his ongoing project <a href='%project_link%'>%project_title%</a> assign to <a href='%freelancer_link%'> %freelancer_name% </a>
+                                    An Employer <a href=' %employer_link%'>%employer_name%</a> has been cancelled his ongoing project <a href='%project_link%'>%project_title%</a> assign to <a href='%freelancer_link%'> %freelancer_name% </a>
                                     Job Cancel Reasons Below.
                                     %message%
 
@@ -498,114 +494,6 @@ class AdminEmailMailable extends Mailable
         $app_content = str_replace("%project_link%", $project_link, $app_content);
         $app_content = str_replace("%project_title%", $title, $app_content);
         $app_content = str_replace("%message%", $message, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
-    /**
-     * Milestone Release
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareAdminEmailMilestoneReleased($email_params)
-    {
-        extract($email_params);
-        $freelancer_name = $freelancer_name;
-        $employer_name = $employer_name;
-        $employer_link = $employer_link;
-        $project_title = $project_title;
-        $symbol = $symbol;
-        $amount = $amount;
-        $currency = $currency;
-        $date = $date;
-        $details = $details;
-        $project_link = $project_link;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hello,
-
-                                    Good news! <a href='%employer_link%'><strong>%employer_name%</strong></a> has released a Milestone Payment of %symbol%%amount% %currency% for <a href='%project_link%'>%project_title%</a>
-                                    <strong>Details: </strong>%details%
-                                    <strong>Date: </strong>%date%
-                    
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        // $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
-        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%symbol%", $symbol, $app_content);
-        $app_content = str_replace("%amount%", $amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%date%", $date, $app_content);
-        $app_content = str_replace("%details%", $details, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
-    /**
-     * Milestone Cancel
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareAdminEmailMilestoneCanceled($email_params)
-    {
-        extract($email_params);
-        $freelancer_name = $freelancer_name;
-        $employer_name = $employer_name;
-        $employer_link = $employer_link;
-        $project_title = $project_title;
-        $symbol = $symbol;
-        $amount = $amount;
-        $currency = $currency;
-        $date = $date;
-        $details = $details;
-        $project_link = $project_link;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hello,
-
-                                    <a href='%employer_link%'><strong>%employer_name% </strong></a>has canceled a Milestone Payment of %symbol%%amount% %currency% for <a href='%project_link%'>%project_title%</a>
-                                    <strong>Details: </strong>%details%
-                                    <strong>Date: </strong>%date%
-
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        // $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
-        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%symbol%", $symbol, $app_content);
-        $app_content = str_replace("%amount%", $amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%date%", $date, $app_content);
-        $app_content = str_replace("%details%", $details, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
         $body = "";

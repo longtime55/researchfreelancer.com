@@ -106,10 +106,8 @@ class MessageController extends Controller
                 $json[$key]['id'] = $chat_user_id;
                 $json[$key]['image'] = Helper::getProfileImage($chat_user_id);
                 $json[$key]['name'] = Helper::getUserName($chat_user_id);
-                $json[$key]['tagline'] = 
-                    !empty(User::find($chat_user_id)->profile->tagline) ? User::find($chat_user_id)->profile->tagline : '';
-                $json[$key]['image_name'] = 
-                    !empty(User::find($chat_user_id)->profile->avater) ? User::find($chat_user_id)->profile->avater : '';
+                $json[$key]['tagline'] = User::find($chat_user_id)->profile->tagline;
+                $json[$key]['image_name'] = User::find($chat_user_id)->profile->avater;
             }
             $message_status = $this->message::where('receiver_id', $user_id)->where('status', 0)->count();
             if ($message_status > 0) {

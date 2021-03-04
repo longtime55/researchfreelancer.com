@@ -53,14 +53,8 @@ class EmployerController extends Controller
      *
      * @access protected
      * @var    array $employer
-     * @var    array $payout_settings
-     * @var    array $currency
      */
     protected $employer;
-    
-    protected $payout_settings;
-    
-    protected $currency;
 
     /**
      * Create a new controller instance.
@@ -72,12 +66,6 @@ class EmployerController extends Controller
     public function __construct(Profile $employer)
     {
         $this->employer = $employer;
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'USD';
-        }
     }
 
     /**
@@ -90,8 +78,8 @@ class EmployerController extends Controller
         $profile = $this->employer::where('user_id', Auth::user()->id)
             ->get()->first();
         $employees = Helper::getEmployeesList();
-        $departments = Department::all()->sortBy('title');
-        $locations = Location::orderBy('title')->pluck('title', 'id');
+        $departments = Department::all();
+        $locations = Location::pluck('title', 'id');
         $gender = !empty($profile->gender) ? $profile->gender : '';
         $tagline = !empty($profile->tagline) ? $profile->tagline : '';
         $description = !empty($profile->description) ? $profile->description : '';
@@ -233,6 +221,7 @@ class EmployerController extends Controller
                 'first_name'    => 'required',
                 'last_name'    => 'required',
                 'gender'    => 'required',
+                'phone_number'    => 'required',
                 'transaction_currency'    => 'required',
             ]
         );
@@ -262,8 +251,9 @@ class EmployerController extends Controller
             $expiry_date = !empty($expiry) ? Carbon::parse($expiry)->toDateTimeString() : '';
             $message_status = Message::where('status', 0)->where('receiver_id', $employer_id)->count();
             $notify_class = $message_status > 0 ? 'wt-insightnoticon' : '';
-            $symbol = Helper::currencyList($this->currency);
-            $enable_package = !empty($this->payout_settings) && !empty($this->payout_settings[0]['employer_package']) ? $this->payout_settings[0]['employer_package'] : 'true';
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+            $enable_package = !empty($currency) && !empty($currency[0]['employer_package']) ? $currency[0]['employer_package'] : 'true';
             $icons  = SiteManagement::getMetaValue('icons');
             $latest_proposals_icon = !empty($icons['hidden_latest_proposal']) ? $icons['hidden_latest_proposal'] : 'img-20.png';
             $latest_package_expiry_icon = !empty($icons['hidden_package_expiry']) ? $icons['hidden_package_expiry'] : 'img-21.png';
@@ -345,20 +335,23 @@ class EmployerController extends Controller
             $ongoing_jobs = Job::where('user_id', $employer_id)->latest()->where('status', 'hired')->paginate(7);
             $completed_jobs = Job::where('user_id', $employer_id)->latest()->where('status', 'completed')->paginate(7);
             $cancelled_jobs = Job::where('user_id', $employer_id)->latest()->where('status', 'cancelled')->paginate(7);
-            // $symbol = Helper::currencyList($this->currency);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if (!empty($status) && $status === 'hired') {
                 if (file_exists(resource_path('views/extend/back-end/employer/jobs/ongoing.blade.php'))) {
                     return view(
                         'extend.back-end.employer.jobs.ongoing',
                         compact(
-                            'ongoing_jobs'
+                            'ongoing_jobs',
+                            'symbol'
                         )
                     );
                 } else {
                     return view(
                         'back-end.employer.jobs.ongoing',
                         compact(
-                            'ongoing_jobs'
+                            'ongoing_jobs',
+                            'symbol'
                         )
                     );
                 }
@@ -367,14 +360,16 @@ class EmployerController extends Controller
                     return view(
                         'extend.back-end.employer.jobs.completed',
                         compact(
-                            'completed_jobs'
+                            'completed_jobs',
+                            'symbol'
                         )
                     );
                 } else {
                     return view(
                         'back-end.employer.jobs.completed',
                         compact(
-                            'completed_jobs'
+                            'completed_jobs',
+                            'symbol'
                         )
                     );
                 }
@@ -395,7 +390,8 @@ class EmployerController extends Controller
         $employer_id = Auth::user()->id;
         if (Auth::user()) {
             $employer = User::find($employer_id);
-            $symbol = Helper::currencyList($this->currency);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if (!empty($status) && $status === 'hired') {
                 $services = $employer->purchasedServices;
                 if (file_exists(resource_path('views/extend/back-end/employer/services/ongoing.blade.php'))) {
@@ -485,7 +481,8 @@ class EmployerController extends Controller
             $validation_error_text = trans('lang.field_required');
             $cancel_popup_title = trans('lang.reason');
             $attachment = Helper::getUnserializeData($service->attachments);
-            $symbol = Helper::currencyList($this->currency);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if (file_exists(resource_path('views/extend/back-end/employer/services/show.blade.php'))) {
                 return view(
                     'extend.back-end.employer.services.show',
@@ -547,37 +544,20 @@ class EmployerController extends Controller
     {
         if (Auth::user() && !empty($id)) {
             if (Auth::user()) {
-                $employer = User::find(Auth::user()->id);
-                $profile = $employer->profile;
-                $payout = $profile->count() > 0 ? Helper::getUnserializeData($profile->payout_settings) : '';
-                if(isset($payout['rave_email'])) {
-                    $rave_email = $payout['rave_email'];
-                } else {
-                    $rave_email = $employer->email;
-                }
-                $firstname = !empty($employer->first_name) ? $employer->first_name : '';
-                $lastname = !empty($employer->last_name) ? $employer->last_name : '';
-                $phonenumber = !empty($employer->phone_number) ? $employer->phone_number : '';
+                $user_id = Auth::user()->id;
+                $employer = User::find($user_id);
                 $proposal = Proposal::where('id', $id)->get()->first();
-                if ($proposal->amount <= 167) {
-                    $fee = 5;
-                } else {
-                    $fee = $proposal->amount * 0.03;
-                }
                 $job = $proposal->job;
-                $currency = $this->currency;
-                if (!empty($job->currency)) {
-                    $this->currency = $job->currency;
-                    $currency = $job->currency;
-                }
-                $country = Helper::getCountry($this->currency);
+                $freelancer = User::find($proposal->freelancer_id);
                 $freelancer_name = Helper::getUserName($proposal->freelancer_id);
                 $profile = User::find($proposal->freelancer_id)->profile;
                 $attachments = !empty($proposal->attachments) ? unserialize($proposal->attachments) : '';
                 $user_image = !empty($profile) ? $profile->avater : '';
                 $profile_image = !empty($user_image) ? '/uploads/users/' . $proposal->freelancer_id . '/' . $user_image : 'images/user-login.png';
-                $payment_gateway = !empty($this->payout_settings) && !empty($this->payout_settings[0]['payment_method']) ? $this->payout_settings[0]['payment_method'] : null;
-                $symbol = Helper::currencyList($this->currency);
+                $payout_settings = SiteManagement::getMetaValue('commision');
+                $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
+                $currency   = SiteManagement::getMetaValue('commision');
+                $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
                 if (file_exists(resource_path('views/extend/back-end/employer/jobs/checkout.blade.php'))) {
                     return view(
                         'extend.back-end.employer.jobs.checkout',
@@ -587,14 +567,7 @@ class EmployerController extends Controller
                             'profile_image',
                             'proposal',
                             'payment_gateway',
-                            'symbol',
-                            'rave_email',
-                            'firstname',
-                            'lastname',
-                            'country',
-                            'currency',
-                            'phonenumber',
-                            'fee'
+                            'symbol'
                         )
                     );
                 } else {
@@ -606,14 +579,7 @@ class EmployerController extends Controller
                             'profile_image',
                             'proposal',
                             'payment_gateway',
-                            'symbol',
-                            'rave_email',
-                            'firstname',
-                            'lastname',
-                            'country',
-                            'currency',
-                            'phonenumber',
-                            'fee'
+                            'symbol'
                         )
                     );
                 }

@@ -91,7 +91,7 @@ class CitationController extends Controller
         }
         $this->validate(
             $request, [
-                'citation_title'    => 'required|unique:citations,title',
+                'citation_title'    => 'required',
             ]
         );
         $this->citation->saveCitations($request);
@@ -140,7 +140,7 @@ class CitationController extends Controller
         }
         $this->validate(
             $request, [
-                'citation_title' => 'required|unique:citations,title',
+                'citation_title' => 'required',
             ]
         );
         $this->citation->updateCitations($request, $id);

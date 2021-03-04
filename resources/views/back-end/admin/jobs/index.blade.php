@@ -37,7 +37,6 @@
                                                 $freelancer = Helper::getUserName($cancel_proposal->freelancer_id);
                                             }
                                             $project_type  = Helper::getProjectTypeList($job->project_type);
-                                            $description = strip_tags(stripslashes($job->description));
                                         @endphp
                                         <div class="wt-userlistinghold wt-featured wt-userlistingvtwo del-job-{{ $job->id }}">
                                             @if (!empty($job->is_featured) && $job->is_featured === 'true')
@@ -62,7 +61,7 @@
                                                     @if (!empty($job->price) || !empty($location['title']) || !empty($job->project_type) || !empty($job->duration) )
                                                         <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                             @if (!empty($job->price))
-                                                                <li><span class="wt-dashboraddoller"><i>{{ Helper::currencyList($job->currency)['symbol'] }}</i> {{{ $job->price }}} {{ $job->currency }}</span></li>
+                                                                <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
                                                             @endif
                                                             @if (!empty($job->location->title))
                                                                 <li><span><img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.locations') }}}"> {{{ $job->location->title }}}</span></li>
@@ -74,27 +73,6 @@
                                                                 <li><span class="wt-dashboradclock"><i class="far fa-clock"></i> {{ trans('lang.duration') }} {{{ $duration }}}</span></li>
                                                             @endif
                                                         </ul>
-                                                    @endif
-                                                    <!-- @if (!empty($description))
-                                                        <div class="wt-description mt-3">
-                                                            <p>{{ str_limit($description, 300) }}</p>
-                                                        </div>
-                                                    @endif -->
-                                                    @if ((!empty($job->categories) && $job->categories->count() > 0) || (!empty($job->skills) && $job->skills->count() > 0) || (!empty($job->rlevels) && $job->rlevels->count() > 0) || (!empty($job->citations) && $job->citations->count() > 0))
-                                                        <div class="wt-tag wt-widgettag mt-3">
-                                                            @foreach ($job->categories as $category)
-                                                                <a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                            @endforeach
-                                                            @foreach ($job->skills as $skill)
-                                                                <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                            @endforeach
-                                                            @foreach ($job->rlevels as $rlevel)
-                                                                <a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-                                                            @endforeach
-                                                            @foreach ($job->citations as $citation)
-                                                                <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                            @endforeach
-                                                        </div>
                                                     @endif
                                                 </div>
                                                 <div class="wt-rightarea la-pending-jobs">
@@ -148,7 +126,6 @@
                                                         </div>
                                                         @if (!empty($cancel_proposal))
                                                             <input type="hidden" value="{{$cancel_proposal->amount}}" id="refundable-amount-{{$job->id}}">
-                                                            <input type="hidden" value="{{$cancel_proposal->currency}}" id="refundable-currency-{{$job->id}}" name="currency">
                                                             <input type="hidden" value="{{$cancel_proposal->id}}" id="refundable-order-id-{{$job->id}}">
                                                         @endif
                                                         <input type="hidden" value="{{$job->id}}" id="refundable-job-id-{{$job->id}}">

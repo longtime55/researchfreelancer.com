@@ -100,7 +100,7 @@ class SkillController extends Controller
         $this->validate(
             $request,
             [
-                'skill_title' => 'required|unique:skills,title',
+                'skill_title' => 'required',
             ]
         );
         $this->skill->saveSkills($request);
@@ -154,7 +154,7 @@ class SkillController extends Controller
         $this->validate(
             $request,
             [
-                'skill_title' => 'required|unique:skills,title',
+                'skill_title' => 'required',
             ]
         );
         $this->skill->updateSkills($request, $id);

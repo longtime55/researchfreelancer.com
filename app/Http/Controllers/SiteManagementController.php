@@ -50,8 +50,6 @@ class SiteManagementController extends Controller
      * @var    array $category
      */
     protected $settings;
-    protected $payout_settings;
-    protected $currency;
 
     /**
      * Create a new controller instance.
@@ -63,12 +61,6 @@ class SiteManagementController extends Controller
     public function __construct(SiteManagement $settings)
     {
         $this->settings = $settings;
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'USD';
-        }
     }
 
     /**
@@ -99,10 +91,11 @@ class SiteManagementController extends Controller
         $gmap_api_key = !empty($settings[0]['gmap_api_key']) ? $settings[0]['gmap_api_key'] : null;
         $logo = !empty($settings[0]['logo']) ? $settings[0]['logo'] : null;
         $favicon = !empty($settings[0]['favicon']) ? $settings[0]['favicon'] : null;
-        $existing_currency = $this->currency;
-        $commision = !empty($this->payout_settings[0]['commision']) ? $this->payout_settings[0]['commision'] : null;
-        $payment_gateway = !empty($this->payout_settings[0]['payment_method']) ? $this->payout_settings[0]['payment_method'] : array();
-        $min_payout = !empty($this->payout_settings[0]['min_payout']) ? $this->payout_settings[0]['min_payout'] : 0;
+        $payout_settings = $this->settings::getMetaValue('commision');
+        $existing_currency = !empty($payout_settings[0]['currency']) ? $payout_settings[0]['currency'] : '';
+        $commision = !empty($payout_settings[0]['commision']) ? $payout_settings[0]['commision'] : null;
+        $payment_gateway = !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : array();
+        $min_payout = !empty($payout_settings[0]['min_payout']) ? $payout_settings[0]['min_payout'] : 0;
         $existing_payment_settings = $this->settings::getMetaValue('payment_settings');
         $client_id = !empty($existing_payment_settings[0]['client_id']) ? $existing_payment_settings[0]['client_id'] : '';
         $payment_password = !empty($existing_payment_settings[0]['paypal_password']) ? $existing_payment_settings[0]['paypal_password'] : '';
@@ -1242,15 +1235,16 @@ class SiteManagementController extends Controller
     public function getSitePaymentOption()
     {
         $json = array();
+        $commision_settings = !empty(SiteManagement::getMetaValue('commision')) ? SiteManagement::getMetaValue('commision') : array();
         $payment_settings = !empty(SiteManagement::getMetaValue('payment_settings')) ? SiteManagement::getMetaValue('payment_settings') : array();
         $rave_settings = !empty(SiteManagement::getMetaValue('rave_settings')) ? SiteManagement::getMetaValue('rave_settings') : array();
-        if (!empty($this->payout_settings[0]['enable_packages'])) {
-            $json['enable_packages'] = $this->payout_settings[0]['enable_packages'];
+        if (!empty($commision_settings[0]['enable_packages'])) {
+            $json['enable_packages'] = $commision_settings[0]['enable_packages'];
         } else {
             $json['enable_packages'] = 'true';
         }
-        if (!empty($this->payout_settings[0]['employer_package'])) {
-            $json['employer_package'] = $this->payout_settings[0]['employer_package'];
+        if (!empty($commision_settings[0]['employer_package'])) {
+            $json['employer_package'] = $commision_settings[0]['employer_package'];
         } else {
             $json['employer_package'] = 'true';
         }

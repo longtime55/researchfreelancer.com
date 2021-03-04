@@ -35,27 +35,7 @@
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">
-                                                {!! Form::select('research_category', $categories, null, array('class' => '', 'placeholder' => trans('lang.select_research_category'), 'v-model'=>'research_category')) !!}
-                                            </span>
-                                        </div>
-                                        <div class="form-group form-group-half wt-formwithlabel">
-                                            <span class="wt-select">
-                                                {!! Form::select('research_field', $skills, null, array('class' => '', 'placeholder' => trans('lang.select_research_field'), 'v-model'=>'research_field')) !!}
-                                            </span>
-                                        </div>
-                                        <div class="form-group form-group-half wt-formwithlabel">
-                                            <span class="wt-select">
-                                                {!! Form::select('project_level', $project_levels, null, array('class' => '', 'placeholder' => trans('lang.select_project_level'), 'v-model'=>'project_level')) !!}
-                                            </span>
-                                        </div>
-                                        <div class="form-group form-group-half wt-formwithlabel">
-                                            <span class="wt-select">
-                                                {!! Form::select('citation', $citations, null, array('class' => '', 'placeholder' => trans('lang.select_citation'), 'v-model'=>'citation')) !!}
-                                            </span>
-                                        </div>
-                                        <div class="form-group form-group-half wt-formwithlabel">
-                                            <span class="wt-select">
-                                                {!! Form::select('freelancer_type', $freelancer_levels, null, array('placeholder' => trans('lang.select_freelancer_level'), 'class' => '', 'v-model'=>'freelancer_level')) !!}
+                                                {!! Form::select('project_levels', $project_levels, null, array('class' => '', 'placeholder' => trans('lang.select_project_level'), 'v-model'=>'project_level')) !!}
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
@@ -63,21 +43,34 @@
                                                 {!! Form::select('job_duration', $job_duration, null, array('class' => '', 'placeholder' => trans('lang.select_job_duration'), 'v-model'=>'job_duration')) !!}
                                             </span>
                                         </div>
+                                        <div class="form-group form-group-half wt-formwithlabel">
+                                            <span class="wt-select">
+                                                {!! Form::select('freelancer_type', $freelancer_level, null, array('placeholder' => trans('lang.select_freelancer_level'), 'class' => '', 'v-model'=>'freelancer_level')) !!}
+                                            </span>
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel">
+                                            <span class="wt-select">
+                                                {!! Form::select('english_level', $english_levels, null, array('class' => '', 'placeholder' => trans('lang.select_english_level'), 'v-model'=>'english_level')) !!}
+                                            </span>
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>
-                            <div class="wt-jobdetails wt-tabsinfo">
+                            <div class="wt-jobcategories wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.job_dtl') }}</h2>
+                                    <h2>{{ trans('lang.job_cats') }}</h2>
                                 </div>
-                                <div class="wt-formtheme wt-userform wt-userformvtwo">
-                                    {!! Form::textarea('description', null, ['class' => 'form-group', 'minlength' => '20', 'style' => 'height: 100px', 'placeholder' => trans('lang.research_dtl_note')]) !!}
-                                    <!--{!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.research_dtl_note')]) !!}-->
+                                <div class="wt-divtheme wt-userform wt-userformvtwo">
+                                    <div class="form-group">
+                                        <span class="wt-select">
+                                            {!! Form::select('categories[]', $categories, null, array('class' => 'chosen-select', 'multiple', 'data-placeholder' => trans('lang.select_job_cats'))) !!}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="wt-languages-holder wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
-                                    <h2>{{ trans('lang.lang') }}</h2>
+                                    <h2>{{ trans('lang.langs') }}</h2>
                                 </div>
                                 <div class="wt-divtheme wt-userform wt-userformvtwo">
                                     <div class="form-group wt-formwithlabel">
@@ -86,6 +79,20 @@
                                         </span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="wt-jobdetails wt-tabsinfo">
+                                <div class="wt-tabscontenttitle">
+                                    <h2>{{ trans('lang.job_dtl') }}</h2>
+                                </div>
+                                <div class="wt-formtheme wt-userform wt-userformvtwo">
+                                    {!! Form::textarea('description', null, ['class' => 'wt-tinymceeditor', 'id' => 'wt-tinymceeditor', 'placeholder' => trans('lang.job_dtl_note')]) !!}
+                                </div>
+                            </div>
+                            <div class="wt-jobskills wt-jobskills-holder wt-tabsinfo">
+                                <div class="wt-tabscontenttitle">
+                                    <h2>{{ trans('lang.skills_req') }}</h2>
+                                </div>
+                                <job_skills :placeholder="'skills already selected'"></job_skills>
                             </div>
                             <div class="wt-joblocation wt-tabsinfo">
                                 <div class="wt-tabscontenttitle">
@@ -99,19 +106,19 @@
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel">
-                                            {!! Form::text( 'address', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_your_state_city')] ) !!}
+                                            {!! Form::text( 'address', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_your_address')] ) !!}
                                         </div>
-                                        <!--<div class="form-group wt-formmap">-->
-                                        <!--    <div class="wt-locationmap">-->
-                                        <!--        <custom-map :latitude="6.5480357" :longitude="3.1438744"></custom-map>-->
-                                        <!--    </div>-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group form-group-half wt-formwithlabel">-->
-                                        <!--    {!! Form::text( 'longitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_enter_logitude')]) !!}-->
-                                        <!--</div>-->
-                                        <!--<div class="form-group form-group-half wt-formwithlabel">-->
-                                        <!--    {!! Form::text( 'latitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_enter_latitude')]) !!}-->
-                                        <!--</div>-->
+                                        <div class="form-group wt-formmap">
+                                            <div class="wt-locationmap">
+                                                <custom-map :latitude="6.5480357" :longitude="3.1438744"></custom-map>
+                                            </div>
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel">
+                                            {!! Form::text( 'longitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_enter_logitude')]) !!}
+                                        </div>
+                                        <div class="form-group form-group-half wt-formwithlabel">
+                                            {!! Form::text( 'latitude', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_enter_latitude')]) !!}
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -123,7 +130,7 @@
                                     <fieldset>
                                         <div class="form-group form-group-half wt-formwithlabel">
                                             <span class="wt-select">
-                                                {!! Form::select('currency', $currency, null, array('class'=>'','placeholder'=>trans('lang.ph_select_currency'))) !!}
+                                                {!! Form::select('currency', $currency, e($existing_currency), array('class'=>'','placeholder'=>trans('lang.ph_select_currency'))) !!}
                                             </span>
                                         </div>
                                         <div class="form-group form-group-half wt-formwithlabel job-cost-input">

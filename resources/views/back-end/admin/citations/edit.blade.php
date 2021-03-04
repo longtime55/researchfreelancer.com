@@ -32,46 +32,46 @@
                                         !!}
                                         <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                     </div>
-                                    <!--<div class="wt-settingscontent">-->
-                                    <!--    @if (!empty($cits['image']))-->
-                                    <!--        <div class="wt-formtheme wt-userform">-->
-                                    <!--            <div v-if="this.uploaded_image">-->
-                                    <!--                <upload-image-->
-                                    <!--                    :id="'cat_image'"-->
-                                    <!--                    :img_ref="'cat_img'"-->
-                                    <!--                    :url="'{{url('admin/citations/upload-temp-image')}}'"-->
-                                    <!--                    :name="'uploaded_image'"-->
-                                    <!--                    >-->
-                                    <!--                </upload-image>-->
-                                    <!--                {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}-->
-                                    <!--            </div>-->
-                                    <!--            <div class="form-group" v-else>-->
-                                    <!--                <ul class="wt-attachfile">-->
-                                    <!--                    <li>-->
-                                    <!--                        <span>{{{ $cits['image'] }}}</span>-->
-                                    <!--                        <em>{{{trans('lang.file_size')}}} <span data-dz-size></span>-->
-                                    <!--                            <a class="dz-remove" href="javascript:void();" v-on:click.prevent="removeImage('hidden_img')" >-->
-                                    <!--                                <span class="lnr lnr-cross"></span>-->
-                                    <!--                            </a>-->
-                                    <!--                        </em>-->
-                                    <!--                    </li>-->
-                                    <!--                </ul>-->
-                                    <!--                <input type="hidden" name="uploaded_image" id="hidden_img" value="{{{$cits['image']}}}">-->
-                                    <!--            </div>-->
-                                    <!--        </div>-->
-                                    <!--    @else-->
-                                    <!--        <div class = "wt-formtheme wt-userform">-->
-                                    <!--            <upload-image-->
-                                    <!--                :id="'cat_image'"-->
-                                    <!--                :img_ref="'cat_ref'"-->
-                                    <!--                :url="'{{url('admin/citations/upload-temp-image')}}'"-->
-                                    <!--                :name="'uploaded_image'"-->
-                                    <!--                >-->
-                                    <!--            </upload-image>-->
-                                    <!--            {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}-->
-                                    <!--        </div>-->
-                                    <!--    @endif-->
-                                    <!--</div>-->
+                                    <div class="wt-settingscontent">
+                                        @if (!empty($cits['image']))
+                                            <div class="wt-formtheme wt-userform">
+                                                <div v-if="this.uploaded_image">
+                                                    <upload-image
+                                                        :id="'cat_image'"
+                                                        :img_ref="'cat_img'"
+                                                        :url="'{{url('admin/citations/upload-temp-image')}}'"
+                                                        :name="'uploaded_image'"
+                                                        >
+                                                    </upload-image>
+                                                    {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}
+                                                </div>
+                                                <div class="form-group" v-else>
+                                                    <ul class="wt-attachfile">
+                                                        <li>
+                                                            <span>{{{ $cits['image'] }}}</span>
+                                                            <em>{{{trans('lang.file_size')}}} <span data-dz-size></span>
+                                                                <a class="dz-remove" href="javascript:void();" v-on:click.prevent="removeImage('hidden_img')" >
+                                                                    <span class="lnr lnr-cross"></span>
+                                                                </a>
+                                                            </em>
+                                                        </li>
+                                                    </ul>
+                                                    <input type="hidden" name="uploaded_image" id="hidden_img" value="{{{$cits['image']}}}">
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class = "wt-formtheme wt-userform">
+                                                <upload-image
+                                                    :id="'cat_image'"
+                                                    :img_ref="'cat_ref'"
+                                                    :url="'{{url('admin/citations/upload-temp-image')}}'"
+                                                    :name="'uploaded_image'"
+                                                    >
+                                                </upload-image>
+                                                {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}
+                                            </div>
+                                        @endif
+                                    </div>
                                     <div class="form-group wt-btnarea">
                                         {!! Form::submit(trans('lang.update_cit'), ['class' => 'wt-btn']) !!}
                                     </div>

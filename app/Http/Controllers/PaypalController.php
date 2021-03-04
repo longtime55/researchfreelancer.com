@@ -15,7 +15,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Profile;
 use App\Invoice;
 use App\Item;
 use Carbon\Carbon;
@@ -133,10 +132,11 @@ class PaypalController extends Controller
         }
 
         $settings = SiteManagement::getMetaValue('commision');
-        $profile = Profile::where('user_id', Auth::user()->id)->get()->first();
-        if (!empty($profile->transaction_currency)) {
-            $currency = $profile->transaction_currency;
-        } elseif (!empty($settings[0]['currency'])) {
+        // $profile = Profile::where('user_id', Auth::user()->id)->get()->first();
+        // if (!empty($profile->transaction_currency)) {
+        //     $currency = $profile->transaction_currency;
+        // } elseif (!empty($settings[0]['currency'])) {
+        if (!empty($settings[0]['currency'])) {
             $currency = $settings[0]['currency'];
         } else {
             $currency = 'USD';
@@ -434,7 +434,7 @@ class PaypalController extends Controller
                         }
                     }
                 }
-            } elseif ($product_type == 'project') {
+            } else if ($product_type == 'project') {
                 if (session()->has('project_type')) {
                     $project_type = session()->get('project_type');
                     if ($project_type == 'service') {

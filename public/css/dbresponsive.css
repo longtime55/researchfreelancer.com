@@ -42,11 +42,16 @@
 	.wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: 100%;}
 	.wt-canceljobholder .wt-userlistinghold .wt-rightarea .wt-btnarea{padding: 0 0 30px;}
 	.wt-jobdetailscontent .wt-userlistinghold .wt-rightarea{width: auto;}
-	.wt-jobdetailscontent .wt-userlistingvtwo .wt-contenthead{max-width: 580px;}
+	.wt-jobdetailscontent .wt-userlistingvtwo .wt-contenthead{max-width: 380px;}
 	.la-alljob-holder .wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: auto;}
 	.la-manage-jobs-holder .wt-userlistingvtwo .wt-userlistingcontent .wt-rightarea{width: auto;}
 }
 @media (max-width:1600px){ 
+	.wt-jobdetailscontent .wt-userlistinghold .wt-rightarea{
+		width: 100%;
+		float: left;
+		margin-top: 0;
+	}
 	.wt-wrapper .wt-sidebarwrapper{padding-top:152px; }
 	.wt-btnmenutoggle{top: 170px;}
 }
@@ -100,10 +105,10 @@
 	.wt-messageboxvtwo .wt-userprofile .wt-title a.wt-btn{padding: 0 40px;}
 }
 @media (max-width:1280px){
-	/*.wt-actionbtn a + a{*/
-	/*	clear: both;*/
-	/*	margin: 10px 0 0;*/
-	/*}*/
+	.wt-actionbtn a + a{
+		clear: both;
+		margin: 10px 0 0;
+	}
 	.wt-hiredfreelancer .wt-rightarea .wt-hireduserstatus{
 		margin: 0;
 		min-width: 0;
@@ -137,11 +142,6 @@
 	.la-setting-holder .wt-userform .wt-updatall{
 		border: 0;
 		width: 100%;
-	}
-	.wt-jobdetailscontent .wt-userlistinghold .wt-rightarea{
-		width: 100%;
-		float: left;
-		margin-top: 0;
 	}
 }
 @media (max-width:1080px){

@@ -1,7 +1,3 @@
-@php 
-    $message_status = DB::table('messages')->where('status', 0)->where('receiver_id', Auth::user()->id)->count();
-    $notify_class = $message_status > 0 ? 'wt-insightnoticon' : '';
-@endphp
 <nav id="wt-profiledashboard" class="wt-usernav">
         <ul>
             @if ($role === 'admin')
@@ -93,10 +89,8 @@
                         <span>{{ trans('lang.taxonomies') }}</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
                         <li><a href="{{{ route('skills') }}}">{{ trans('lang.skills') }}</a></li>
-                        <li><a href="{{{ route('levels',['which'=>'research']) }}}">{{ trans('lang.research_levels') }}</a></li>
-                        <li><a href="{{{ route('levels',['which'=>'freelancer']) }}}">{{ trans('lang.freelancer_levels') }}</a></li>
+                        <li><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
                         <li><a href="{{{ route('citations') }}}">{{ trans('lang.writer_cits') }}</a></li>
                         <li><a href="{{{ route('departments') }}}">{{ trans('lang.dpts') }}</a></li>
                         <li><a href="{{{ route('languages') }}}">{{ trans('lang.langs') }}</a></li>
@@ -110,13 +104,13 @@
             @if ($role === 'employer' || $role === 'freelancer' )
                 <li>
                     <a href="{{{ url($role.'/dashboard') }}}">
-                        <i class="ti-desktop {{ $notify_class }}"></i>
+                        <i class="ti-desktop"></i>
                         <span>{{ trans('lang.dashboard') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{{ route('message') }}}">
-                        <i class="ti-envelope {{ $notify_class }}"></i>
+                        <i class="ti-envelope"></i>
                         <span>{{ trans('lang.msg_center') }}</span>
                     </a>
                 </li>

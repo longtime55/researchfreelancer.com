@@ -39,6 +39,7 @@ class CreateJobsTable extends Migration
                     ['posted', 'hired', 'completed', 'cancelled']
                 )->default('posted');
                 $table->string('duration');
+                $table->enum('project_level', ['basic', 'medium', 'expensive']);
                 $table->enum(
                     'freelancer_type',
                     ['pro_independent', 'pro_agency', 'independent', 'agency', 'rising_talent']
@@ -48,7 +49,6 @@ class CreateJobsTable extends Migration
                     ['basic', 'conversational', 'fluent', 'native', 'professional']
                 );
                 $table->enum('project_type', ['hourly', 'fixed'])->default('fixed');
-                $table->string('currency');
                 $table->integer('price');
                 $table->text('description')->nullable();
                 $table->integer('location_id')->nullable();

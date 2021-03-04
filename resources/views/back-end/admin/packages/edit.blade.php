@@ -18,7 +18,8 @@
                             <h2>{{{ trans('lang.edit_package') }}}</h2>
                         </div>
                         <div class="wt-dashboardboxcontent">
-                            {!! Form::open(['url' => url('admin/packages/update/'.$package->slug.''), 'class' =>'wt-formtheme wt-formprojectinfo wt-formcategory', 'id' => 'packages'] ) !!}
+                            {!! Form::open(['url' => url('admin/packages/update/'.$package->slug.''), 'class' =>'wt-formtheme wt-formprojectinfo wt-formcategory',
+                            'id' => 'packages'] ) !!}
                                 <fieldset>
                                     <div class="form-group">
                                         {!! Form::text( 'package_title', e($package->title), ['class' =>'form-control'.($errors->has('package_title') ? ' is-invalid' : ''), 'placeholder' => trans('lang.ph_pkg_title')]) !!}
@@ -103,19 +104,19 @@
                                         @endif --}}
                                     @elseif ($package->role_id == 3)
                                         <div class="form-group">
-                                            {!! Form::number( 'freelancer[no_of_credits]', e($no_of_credits), ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_credits')] ) !!}
+                                            {!! Form::number('freelancer[no_of_connects]', e($options['no_of_connects']), array('class' => 'form-control', 'placeholder'
+                                            => trans('lang.no_of_connects'))) !!}
                                         </div>
                                         <div class="form-group">
                                             {!! Form::number('freelancer[no_of_skills]', e($options['no_of_skills']), array('class' => 'form-control', 'placeholder'
                                             => trans('lang.no_of_skills'))) !!}
                                         </div>
                                         <div class="form-group">
-                                            {!! Form::number('freelancer[no_of_categories]', e($options['no_of_categories']), array('class' => 'form-control', 'placeholder'
-                                            => trans('lang.freelancer_pkg_opt.no_of_categories'))) !!}
+                                            {!! Form::number( 'freelancer[no_of_services]', e($no_of_services), ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_services')] ) !!}
                                         </div>
-                                        <!--<div class="form-group">-->
-                                        <!--    {!! Form::number( 'freelancer[no_of_featured_services]', e($no_of_featured_services), ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_featured_services')] ) !!}-->
-                                        <!--</div>-->
+                                        <div class="form-group">
+                                            {!! Form::number( 'freelancer[no_of_featured_services]', e($no_of_featured_services), ['class' =>'form-control ', 'placeholder' => trans('lang.freelancer_pkg_opt.no_of_featured_services')] ) !!}
+                                        </div>
                                         <div class="form-group">
                                             <span class="wt-select">
                                                 <select name="freelancer[duration]">

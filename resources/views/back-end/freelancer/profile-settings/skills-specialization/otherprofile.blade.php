@@ -14,7 +14,7 @@
 </div>
 <div class="wt-yourdetails wt-tabsinfo">
 	<div class="wt-tabscontenttitle">
-    <h2>{{{ trans('lang.professional_note') }}}</h2>
+    <h2>{{{ trans('lang.box_write') }}}</h2>
 	</div>
 	<div class="wt-divtheme wt-userform wt-userformvtw">
 	    <fieldset>

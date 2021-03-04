@@ -51,7 +51,7 @@
                     <div class="wt-categoryslidercontent item {{$active_wrapper}}">
                         <figure><img src="{{{ asset(Helper::getCategoryImage($cat->image)) }}}" alt="{{{ $cat->title }}}"></figure>
                         <div class="wt-cattitle">
-                        <h3><a href="{{{url('search-results?type=project&categories%5B%5D='.$cat->slug)}}}" class="{{$active}}">{{{ $cat->title }}}</a></h3>
+                        <h3><a href="{{{url('search-results?type=project&category%5B%5D='.$cat->slug)}}}" class="{{$active}}">{{{ $cat->title }}}</a></h3>
                             <span>Items: {{{$category->jobs->count()}}}</span>
                         </div>
                     </div>
@@ -79,11 +79,11 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-8 float-left">
                             <div class="wt-userlistingholder wt-userlisting wt-haslayout">
-                                @if (!empty($users))
-                                    <div class="wt-userlistingtitle">
-                                        <span>{{ $users->firstItem() }} - {{ $users->firstItem() + $users->count() - 1 }} of {{$users->total()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>
-                                    </div>
-                                @endif
+                                <div class="wt-userlistingtitle">
+                                    @if (!empty($users))
+                                        <span>{{ trans('lang.01') }} {{$users->count()}} of {{\App\User::role('freelancer')->count()}} results @if (!empty($keyword)) for <em>"{{{$keyword}}}"</em> @endif</span>
+                                    @endif
+                                </div>
                                 @if (!empty($users))
                                     @foreach ($users as $key => $freelancer)
                                         @php
@@ -108,9 +108,6 @@
                                                 $feature_class = 'wt-exp';
                                                 $badge_color = '';
                                                 $badge_img    = '';
-                                            }
-                                            if (!empty($freelancer->profile->transaction_currency)) {
-                                                $symbol = Helper::currencyList($freelancer->profile->transaction_currency);
                                             }
                                         @endphp
                                         <div class="wt-userlistinghold {{ $feature_class }}">
@@ -144,7 +141,7 @@
                                                     <ul class="wt-userlisting-breadcrumb">
                                                         @if (!empty($freelancer->profile->hourly_rate))
                                                             <li><span><i class="far fa-money-bill-alt"></i>
-                                                                {{ $symbol['symbol'] }} {{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
+                                                                {{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{ $freelancer->profile->hourly_rate }}} {{ trans('lang.per_hour') }}</span>
                                                             </li>
                                                         @endif
                                                         @if (!empty($freelancer->location))
@@ -177,13 +174,6 @@
                                                     <p>{{{ str_limit($freelancer->profile->description, 180) }}}</p>
                                                 </div>
                                             @endif
-                                            @if (!empty($freelancer->categories))
-                                                <div class="wt-tag wt-widgettag">
-                                                    @foreach($freelancer->categories as $category)
-                                                        <a href="{{{url('search-results?type=project&categoriess%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                    @endforeach
-                                                </div>
-                                            @endif
                                             @if (!empty($freelancer->skills))
                                                 <div class="wt-tag wt-widgettag">
                                                     @foreach($freelancer->skills as $skill)
@@ -191,17 +181,10 @@
                                                     @endforeach
                                                 </div>
                                             @endif
-                                            @if (!empty($freelancer->citations))
-                                                <div class="wt-tag wt-widgettag">
-                                                    @foreach($freelancer->citations as $citation)
-                                                        <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                    @endforeach
-                                                </div>
-                                            @endif
                                         </div>
                                     @endforeach
                                     @if ( method_exists($users,'links') )
-                                        {{ $users->onEachSide(1)->links('pagination.custom') }}
+                                        {{ $users->links('pagination.custom') }}
                                     @endif
                                 @else
                                     @if (file_exists(resource_path('views/extend/errors/no-record.blade.php'))) 

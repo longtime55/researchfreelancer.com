@@ -41,7 +41,6 @@
                         @endif
                         @if (!empty($job))
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 float-left">
-                                @php $symbol = Helper::currencyList($job->currency) ? Helper::currencyList($job->currency) : $symbol; @endphp
                                 <div class="wt-proposalholder">
                                     @if (!empty($job->is_featured) && $job->is_featured === 'true')
                                         <span class="wt-featuredtag"><img src="{{{ asset('images/featured.png') }}}" alt="{{ trans('lang.img') }}" data-tipso="Plus Member" class="template-content tipso_style"></span>
@@ -64,8 +63,8 @@
                                                 !empty($job->duration)
                                                 )
                                                 <ul class="wt-userlisting-breadcrumb wt-userlisting-breadcrumbvtwo">
-                                                    @if (!empty($job->price))
-                                                        <li><span><i class="wt-budget">{{ $symbol['symbol'] }}</i> {{{ $job->price }}}</span></li>
+                                                    @if (!empty($job->project_level))
+                                                        <li><span><i class="fa fa-dollar-sign wt-viewjobdollar"></i> {{{Helper::getProjectLevel($job->project_level)}}}</span></li>
                                                     @endif
                                                     @if (!empty($job->location->title))
                                                         <li><span><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{ trans('lang.img') }}"> {{{ $job->location->title }}}</span></li>
@@ -76,6 +75,13 @@
                                                     @if (!empty($job->duration))
                                                         <li><span class="wt-dashboradclock"><i class="far fa-clock wt-viewjobclock"></i> {{ trans('lang.duration') }} {{{ Helper::getJobDurationList($job->duration) }}}</span></li>
                                                     @endif
+                                                    {{-- @if (!empty($job->price))
+                                                        <li>
+                                                            <span>
+                                                                <i class="wt-budget">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}
+                                                            </span>
+                                                        </li>
+                                                    @endif --}}
                                                 </ul>
                                             @endif
                                         </div>
@@ -95,33 +101,18 @@
                                             </div>
                                         </div>
                                     @endif
-                                    <div class="wt-skillsrequired">
-                                        <div class="wt-title">
-                                            <h3>{{ trans('lang.project_info') }}</h3>
-                                        </div>
-                                        <div class="wt-tag wt-widgettag">
-                                            @if (!empty($job->categories) && $job->categories->count() > 0)
-                                                @foreach ($job->categories as $category)
-                                                    <a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                @endforeach
-                                            @endif
-                                            @if (!empty($job->skills) && $job->skills->count() > 0)
+                                    @if (!empty($job->skills) && $job->skills->count() > 0)
+                                        <div class="wt-skillsrequired">
+                                            <div class="wt-title">
+                                                <h3>{{ trans('lang.skills_req') }}</h3>
+                                            </div>
+                                            <div class="wt-tag wt-widgettag">
                                                 @foreach ($job->skills as $skill)
                                                     <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
                                                 @endforeach
-                                            @endif
-                                            @if (!empty($job->rlevels) && $job->rlevels->count() > 0)
-                                                @foreach ($job->rlevels as $rlevel)
-                                                    <a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-                                                @endforeach
-                                            @endif
-                                            @if (!empty($job->citations) && $job->citations->count() > 0)
-                                                @foreach ($job->citations as $citation)
-                                                    <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                @endforeach
-                                            @endif
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                     @if (!empty($attachments) && $job->show_attachments === 'true')
                                         <div class="wt-attachments">
                                             <div class="wt-title">

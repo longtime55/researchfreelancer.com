@@ -20,7 +20,6 @@ use App\Invoice;
 use App\Job;
 use App\Language;
 use App\Mail\AdminEmailMailable;
-use App\Mail\EmployerEmailMailable;
 use App\Mail\FreelancerEmailMailable;
 use App\Mail\GeneralEmailMailable;
 use App\Package;
@@ -71,8 +70,6 @@ class UserController extends Controller
     use HasRoles;
     protected $user;
     protected $redirectTo = '/';
-    protected $payout_settings;
-    protected $currency;
 
     /**
      * Create a new controller instance.
@@ -86,13 +83,6 @@ class UserController extends Controller
     {
         $this->user = $user;
         $this->profile = $profile;
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        }
-         else {
-            $this->currency = 'USD';
-        }
     }
 
     /**
@@ -104,7 +94,7 @@ class UserController extends Controller
      */
     public function accountSettings()
     {
-        $languages = Language::orderBy('title')->pluck('title', 'id');
+        $languages = Language::pluck('title', 'id');
         $user_id = Auth::user()->id;
         $profile = new Profile();
         $saved_options = $profile::select('profile_searchable', 'profile_blocked', 'english_level')
@@ -540,7 +530,8 @@ class UserController extends Controller
             $saved_jobs        = !empty($profile->saved_jobs) ? unserialize($profile->saved_jobs) : array();
             $saved_freelancers = !empty($profile->saved_freelancer) ? unserialize($profile->saved_freelancer) : array();
             $saved_employers   = !empty($profile->saved_employers) ? unserialize($profile->saved_employers) : array();
-            $symbol            = Helper::currencyList($this->currency);
+            $currency          = SiteManagement::getMetaValue('commision');
+            $symbol            = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if ($request->path() === 'employer/saved-items') {
                 if (file_exists(resource_path('views/extend/back-end/employer/saved-items.blade.php'))) {
                     return view(
@@ -1208,36 +1199,39 @@ class UserController extends Controller
     {
         if (!empty($id)) {
             $user = $this->user::find(Auth::user()->id);
+            $payout_settings = SiteManagement::getMetaValue('commision');
             $profile = $user->profile;
             $payout = $profile->count() > 0 ? Helper::getUnserializeData($profile->payout_settings) : '';
-            if(isset($payout['rave_email'])) {
-                $rave_email = $payout['rave_email'];
-            } else {
-                $rave_email = $user->email;
-            }
-            // if (empty($rave_email)) {
-            //     Session::flash('error', trans('lang.rave_email_address_is_required'));
-            // }
-            $from_currency = $this->currency;
-            $to_currency = !empty($profile->transaction_currency) ? $user->profile->transaction_currency : $from_currency;
             $firstname = !empty($user->first_name) ? $user->first_name : '';
             $lastname = !empty($user->last_name) ? $user->last_name : '';
-            $country = Helper::getCountry($this->currency);
+            // if (!empty($user->location_id)) {
+            //     $country = substr(Location:: find($user->location_id)->title, 0, 2);
+            // } else {
+                $country = 'NG';
+            // }
+            if (!empty($profile->transaction_currency)) {
+                $currency = $profile->transaction_currency;
+            } elseif (!empty($settings[0]['currency'])) {
+                $currency = $settings[0]['currency'];
+            } else {
+                $currency = 'USD';
+            }
+            $currency = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? $payout_settings[0]['currency'] : 'USD';
             $phonenumber = !empty($user->phone_number) ? $user->phone_number : '';
             $package_options = Helper::getPackageOptions(Auth::user()->getRoleNames()[0]);
             $package = Package::find($id);
-            $payment_gateway = !empty($this->payout_settings) && !empty($this->payout_settings[0]['payment_method']) ? $this->payout_settings[0]['payment_method'] : array();
-            $symbol = Helper::currencyList($to_currency);
+            $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : array();
+            $symbol = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? Helper::currencyList($payout_settings[0]['currency']) : array();
             if (file_exists(resource_path('views/extend/back-end/package/checkout.blade.php'))) {
                 return view::make('extend.back-end.package.checkout',
                     compact(
-                        'firstname', 'lastname', 'rave_email', 'country', 'from_currency', 'to_currency', 'phonenumber',
+                        'firstname', 'lastname', 'payout', 'country', 'currency', 'phonenumber',
                         'package', 'package_options', 'payment_gateway', 'symbol'
                     ));
             } else {
                 return view::make('back-end.package.checkout',
                     compact(
-                        'firstname', 'lastname', 'rave_email', 'country', 'from_currency', 'to_currency', 'phonenumber',
+                        'firstname', 'lastname', 'payout', 'country', 'currency', 'phonenumber',
                         'package', 'package_options', 'payment_gateway', 'symbol'
                     ));
             }
@@ -1268,10 +1262,10 @@ class UserController extends Controller
     public function getEmployerInvoices($type = '')
     {
         if (Auth::user()->getRoleNames()[0] != 'admin' && Auth::user()->getRoleNames()[0] === 'employer') {
-            $user = $this->user::find(Auth::user()->id);
-            $symbol = Helper::currencyList($this->currency);
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             $invoices = array();
-            $expiry_date = !empty($user->expiry_date)? $user->expiry_date : '';
+            $expiry_date = '';
             if ($type === 'project') {
                 $invoices = DB::table('invoices')
                     ->join('items', 'items.invoice_id', '=', 'invoices.id')
@@ -1311,9 +1305,6 @@ class UserController extends Controller
     public function getFreelancerInvoices($type = '')
     {
         if (Auth::user()->getRoleNames()[0] != 'admin' && Auth::user()->getRoleNames()[0] === 'freelancer') {
-            $user = $this->user::find(Auth::user()->id);
-            $symbol = Helper::currencyList($this->currency);
-            $expiry_date = !empty($user->expiry_date)? $user->expiry_date : '';
             $invoices = array();
             $invoices = DB::table('invoices')
                 ->join('items', 'items.invoice_id', '=', 'invoices.id')
@@ -1322,7 +1313,9 @@ class UserController extends Controller
                 ->where('items.subscriber', Auth::user()->id)
                 ->where('invoices.type', $type)
                 ->get();
-            $symbol = Helper::currencyList($this->currency);
+            $expiry_date = '';
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if ($type === 'project') {
                 if (file_exists(resource_path('views/extend/back-end/freelancer/invoices/project.blade.php'))) {
                     return view('extend.back-end.freelancer.invoices.project', compact('invoices', 'type', 'expiry_date', 'symbol'));
@@ -1563,7 +1556,7 @@ class UserController extends Controller
      *
      * @return View
      */
-    public function raiseDispute($slug, $milestone_id = null)
+    public function raiseDispute($slug)
     {
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
@@ -1574,7 +1567,6 @@ class UserController extends Controller
                 'extend.back-end.freelancer.jobs.dispute',
                 compact(
                     'job',
-                    'milestone_id',
                     'reasons',
                     'show_breadcrumbs'
                 )
@@ -1584,7 +1576,6 @@ class UserController extends Controller
                 'back-end.freelancer.jobs.dispute',
                 compact(
                     'job',
-                    'milestone_id',
                     'reasons',
                     'show_breadcrumbs'
                 )
@@ -1613,7 +1604,6 @@ class UserController extends Controller
         $storeDispute = $this->user->saveDispute($request);
         if ($storeDispute == "success") {
             $json['type'] = 'success';
-            $json['auth'] = Auth::user()->getRoleNames()->first();
             $json['message'] = trans('lang.dispute_raised');
             $user = $this->user::find(Auth::user()->id);
             //send email
@@ -1642,7 +1632,6 @@ class UserController extends Controller
             return $json;
         } else {
             $json['type'] = 'error';
-            $json['auth'] = Auth::user()->getRoleNames()->first();
             $json['message'] = trans('lang.something_wrong');
             return $json;
         }
@@ -1822,135 +1811,6 @@ class UserController extends Controller
     }
 
     /**
-     * Submit user refund to payouts and release fund to freelancer
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function employerReleaseCancel($milestone_id, $status)
-    {
-        $server_verification = Helper::worketicIsDemoSite();
-        if (!empty($server_verification)) {
-            Session::flash('error', $server_verification);
-            return Redirect::back();
-        }
-        $json = array();
-        if (!empty($status)) {
-            $result = $this->user->milstoneReleaseCancel($milestone_id, $status);
-            if ($status = 'release') {
-                if ($result['status'] == 'success') {
-                    Session::flash('message', trans('lang.payment_released'));
-                    //send email
-                    if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
-                        $email_params = array();
-                        $admin_release_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_milestone_released')->get()->first();
-                        $employer_release_template = DB::table('email_types')->select('id')->where('email_type', 'employer_email_milestone_released')->get()->first();
-                        $freelancer_release_template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_milestone_released')->get()->first();
-                        if (!empty($admin_release_template->id) || !empty($employer_release_template->id) || !empty($freelancer_release_template->id)) {
-                            $admin_template_data = EmailTemplate::getEmailTemplateByID($admin_release_template->id);
-                            $employer_template_data = EmailTemplate::getEmailTemplateByID($employer_release_template->id);
-                            $freelancer_template_data = EmailTemplate::getEmailTemplateByID($freelancer_release_template->id);
-                            $email_params['project_title'] = $result['project_title'];
-                            $email_params['project_link'] = $result['project_link'];
-                            $email_params['employer_link'] = $result['employer_link'];
-                            $email_params['employer_name'] = Helper::getUserName(Auth::user()->id);
-                            $email_params['freelancer_name'] = Helper::getUserName($result['freelancer_id']);
-                            $email_params['amount'] = $result['amount'];
-                            $email_params['currency'] = $result['currnecy'];
-                            $email_params['symbol'] = Helper::currencyList($result['currnecy'])['symbol'];
-                            $email_params['details'] = $result['details'];
-                            $email_params['date'] = date("F j, Y, g:i a");
-                            Mail::to(config('mail.username'))
-                                ->send(
-                                    new AdminEmailMailable(
-                                        'admin_email_milestone_released',
-                                        $admin_template_data,
-                                        $email_params
-                                    )
-                                );
-                            Mail::to($result['employer_email'])
-                                ->send(
-                                    new EmployerEmailMailable(
-                                        'employer_email_milestone_released',
-                                        $employer_template_data,
-                                        $email_params
-                                    )
-                                );
-                            Mail::to($result['freelancer_email'])
-                                ->send(
-                                    new FreelancerEmailMailable(
-                                        'freelancer_email_milestone_released',
-                                        $freelancer_template_data,
-                                        $email_params
-                                    )
-                                );
-                        }
-                    }
-                } else {
-                     Session::flash('error', trans('lang.something_wrong'));
-                }
-            } elseif ($status == 'cancel') {
-                if ($result['status'] == 'success') {
-                    Session::flash('message', trans('lang.payment_canceled'));
-                    //send email
-                    if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
-                        $email_params = array();
-                        $admin_cancel_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_milestone_canceled')->get()->first();
-                        $employer_cancel_template = DB::table('email_types')->select('id')->where('email_type', 'employer_email_milestone_canceled')->get()->first();
-                        $freelancer_cancel_template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_milestone_canceled')->get()->first();
-                        if (!empty($admin_cancel_template->id) || !empty($employer_cancel_template->id) || !empty($freelancer_cancel_template->id)) {
-                            $admin_template_data = EmailTemplate::getEmailTemplateByID($admin_cancel_template->id);
-                            $employer_template_data = EmailTemplate::getEmailTemplateByID($employer_cancel_template->id);
-                            $freelancer_template_data = EmailTemplate::getEmailTemplateByID($freelancer_cancel_template->id);
-                            $email_params['project_title'] = $result['project_title'];
-                            $email_params['project_link'] = $result['project_link'];
-                            $email_params['employer_link'] = $result['employer_link'];
-                            $email_params['employer_name'] = Helper::getUserName(Auth::user()->id);
-                            $email_params['freelancer_name'] = Helper::getUserName($result['freelancer_id']);
-                            $email_params['amount'] = $result['amount'];
-                            $email_params['currency'] = $result['currnecy'];
-                            $email_params['symbol'] = Helper::currencyList($result['currnecy'])['symbol'];
-                            $email_params['details'] = $result['details'];
-                            $email_params['date'] = date("F j, Y, g:i a");
-                            Mail::to(config('mail.username'))
-                                ->send(
-                                    new AdminEmailMailable(
-                                        'admin_email_milestone_canceled',
-                                        $admin_template_data,
-                                        $email_params
-                                    )
-                                );
-                            Mail::to($result['employer_email'])
-                                ->send(
-                                    new EmployerEmailMailable(
-                                        'employer_email_milestone_canceled',
-                                        $employer_template_data,
-                                        $email_params
-                                    )
-                                );
-                            Mail::to($result['freelancer_email'])
-                                ->send(
-                                    new FreelancerEmailMailable(
-                                        'freelancer_email_milestone_canceled',
-                                        $freelancer_template_data,
-                                        $email_params
-                                    )
-                                );
-                        }
-                    }
-                } else {
-                    Session::flash('error', trans('lang.something_wrong'));
-                }
-            }
-            if ($result['status'] == 'payout_not_available') {
-                Session::flash('error', trans('lang.user_payout_not_set'));
-            }
-        } else {
-            Session::flash('error', trans('lang.something_wrong'));
-        }
-        return Redirect::back();
-    }
-
-    /**
      * Verify Code
      *
      * @return \Illuminate\Http\Response
@@ -1962,7 +1822,7 @@ class UserController extends Controller
 
             $payout_setting = $this->profile->savePayoutDetail($request, $user_id);
             $json['type'] = 'success';
-            $json['message'] = 'Payout updated successfully';
+            $json['message'] = 'payout update successfully';
             return $json;
         } else {
             $json['type'] = 'error';

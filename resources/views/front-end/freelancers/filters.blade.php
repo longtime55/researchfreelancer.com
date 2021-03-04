@@ -17,15 +17,9 @@
         </div>
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
-                <h2>{{ trans('lang.fields') }}</h2>
+                <h2>{{ trans('lang.skills') }}</h2>
             </div>
             <div class="wt-widgetcontent">
-                <fieldset>
-                    <div class="form-group">
-                        <input type="text" class="form-control filter-records" placeholder="{{ trans('lang.ph_search_skills') }}">
-                        <a href="javascript:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
-                    </div>
-                </fieldset>
                 <fieldset>
                     @if (!empty($skills))
                         <div class="wt-checkboxholder wt-verticalscrollbar">
@@ -49,7 +43,7 @@
                 <fieldset>
                     <div class="form-group">
                         <input type="text" class="form-control filter-records" placeholder="{{ trans('lang.search_loc') }}">
-                        <a href="javascript:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
+                        <a href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -76,7 +70,7 @@
                     <fieldset>
                         <div class="form-group">
                             <input type="text" class="form-control filter-records" placeholder="{{ trans('lang.ph_search_rate') }}">
-                            <a href="javascript:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
+                            <a href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -96,22 +90,18 @@
         
         <div class="wt-widget wt-effectiveholder">
             <div class="wt-widgettitle">
-                <h2>{{ trans('lang.freelancer_levels') }}</h2>
+                <h2>{{ trans('lang.freelancer_type') }}</h2>
             </div>
             <div class="wt-widgetcontent">
                 <div class="wt-formtheme wt-formsearch">
                     <div class="wt-checkboxholder wt-verticalscrollbar">
-                        @if (!empty($flevels))
-                            <div class="wt-checkboxholder wt-verticalscrollbar">
-                                @foreach ($flevels as $flevel)
-                                    @php $checked = ( !empty($_GET['freelancer_type']) && in_array($flevel->slug, $_GET['freelancer_type'])) ? 'checked' : '' @endphp
-                                    <span class="wt-checkbox">
-                                        <input id="flevel-{{{ $flevel->slug }}}" type="checkbox" name="freelancer_type[]" value="{{{$flevel->slug}}}" {{$checked}} >
-                                        <label for="flevel-{{{ $flevel->slug }}}">{{{ $flevel->title }}}</label>
-                                    </span>
-                                @endforeach
-                            </div>
-                        @endif
+                        @foreach (Helper::getFreelancerLevelList() as $key => $freelancer_level)
+                        @php $checked = ( !empty($_GET['freelaner_type']) && in_array($key, $_GET['freelaner_type'])) ? 'checked' : '' @endphp
+                            <span class="wt-checkbox">
+                                <input id="rate-{{ $key }}" type="checkbox" name="freelaner_type[]" value="{{ $key }}" {{ $checked }}>
+                                <label for="rate-{{ $key }}">{{ $freelancer_level }}</label>
+                            </span>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -127,8 +117,8 @@
                             @foreach (Helper::getEnglishLevelList() as $key => $english_level)
                                 @php $checked = ( !empty($_GET['english_level']) && in_array($key, $_GET['english_level'])) ? 'checked' : '' @endphp
                                 <span class="wt-checkbox">
-                                    <input id="elevel-{{ $key }}" type="checkbox" name="english_level[]" value="{{ $key }}" {{ $checked }}>
-                                    <label for="elevel-{{ $key }}">{{ $english_level }}</label>
+                                    <input id="rate-{{ $key }}" type="checkbox" name="english_level[]" value="{{ $key }}" {{ $checked }}>
+                                    <label for="rate-{{ $key }}">{{ $english_level }}</label>
                                 </span>
                             @endforeach
                         </div>
@@ -144,7 +134,7 @@
                 <fieldset>
                     <div class="form-group">
                         <input type="text" class="form-control filter-records" placeholder="{{ trans('lang.ph_search_langs') }}">
-                        <a href="javascript:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
+                        <a href="javascrip:void(0);" class="wt-searchgbtn"><i class="lnr lnr-magnifier"></i></a>
                     </div>
                 </fieldset>
                 <fieldset>

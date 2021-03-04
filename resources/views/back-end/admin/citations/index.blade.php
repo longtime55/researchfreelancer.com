@@ -37,18 +37,18 @@
                                         {!! Form::textarea( 'citation_abstract', null, ['class' =>'form-control', 'placeholder' => trans('lang.ph_desc')] ) !!}
                                         <span class="form-group-description">{{{ trans('lang.cat_desc') }}}</span>
                                     </div>
-                                    <!--<div class="wt-settingscontent">-->
-                                    <!--    <div class = "wt-formtheme wt-userform">-->
-                                    <!--        <upload-image-->
-                                    <!--            :id="'cat_image'"-->
-                                    <!--            :img_ref="'cat_ref'"-->
-                                    <!--            :url="'{{url('admin/citations/upload-temp-image')}}'"-->
-                                    <!--            :name="'uploaded_image'"-->
-                                    <!--            >-->
-                                    <!--        </upload-image>-->
-                                    <!--        {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}-->
-                                    <!--    </div>-->
-                                    <!--</div>-->
+                                    <div class="wt-settingscontent">
+                                        <div class = "wt-formtheme wt-userform">
+                                            <upload-image
+                                                :id="'cat_image'"
+                                                :img_ref="'cat_ref'"
+                                                :url="'{{url('admin/citations/upload-temp-image')}}'"
+                                                :name="'uploaded_image'"
+                                                >
+                                            </upload-image>
+                                            {!! Form::hidden( 'uploaded_image', '', ['id'=>'hidden_img'] ) !!}
+                                        </div>
+                                    </div>
                                     <div class="form-group wt-btnarea">
                                         {!! Form::submit(trans('lang.add_cit'), ['class' => 'wt-btn']) !!}
                                     </div>
@@ -88,7 +88,7 @@
                                                     <label for="wt-cits"></label>
                                                 </span>
                                             </th>
-                                            <!--<th>{{{ trans('lang.icon') }}}</th>-->
+                                            <th>{{{ trans('lang.cat_icon') }}}</th>
                                             <th>{{{ trans('lang.name') }}}</th>
                                             <th>{{{ trans('lang.slug') }}}</th>
                                             <th>{{{ trans('lang.action') }}}</th>
@@ -104,7 +104,7 @@
                                                         <label for="wt-check-{{{ $counter }}}"></label>
                                                     </span>
                                                 </td>
-                                                <!--<td data-th="Icon"><span class="bt-content"><figure><img src="{{{ asset(\App\Helper::getCitationImage($cit->image)) }}}" alt="{{{ $cit->title }}}"></figure></span></td>-->
+                                                <td data-th="Icon"><span class="bt-content"><figure><img src="{{{ asset(\App\Helper::getCategoryImage($cit->image)) }}}" alt="{{{ $cit->title }}}"></figure></span></td>
                                                 <td>{{{ $cit->title }}}</td>
                                                 <td>{{{ $cit->slug }}}</td>
                                                 <td>

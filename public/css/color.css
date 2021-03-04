@@ -97,23 +97,23 @@ input:focus,
 .wt-msgbtn{background: #00cc8d;}
 .active-category-wrapper{background: #f7f7f7;}
 .wt-black {
-	color: #000000 !important;
+	color: #000000;
 }
 .wt-blue {
-	color: #3439dc !important;
+	color: #3439dc;
 }
 .wt-green {
-	color: #2eca7f !important;
+	color: #2eca7f;
 }
 .wt-white {
-	color: #fff !important;
+	color: #fff;
 }
 .wt-red {
-	color: red !important;
+	color: red;
 }
 .wt-chocolate {
-	color: #fb590d !important;
+	color: #fb590d;
 }
 .wt-themecolor {
-	color: #ff0000 !important;
+	color: #ff0000;
 }

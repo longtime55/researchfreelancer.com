@@ -33,10 +33,10 @@ class JobSeeder extends Seeder
                     'slug' => 'internet-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '786',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -73,10 +73,10 @@ class JobSeeder extends Seeder
                     'slug' => 'intranet-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '96',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -113,10 +113,10 @@ class JobSeeder extends Seeder
                     'slug' => 'web-content-developers',
                     'status' => 'hired',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '8500',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -153,10 +153,10 @@ class JobSeeder extends Seeder
                     'slug' => 'wildlife-conservation-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '780',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -193,10 +193,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-biometrics-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '74',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -233,10 +233,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-ecology-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '1000',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -273,10 +273,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-management-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '150',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -313,10 +313,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-pathology-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '2000',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -353,10 +353,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-resources-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '2050',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -393,10 +393,10 @@ class JobSeeder extends Seeder
                     'slug' => 'forest-technology-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '1120',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -433,10 +433,10 @@ class JobSeeder extends Seeder
                     'slug' => 'silviculture-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '7850',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -473,10 +473,10 @@ class JobSeeder extends Seeder
                     'slug' => 'timber-management-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '700',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -513,10 +513,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-programming-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '500',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -553,10 +553,10 @@ class JobSeeder extends Seeder
                     'slug' => 'information-systems-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '99',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -593,10 +593,10 @@ class JobSeeder extends Seeder
                     'slug' => 'information-technology-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '193',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -633,10 +633,10 @@ class JobSeeder extends Seeder
                     'slug' => 'it-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '450',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -673,10 +673,10 @@ class JobSeeder extends Seeder
                     'slug' => 'java-programming-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '743',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -713,10 +713,10 @@ class JobSeeder extends Seeder
                     'slug' => 'ecology-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '950',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -753,10 +753,10 @@ class JobSeeder extends Seeder
                     'slug' => 'environmental-conservation-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '750',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -793,10 +793,10 @@ class JobSeeder extends Seeder
                     'slug' => 'c-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '800',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -833,10 +833,10 @@ class JobSeeder extends Seeder
                     'slug' => 'visual-designer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '900',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -873,10 +873,10 @@ class JobSeeder extends Seeder
                     'slug' => 'graphic-designer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '500',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -913,10 +913,10 @@ class JobSeeder extends Seeder
                     'slug' => 'graphic-artist',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '400',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -953,10 +953,10 @@ class JobSeeder extends Seeder
                     'slug' => 'catalogue-illustrator',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '900',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -993,10 +993,10 @@ class JobSeeder extends Seeder
                     'slug' => 'software-applications-designer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '760',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1033,10 +1033,10 @@ class JobSeeder extends Seeder
                     'slug' => 'software-applications-architect',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '980',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1073,10 +1073,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-information-systems-professor',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '1145',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1113,10 +1113,10 @@ class JobSeeder extends Seeder
                     'slug' => 'mainframe-programmer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '750',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1153,10 +1153,10 @@ class JobSeeder extends Seeder
                     'slug' => 'systems-programmer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '850',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1193,10 +1193,10 @@ class JobSeeder extends Seeder
                     'slug' => 'application-integration-engineer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '950',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1233,10 +1233,10 @@ class JobSeeder extends Seeder
                     'slug' => 'applications-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '100',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1273,10 +1273,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-applications-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '746',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1313,10 +1313,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-applications-engineer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '147',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1353,10 +1353,10 @@ class JobSeeder extends Seeder
                     'slug' => 'database-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '965',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1393,10 +1393,10 @@ class JobSeeder extends Seeder
                     'slug' => 'software-application-designer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '784',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1433,10 +1433,10 @@ class JobSeeder extends Seeder
                     'slug' => 'web-content-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '1200',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1473,10 +1473,10 @@ class JobSeeder extends Seeder
                     'slug' => 'web-designer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '1500',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1513,10 +1513,10 @@ class JobSeeder extends Seeder
                     'slug' => 'web-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '2000',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1553,10 +1553,10 @@ class JobSeeder extends Seeder
                     'slug' => 'applications-programmer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '15',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1593,10 +1593,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-language-coder',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '10',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1633,10 +1633,10 @@ class JobSeeder extends Seeder
                     'slug' => 'computer-programmer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '100',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1673,10 +1673,10 @@ class JobSeeder extends Seeder
                     'slug' => 'junior-software-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '50',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1713,10 +1713,10 @@ class JobSeeder extends Seeder
                     'slug' => 'intranet-developers',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '90',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1753,10 +1753,10 @@ class JobSeeder extends Seeder
                     'slug' => 'internet-developers',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'hourly',
-                    'currency' => 'USD',
                     'price' => '80',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>
@@ -1793,10 +1793,10 @@ class JobSeeder extends Seeder
                     'slug' => 'internet-application-developer',
                     'status' => 'posted',
                     'duration' => 'weekly',
+                    'project_level' => 'basic',
                     'freelancer_type' => 'pro_independent',
                     'english_level' => 'basic',
                     'project_type' => 'fixed',
-                    'currency' => 'USD',
                     'price' => '10',
                     'description' => '<p>Excepteur sint occaecat cupidatat non proident, saeunt in culpa qui officia deserunt mollit anim laborum. Seden utem perspiciatis undesieu omnis voluptatem accusantium doque laudantium, totam rem aiam eaqueiu ipsa quae ab illoion inventore veritatisetm quasitea architecto beataea dictaed quia couuntur magni dolores eos aquist ratione vtatem seque nesnt. Neque porro quamest quioremas ipsum quiatem dolor sitem ameteism conctetur adipisci velit sedate quianon.</p>
                     <p>Laborum sed ut perspiciatis unde omnis iste natus error sitems voluptatem accusantium doloremque laudantium, totam rem aiam eaque ipsa quae ab illo inventore veritatis etna quasi architecto beatae vitae dictation explicabo. nemo enim ipsam fugit.</p>

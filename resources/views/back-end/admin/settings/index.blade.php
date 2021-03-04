@@ -84,11 +84,11 @@
                             @else
                                 @include('back-end.admin.settings.payment.rave-settings')
                             @endif
-                            <!--@if (file_exists(resource_path('views/extend/back-end/admin/settings/payment/stripe-settings.blade.php')))-->
-                            <!--    @include('extend.back-end.admin.settings.payment.stripe-settings')-->
-                            <!--@else-->
-                            <!--    @include('back-end.admin.settings.payment.stripe-settings')-->
-                            <!--@endif-->
+                            @if (file_exists(resource_path('views/extend/back-end/admin/settings/payment/stripe-settings.blade.php')))
+                                @include('extend.back-end.admin.settings.payment.stripe-settings')
+                            @else
+                                @include('back-end.admin.settings.payment.stripe-settings')
+                            @endif
                         </div>
                         <div class="wt-securityhold tab-pane la-footer-setting" id="wt-footer">
                             @if (file_exists(resource_path('views/extend/back-end/admin/settings/footer/index.blade.php')))

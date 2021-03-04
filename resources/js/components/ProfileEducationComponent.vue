@@ -54,7 +54,7 @@
                   :value="stored_education.degree_title"
                   v-bind:name="'education['+[index]+'][degree_title]'"
                   class="form-control"
-                  :placeholder="ph_degree_title"
+                  :placeholder="ph_job_title"
                 />
               </div>
               <div class="form-group form-group-half">
@@ -138,7 +138,7 @@
                   type="text"
                   v-bind:name="'education['+[education.count]+'][degree_title]'"
                   class="form-control"
-                  :placeholder="ph_degree_title"
+                  :placeholder="ph_job_title"
                   v-model="education.degree_title"
                 />
               </div>
@@ -206,21 +206,13 @@ export default {
       end_date: "",
       stored_educations: [],
       education: {
-        institute_title: "",
+        institute_title: this.ph_institute_title,
         start_date: this.ph_start_date,
         end_date: this.ph_end_date,
-        degree_title: "",
-        description: "",
+        degree_title: this.ph_degree_title,
+        description: this.ph_desc,
         count: 0
       },
-      // education: {
-      //   institute_title: this.ph_institute_title,
-      //   start_date: this.ph_start_date,
-      //   end_date: this.ph_end_date,
-      //   degree_title: this.ph_degree_title,
-      //   description: this.ph_desc,
-      //   count: 0
-      // },
       educations: [],
       freelancer_educations: [],
       count: 0
@@ -233,16 +225,17 @@ export default {
         .get(APP_URL + "/freelancer/get-freelancer-educations")
         .then(function(response) {
           self.stored_educations = response.data.educations;
-          // console.log(self.stored_educations);
+          console.log(self.stored_educations);
         });
     },
     addEducation: function() {
       var education_list_count = jQuery(".add-education-btn")
         .parents(".wt-tabsinfo")
         .find("ul#education-list span.education-inner-list li").length;
-      // console.log(education_list_count);
+      console.log(education_list_count);
       if (this.$refs.educationlistelement) {
-        this.education.count = education_list_count + this.$refs.educationlistelement.length;
+        this.education.count =
+          education_list_count + this.$refs.educationlistelement.length;
       } else {
         this.education.count = education_list_count - 1;
       }

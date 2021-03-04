@@ -24,7 +24,7 @@ const getTemplate = () => `
       </em>
   </li>`;
 import vueDropzone from "vue2-dropzone";
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import 'vue2-dropzone/dist/vue2Dropzone.css'
 export default {
     props: ['temp_url', 'img_ref', 'type'],
  data () {

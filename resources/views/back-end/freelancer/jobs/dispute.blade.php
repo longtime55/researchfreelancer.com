@@ -48,7 +48,6 @@
                                 <div class="form-group">
                                         {!! Form::textarea('description', null, array('class' => 'form-control', 'placeholder' => trans('lang.dispute_desc'))) !!}
                                 </div>
-                                {!! Form::hidden('milestone_id', $milestone_id) !!}
                                 <div class="wt-btnarea">
                                     {!! Form::submit(trans('lang.btn_submit'), ['class' => 'wt-btn']) !!}
                                 </div>

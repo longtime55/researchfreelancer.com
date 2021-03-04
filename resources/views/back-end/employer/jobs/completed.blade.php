@@ -18,14 +18,12 @@
                                         $user_image = !empty($profile) ? $profile->avater : '';
                                         $verified_user = \App\User::select('user_verified')->where('id', $job->employer->id)->pluck('user_verified')->first();
                                         $project_type  = Helper::getProjectTypeList($job->project_type);
-                                        $symbol = Helper::currencyList($job->currency);
-                                        $description = strip_tags(stripslashes($job->description));
                                     @endphp
                                     <div class="wt-userlistinghold wt-featured wt-userlistingvtwo">
                                         @if (!empty($job->is_featured) && $job->is_featured === 'true')
                                             <span class="wt-featuredtag"><img src="{{{ asset('images/featured.png') }}}" alt="{{ trans('lang.is_featured') }}" data-tipso="Plus Member" class="template-content tipso_style"></span>
                                         @endif
-                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 wt-userlistingcontent">
+                                        <div class="wt-userlistingcontent wt-userlistingcontentvtwo">
                                             <div class="wt-contenthead">
                                                 <div class="wt-title">
                                                     <a href="{{{ url('profile/'.$job->employer->slug) }}}">
@@ -40,7 +38,7 @@
                                                 </div>
                                                 <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                     @if (!empty($job->price))
-                                                        <li><span class="wt-dashboraddoller"><i>{{ $symbol['symbol'] }}</i> {{{ $job->price }}}</span></li>
+                                                        <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
                                                     @endif
                                                     @if (!empty($job->location->title))
                                                         <li><span><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.locations') }}}"> {{{ $job->location->title }}}</span></li>
@@ -52,27 +50,6 @@
                                                         <li><span class="wt-dashboradclock"><i class="far fa-clock"></i> {{ trans('lang.duration') }} {{{ Helper::getJobDurationList($job->duration)}}}</span></li>
                                                     @endif
                                                 </ul>
-                                                @if (!empty($description))
-                                                    <div class="wt-description mt-3">
-                                                        <p>{{ str_limit($description, 300) }}</p>
-                                                    </div>
-                                                @endif
-                                                @if ((!empty($job->categories) && $job->categories->count() > 0) || (!empty($job->skills) && $job->skills->count() > 0) || (!empty($job->rlevels) && $job->rlevels->count() > 0) || (!empty($job->citations) && $job->citations->count() > 0))
-                                                    <div class="wt-tag wt-widgettag">
-                                                        @foreach ($job->categories as $category)
-                                                            <a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                        @endforeach
-                                                        @foreach ($job->skills as $skill)
-                                                            <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                        @endforeach
-                                                        @foreach ($job->rlevels as $rlevel)
-                                                            <a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-                                                        @endforeach
-                                                        @foreach ($job->citations as $citation)
-                                                            <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
                                             </div>
                                             <div class="wt-rightarea">
                                                 <div class="wt-btnarea">
@@ -85,67 +62,6 @@
                                                         <li><figure><img src="{{{ asset(Helper::getProjectImage($user_image, $accepted_proposal->freelancer_id)) }}}" alt="{{{ trans('lang.freelancer') }}}"></figure></li>
                                                     </ul>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xm-12 col-sm-12 col-md-12 col-lg-6 wt-userlistingcontent mt-5">
-                                            <div class="wt-description">
-                                                <h4>{{{trans('lang.milestone')}}}</h4>
-                                            </div>
-                                            <table class="wt-tablecategories">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>{{{ trans('lang.description') }}}</th>
-                                                        <th>{{{ trans('lang.amount') }}}</th>
-                                                        <th>{{{ trans('lang.date') }}}</th>
-                                                        <th>{{{ trans('lang.status') }}}</th>
-                                                        <th>{{{ trans('lang.action') }}}</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @php 
-                                                        $milestones = \App\Milestone::where('proposal_id', $accepted_proposal->id)->orderBy('id', 'asc')->get();
-                                                        $n = 0;
-                                                    @endphp
-                                                    @if (!empty($milestones)) 
-                                                        @foreach ($milestones as $milestone)
-                                                            @php $n++; @endphp
-                                                            <tr>
-                                                                <td>{{ $n }}</td>
-                                                                <td>{{ $milestone->description }}</td>
-                                                                <td>{{ $symbol['symbol'] }} {{ $milestone->amount }}</td>
-                                                                <td>{{ $milestone->updated_at->format('Y-m-d') }}</td>
-                                                                <td>{{ $milestone->status }}</td>
-                                                                @if ($milestone->status == 'Waiting')
-                                                                    <td>Disputed</td>
-                                                                @elseif ($milestone->status == 'Released' || $milestone->status == 'Rejected')
-                                                                    <td><a href="{{{ url('employer/'.$job->slug.'/'.$milestone->id.'/dispute') }}}">Dispute</a></td>
-                                                                @elseif ($milestone->status == 'In Progress')
-                                                                    <td>
-                                                                        <!-- Default dropright button -->
-                                                                        <div class="form-group btn-group dropright">
-                                                                            <button type="button" class="wt-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="line-height: 30px; padding: 0 15px 0 15px">
-                                                                                {{{ trans('lang.btn_edit') }}}
-                                                                            </button>
-                                                                            <div class="dropdown-menu">
-                                                                                <!-- Dropdown menu links -->
-                                                                                <a class="dropdown-item" href="{{{ url('employer/milestone/'.$milestone->id.'/release') }}}">Release</a>
-                                                                                <a class="dropdown-item" href="{{{ url('employer/milestone/'.$milestone->id.'/cancel') }}}">Cancel</a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                @elseif ($milestone->status == 'Suggested')
-                                                                    <td>No Pending</td>
-                                                                @endif
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                            <div class="form-group form-group-label text-center mt-3">
-                                                <label>
-                                                    <span id="{{$accepted_proposal->id}}" class="wt-btn wt-white updateMilestone" style="line-height: 40px; padding: 0 15px 0 15px">{{{ trans('lang.update_milestone') }}}</span>
-                                                </label>
                                             </div>
                                         </div>
                                     </div>

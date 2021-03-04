@@ -89,9 +89,9 @@ Vue.component('custom-map', require('./components/map.vue').default);
 Vue.component('dashboard-icon', require('./components/DashboardIconUploadComponent.vue').default);
 Vue.component('image-attachments', require('./components/UploadServiceAttachmentComponent.vue').default);
 Vue.component('freelancer-reviews', require('./components/FreelancerReviewsComponent.vue').default);
+Vue.component('telephone', require('./components/TelephoneComponent.vue').default);
 
 jQuery(document).ready(function () {
-
     jQuery(document).on('click', '.wt-back', function (e) {
         e.preventDefault();
         jQuery('.wt-back').parents('.wt-messages-holder').removeClass('wt-openmsg');
@@ -145,15 +145,10 @@ jQuery(document).ready(function () {
     fixedNav();
 
     jQuery('.filter-records').on('keyup', function () {
-        var content = jQuery(this).val().toLowerCase();
-        var fields = jQuery(this).parents('fieldset').next().find('.wt-checkbox');
-        $(fields).each(function() {
-        if(this.innerText.toLowerCase().includes(content)) {
-            jQuery(this).show();
-        } else {
-            jQuery(this).hide();
-        }
-        });
+        var content = jQuery(this).val();
+        console.log(content);
+        jQuery(this).parents('fieldset').siblings('fieldset').find('.wt-checkbox:contains(' + content + ')').show();
+        jQuery(this).parents('fieldset').siblings('fieldset').find('.wt-checkbox:not(:contains(' + content + '))').hide();
     });
 
     jQuery('#wt-btnclosechat, #wt-getsupport').on('click', function () {
@@ -918,6 +913,7 @@ if (document.getElementById("response-time")) {
                 var deleteIDs = jQuery("#checked-val input:checkbox:checked").map(function () {
                     return jQuery(this).val();
                 }).get();
+                console.log(deleteIDs);
                 var self = this;
                 this.$swal({
                     title: msg,
@@ -997,6 +993,7 @@ if (document.getElementById("cat-list")) {
                 var deleteIDs = jQuery("#checked-val input:checkbox:checked").map(function () {
                     return jQuery(this).val();
                 }).get();
+                console.log(deleteIDs);
                 var self = this;
                 this.$swal({
                     title: msg,
@@ -1076,6 +1073,7 @@ if (document.getElementById("cit-list")) {
                 var deleteIDs = jQuery("#checked-val input:checkbox:checked").map(function () {
                     return jQuery(this).val();
                 }).get();
+                console.log(deleteIDs);
                 var self = this;
                 this.$swal({
                     title: msg,
@@ -1104,86 +1102,6 @@ if (document.getElementById("cit-list")) {
                                         })
                                     }, 500);
                                     window.location.replace(APP_URL + '/admin/citations');
-                                } else {
-                                    self.showError(response.data.message);
-                                }
-                            })
-                    } else {
-                        this.$swal.close()
-                    }
-                })
-            }
-        }
-    });
-}
-
-if (document.getElementById("level-list")) {
-    const vmlevelList = new Vue({
-        el: '#level-list',
-        mounted: function () {
-            if (document.getElementsByClassName("flash_msg") != null) {
-                flashVue.$emit('showFlashMessage');
-            }
-        },
-        data: {
-            uploaded_image: false,
-            color: '',
-            rgb: '',
-            wheel: '',
-            is_show: false
-        },
-        components: { Verte },
-        methods: {
-            removeImage: function (id) {
-                this.uploaded_image = true;
-                document.getElementById(id).value = '';
-            },
-            selectAll: function () {
-                this.is_show = !this.is_show;
-                jQuery("#wt-levels").change(function () {
-                    jQuery("input:checkbox").prop('checked', jQuery(this).prop("checked"));
-                });
-            },
-            selectRecord: function () {
-                if (document.querySelectorAll('input[type="checkbox"]:checked').length > 0) {
-                    this.is_show = true;
-                } else {
-                    this.is_show = false;
-                }
-            },
-            deleteChecked: function (msg, text, which) {
-                var deleteIDs = jQuery("#checked-val input:checkbox:checked").map(function () {
-                    return jQuery(this).val();
-                }).get();
-                var self = this;
-                this.$swal({
-                    title: msg,
-                    type: "warning",
-                    customContainerClass: 'hire_popup',
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Yes",
-                    cancelButtonText: "No",
-                    closeOnConfirm: true,
-                    closeOnCancel: true,
-                    showLoaderOnConfirm: true
-                }).then((result) => {
-                    var self = this;
-                    if (result.value) {
-                        axios.post(APP_URL + '/admin/levels/delete-checked/' + which, {
-                            ids: deleteIDs
-                        })
-                            .then(function (response) {
-                                if (response.data.type == "success") {
-                                    setTimeout(function () {
-                                        self.$swal({
-                                            title: this.title,
-                                            text: text,
-                                            type: "success"
-                                        })
-                                    }, 500);
-                                    var which = response.data.which;
-                                    window.location.replace(APP_URL + '/admin/levels/' + which);
                                 } else {
                                     self.showError(response.data.message);
                                 }
@@ -1578,25 +1496,28 @@ if (document.getElementById("user_profile")) {
                         if (error.response.data.errors.last_name) {
                             self.showError(error.response.data.errors.last_name[0]);
                         }
+                        if (error.response.data.errors.email) {
+                            self.showError(error.response.data.errors.email[0]);
+                        }
                         if (error.response.data.errors.gender) {
                             self.showError(error.response.data.errors.gender[0]);
                         }
+                        if (error.response.data.errors.phone_number) {
+                            self.showError(error.response.data.errors.phone_number[0]);
+                        }
                     });
             },
-            submitPaymentSettings: function submitPaymentSettings() {
+            submitFreelancerPayment: function submitFreelancerPayment() {
                 var self = this;
-                var payment_data = document.getElementById('payment_settings');
+                var payment_data = document.getElementById('freelancer_payment');
                 var form_data = new FormData(payment_data);
                 axios.post(APP_URL + '/freelancer/store-payment-settings', form_data).then(function (response) {
                     if (response.data.type == 'success') {
-                        self.showInfo(Vue.prototype.trans('lang.saving_payment_settings'));
+                        self.showInfo(vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.trans('lang.saving_payment_settings'));
                     } else if (response.data.type == 'error') {
                         self.showError(response.data.message);
                     }
                 }).catch(function (error) {
-                    if (error.response.data.errors.transaction_currency) {
-                        self.showError(error.response.data.errors.transaction_currency[0]);
-                    }
                     if (error.response.data.errors.hourly_rate) {
                         self.showError(error.response.data.errors.hourly_rate[0]);
                     }
@@ -1608,19 +1529,19 @@ if (document.getElementById("user_profile")) {
                 var form_data = new FormData(skills_special);
                 axios.post(APP_URL + '/freelancer/store-skills-specialization', form_data).then(function (response) {
                     if (response.data.type == 'success') {
-                        self.showInfo(Vue.prototype.trans('lang.saving_skills_specialty'));
+                        self.showInfo(vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.trans('lang.saving_skills_specialty'));
                     } else if (response.data.type == 'error') {
                         self.showError(response.data.message);
                     }
                 }).catch(function (error) {
                     if (error.response.data.errors.skills) {
-                        self.showError(error.response.data.errors.skills[0]);
+                        self.showError(error.response.data.errors.skills);
                     }
                     if (error.response.data.errors.categories) {
                         self.showError(error.response.data.errors.categories[0]);
                     }
-                    if (error.response.data.errors.citations) {
-                        self.showError(error.response.data.errors.citations[0]);
+                    if (error.response.data.errors.citation_id) {
+                        self.showError(error.response.data.errors.citation_id[0]);
                     }
                     if (error.response.data.errors.years_exp) {
                         self.showError(error.response.data.errors.years_exp[0]);
@@ -1642,6 +1563,27 @@ if (document.getElementById("user_profile")) {
                     .catch(function (error) {
                         if (error.response.status == 422) {
                             self.showError(self.experience_server_error);
+                        }
+                    });
+            },
+            submitPaymentSettings: function () {
+                var self = this;
+                var payment = document.getElementById('payment_settings');
+                let form_data = new FormData(payment);
+                axios.post(APP_URL + '/freelancer/store-payment-settings', form_data)
+                    .then(function (response) {
+                        if (response.data.type == 'success') {
+                            self.showInfo(response.data.processing);
+                            setTimeout(function () {
+                                window.location.replace(APP_URL + '/freelancer/dashboard');
+                            }, 4000);
+                        } else {
+                            self.showError(response.data.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        if (error.response.data.errors.payout_id) {
+                            self.showError(error.response.data.errors.payout_id[0]);
                         }
                     });
             },
@@ -1685,11 +1627,11 @@ if (document.getElementById("user_profile")) {
                         if (error.response.data.errors.last_name) {
                             self.showError(error.response.data.errors.last_name[0]);
                         }
-                        if (error.response.data.errors.gender) {
-                            self.showError(error.response.data.errors.gender[0]);
+                        if (error.response.data.errors.phone_number) {
+                            self.showError(error.response.data.errors.phone_number[0]);
                         }
-                        if (error.response.data.errors.transaction_currency) {
-                            self.showError(error.response.data.errors.transaction_currency[0]);
+                        if (error.response.data.errors.email) {
+                            self.showError(error.response.data.errors.email[0]);
                         }
                     });
             },
@@ -2826,12 +2768,10 @@ if (document.getElementById("post_job")) {
         },
         data: {
             title: '',
-            research_category: '',
-            research_field: '',
             project_level: '',
             job_duration: '',
             freelancer_level: '',
-            citation: '',
+            english_level: '',
             message: '',
             form_errors: [],
             custom_error: false,
@@ -2889,8 +2829,8 @@ if (document.getElementById("post_job")) {
                 this.loading = true;
                 let register_Form = document.getElementById('post_job_form');
                 let form_data = new FormData(register_Form);
-                // var description = tinyMCE.get('wt-tinymceeditor').getContent();
-                // form_data.append('description', description);
+                var description = tinyMCE.get('wt-tinymceeditor').getContent();
+                form_data.append('description', description);
                 var self = this;
                 axios.post(APP_URL + '/job/post-job', form_data)
                     .then(function (response) {
@@ -2910,35 +2850,26 @@ if (document.getElementById("post_job")) {
                     })
                     .catch(function (error) {
                         self.loading = false;
+                        if (error.response.data.errors.job_duration) {
+                            self.showError(error.response.data.errors.job_duration[0]);
+                        }
+                        if (error.response.data.errors.english_level) {
+                            self.showError(error.response.data.errors.english_level[0]);
+                        }
                         if (error.response.data.errors.title) {
                             self.showError(error.response.data.errors.title[0]);
                         }
-                        if (error.response.data.errors.research_category) {
-                            self.showError(error.response.data.errors.research_category[0]);
-                        }
-                        if (error.response.data.errors.research_field) {
-                            self.showError(error.response.data.errors.research_field[0]);
-                        }
-                        if (error.response.data.errors.project_level) {
-                            self.showError(error.response.data.errors.project_level[0]);
-                        }
-                        if (error.response.data.errors.citation) {
-                            self.showError(error.response.data.errors.citation[0]);
+                        if (error.response.data.errors.project_levels) {
+                            self.showError(error.response.data.errors.project_levels[0]);
                         }
                         if (error.response.data.errors.freelancer_type) {
                             self.showError(error.response.data.errors.freelancer_type[0]);
                         }
-                        if (error.response.data.errors.job_duration) {
-                            self.showError(error.response.data.errors.job_duration[0]);
+                        if (error.response.data.errors.project_cost) {
+                            self.showError(error.response.data.errors.project_cost[0]);
                         }
                         if (error.response.data.errors.description) {
                             self.showError(error.response.data.errors.description[0]);
-                        }
-                        if (error.response.data.errors.currency) {
-                            self.showError(error.response.data.errors.currency[0]);
-                        }
-                        if (error.response.data.errors.project_cost) {
-                            self.showError(error.response.data.errors.project_cost[0]);
                         }
                     });
             },
@@ -2968,35 +2899,23 @@ if (document.getElementById("post_job")) {
                     })
                     .catch(function (error) {
                         self.loading = false;
-                        if (error.response.data.errors.title) {
-                            self.showError(error.response.data.errors.title[0]);
-                        }
-                        if (error.response.data.errors.research_category) {
-                            self.showError(error.response.data.errors.research_category[0]);
-                        }
-                        if (error.response.data.errors.research_field) {
-                            self.showError(error.response.data.errors.research_field[0]);
-                        }
-                        if (error.response.data.errors.project_level) {
-                            self.showError(error.response.data.errors.project_level[0]);
-                        }
-                        if (error.response.data.errors.citation) {
-                            self.showError(error.response.data.errors.citation[0]);
-                        }
-                        if (error.response.data.errors.freelancer_type) {
-                            self.showError(error.response.data.errors.freelancer_type[0]);
-                        }
                         if (error.response.data.errors.job_duration) {
                             self.showError(error.response.data.errors.job_duration[0]);
                         }
-                        if (error.response.data.errors.description) {
-                            self.showError(error.response.data.errors.description[0]);
+                        if (error.response.data.errors.english_level) {
+                            self.showError(error.response.data.errors.english_level[0]);
                         }
-                        if (error.response.data.errors.currency) {
-                            self.showError(error.response.data.errors.currency[0]);
+                        if (error.response.data.errors.title) {
+                            self.showError(error.response.data.errors.title[0]);
+                        }
+                        if (error.response.data.errors.project_levels) {
+                            self.showError(error.response.data.errors.project_levels[0]);
                         }
                         if (error.response.data.errors.project_cost) {
                             self.showError(error.response.data.errors.project_cost[0]);
+                        }
+                        if (error.response.data.errors.description) {
+                            self.showError(error.response.data.errors.description[0]);
                         }
                     });
             },
@@ -3158,7 +3077,8 @@ if (document.getElementById("jobs")) {
                     });
             },
             calculate_amount: function (commission) {
-                this.proposal.deduction = (this.proposal.amount / 100 * commission).toFixed(2);
+                console.log(commission);
+                this.proposal.deduction = (this.proposal.amount / 100) * commission;
                 this.proposal.total = this.proposal.amount - this.proposal.deduction;
             },
             submitJobProposal: function (id, user_id) {
@@ -3385,15 +3305,9 @@ if (document.getElementById("jobs")) {
                             self.loading = false;
                             var message = response.data.message;
                             self.showMessage(message);
-                            if (response.data.auth == 'freelancer') {
-                                setTimeout(function () {
-                                    window.location.replace(APP_URL + '/freelancer/dashboard');
-                                }, 2000);
-                            } else {
-                                setTimeout(function () {
-                                    window.location.replace(APP_URL + '/employer/jobs/hired');
-                                }, 2000);
-                            }
+                            setTimeout(function () {
+                                window.location.replace(APP_URL + '/freelancer/dashboard');
+                            }, 2000);
                         } if (response.data.type == 'error') {
                             self.loading = false;
                             self.showError(message);
@@ -3444,76 +3358,14 @@ if (document.getElementById("jobs")) {
         }
     });
 }
-
 if (document.getElementById("proposals")) {
     const vproposals = new Vue({
         el: '#proposals',
-        mounted: function () {},
+        mounted: function () { },
         data: {},
         methods: {}
     });
 }
-
-if (document.getElementById("milestones")) {
-    const vmilestones = new Vue({
-        el: '#milestones',
-        mounted: function () {
-        },
-        data: {
-            form_errors: [],
-            loading: false,
-            notificationSystem: {
-                options: {
-                    success: {
-                        position: "topRight",
-                        timeout: 3000
-                    },
-                    error: {
-                        position: "topRight",
-                        timeout: 4000
-                    },
-                }
-            },
-        },
-        methods: {
-            showMessage(message) {
-                return this.$toast.success(' ', message, this.notificationSystem.options.success);
-            },
-            showError(error) {
-                return this.$toast.error(' ', error, this.notificationSystem.options.error);
-            },
-            updateProposal: function (id) {
-                this.loading = true;
-                let milestone_form = document.getElementById('split-proposalMilestone');
-                let form_data = new FormData(milestone_form);
-                var self = this;
-                axios.post(APP_URL + '/employer/proposal/change-milestone/' + id, form_data)
-                    .then(function (response) {
-                        if (response.data.type == 'success') {
-                            self.loading = false;
-                            self.showMessage(response.data.message);
-                            setTimeout(function () {
-                                window.location.replace(APP_URL + '/payment-process/' + id);
-                            }, 1050);
-                        } else {
-                            self.loading = false;
-                            self.showError(response.data.message);
-                        }
-                    })
-                    .catch(function (error) {
-                        self.loading = false;
-                        if (error.response.data.errors.desc) {
-                            self.showError(error.response.data.errors.desc[0]);
-                        }
-                        if (error.response.data.errors.ms_amount) {
-                            self.showError(error.response.data.errors.ms_amount[0]);
-                        }
-                    });
-            },
-        }
-    });
-}
-
 if (document.getElementById("packages")) {
     const packages = new Vue({
         el: '#packages',
@@ -3651,6 +3503,7 @@ if (document.getElementById("packages")) {
                 var self = this;
                 axios.post(APP_URL + '/addmoney/rave', data)
                     .then(function (response) {
+                        console.log(response.data);
                         if (response.data.type == 'success') {
                             self.loading = false;
                             self.showMessage(response.data.message);
@@ -3677,6 +3530,7 @@ if (document.getElementById("packages")) {
                 var self = this;
                 axios.post(APP_URL + '/addmoney/stripe', data)
                     .then(function (response) {
+                        console.log(response.data);
                         if (response.data.type == 'success') {
                             self.loading = false;
                             self.showMessage(response.data.message);

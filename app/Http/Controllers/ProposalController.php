@@ -40,19 +40,6 @@ use App\Review;
 class ProposalController extends Controller
 {
     /**
-     * Defining scope of the variable
-     *
-     * @access protected
-     * @var    array $proposal
-     * @var    array $payout_settings
-     * @var    array $currency
-     */
-    protected $proposal;
-    
-    protected $payout_settings;
-    
-    protected $currency;
-    /**
      * Create a new controller instance.
      *
      * @param instance $proposal instance
@@ -62,12 +49,6 @@ class ProposalController extends Controller
     public function __construct(Proposal $proposal)
     {
         $this->proposal = $proposal;
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'USD';
-        }
     }
 
     /**
@@ -82,9 +63,6 @@ class ProposalController extends Controller
         if (!empty($job_slug)) {
             $job = Job::all()->where('slug', $job_slug)->first();
             if (!empty($job)) {
-                if (!empty($job->currency)) {
-                    $this->currency = $job->currency;
-                }
                 $job_skills = $job->skills->pluck('id')->toArray();
                 $check_skill_req = $this->proposal->getJobSkillRequirement($job_skills);
                 $proposal_status = Job::find($job->id)->proposals()->where('status', 'hired')->first();
@@ -97,8 +75,10 @@ class ProposalController extends Controller
                 $submitted_proposals = $this->proposal::where('freelancer_id', Auth::user()->id)->count();
                 $duration =  Helper::getJobDurationList($job->duration);
                 $job_completion_time = Helper::getJobDurationList();
-                $commision = !empty($this->payout_settings) && !empty($this->payout_settings[0]["commision"]) ? $this->payout_settings[0]["commision"] : 0;
-                $symbol = Helper::currencyList($this->currency);
+                $commision_amount = SiteManagement::getMetaValue('commision');
+                $commision = !empty($commision_amount) && !empty($commision_amount[0]["commision"]) ? $commision_amount[0]["commision"] : 0;
+                $currency = SiteManagement::getMetaValue('commision');
+                $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
                 $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
                 $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
                 if (Auth::user() && !empty(Auth::user()->id)) {
@@ -196,14 +176,15 @@ class ProposalController extends Controller
                     $json['message'] = trans('lang.job_not_avail');
                     return $json;
                 }
-                // if (intval($request['amount']) > $job->price) {
-                //     $json['type'] = 'error';
-                //     $json['message'] = trans('lang.proposal_exceed');
-                //     return $json;
-                // }
+                if (intval($request['amount']) > $job->price) {
+                    $json['type'] = 'error';
+                    $json['message'] = trans('lang.proposal_exceed');
+                    return $json;
+                }
                 $package = DB::table('items')->where('subscriber', Auth::user()->id)->select('product_id')->first();
                 $proposals = $this->proposal::where('freelancer_id', Auth::user()->id)->count();
                 $settings = SiteManagement::getMetaValue('settings');
+                $payment_settings = SiteManagement::getMetaValue('commision');
                 $required_connects = !empty($settings) && !empty($settings[0]['connects_per_job']) ? $settings[0]['connects_per_job'] : 2;
                 $package_status = '';
                 if (Auth::user() && $request['user_id']) {
@@ -216,12 +197,12 @@ class ProposalController extends Controller
                         return $json;
                     }
                 }
-                if (!empty($this->payout_settings) && empty($this->payout_settings[0]['enable_packages'])) {
+                if (!empty($payment_settings) && empty($payment_settings[0]['enable_packages'])) {
                     $package_status = 'true';
                 } else {
-                    $package_status = $this->payout_settings[0]['enable_packages'];
+                    $package_status = $payment_settings[0]['enable_packages'];
                 }
-                if (!empty($this->payout_settings) && $package_status === 'true') {
+                if (!empty($payment_settings) && $package_status === 'true') {
                     if (empty($package->product_id)) {
                         $json['type'] = 'error';
                         $json['message'] = trans('lang.need_to_purchase_pkg');
@@ -229,7 +210,7 @@ class ProposalController extends Controller
                     }
                     $package_options = Package::select('options')->where('id', $package->product_id)->get()->first();
                     $option = unserialize($package_options->options);
-                    $allowed_proposals = $option['no_of_credits'] / $required_connects;
+                    $allowed_proposals = $option['no_of_connects'] / $required_connects;
                     if ($proposals > $allowed_proposals) {
                         $json['type'] = 'error';
                         $json['message'] = trans('lang.not_enough_connects');
@@ -256,8 +237,8 @@ class ProposalController extends Controller
                                         $email_params['freelancer'] = Helper::getUserName(Auth::user()->id);
                                         $email_params['freelancer_profile'] = url('profile/' . $user->slug);
                                         $email_params['title'] = $job->title;
-                                        $email_params['link'] = url('employer/dashboard/manage-jobs');
-                                        $email_params['amount'] = $request['amount']. ' '. $job->currency;
+                                        $email_params['link'] = url('project/' . $job->slug);
+                                        $email_params['amount'] = $request['amount'];
                                         $email_params['duration'] = Helper::getJobDurationList($request['completion_time']);
                                         $email_params['message'] = $request['description'];
                                         Mail::to($job->employer->email)
@@ -313,8 +294,8 @@ class ProposalController extends Controller
                                     $email_params['freelancer'] = Helper::getUserName(Auth::user()->id);
                                     $email_params['freelancer_profile'] = url('profile/' . $user->slug);
                                     $email_params['title'] = $job->title;
-                                    $email_params['link'] = url('employer/dashboard/manage-jobs');
-                                    $email_params['amount'] = $request['amount']. ' '. $job->currency;
+                                    $email_params['link'] = url('project/' . $job->slug);
+                                    $email_params['amount'] = $request['amount'];
                                     $email_params['duration'] = Helper::getJobDurationList($request['completion_time']);
                                     $email_params['message'] = $request['description'];
                                     Mail::to($job->employer->email)
@@ -358,97 +339,7 @@ class ProposalController extends Controller
             return $json;
         }
     }
-    
-    /**
-     * Upate and save a newly created or changed resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request req attributes
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function updateSave(Request $request, $proposal_id)
-    {
-        $server = Helper::worketicIsDemoSiteAjax();
-        if (!empty($server)) {
-            $response['message'] = $server->getData()->message;
-            return $response;
-        }
-        if (!empty($request) && !empty($proposal_id)) {
-            $json = array();
-            $this->validate(
-                $request,
-                [
-                    'desc'    => 'required',
-                    'ms_amount' => 'required'
-                ]
-            );
-            $n = 0;
-            $total = 0;
-            for ($n = 0; $n < count($request->ms_amount); $n++) {
-                $total += intval($request->ms_amount[$n]);
-            }
-            $job = Job::find($request['id']);
-            $freelancer = User::find($request['freelancer_id']);
-            $currency = $this->proposal::find($proposal_id)->currency;
-            $update_propsal = $this->proposal->updateProposal($request, $total, $proposal_id);
-            if ($update_propsal = 'success') {
-                $json['type'] = 'success';
-                $json['message'] = trans('lang.proposal_milestone_updated');
-                $user = User::find(Auth::user()->id);
-                //send email
-                if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
-                    if (!empty($job->employer->email)) {
-                        $email_params = array();
-                        $milestone_request_submitted_template = DB::table('email_types')->select('id')->where('email_type', 'employer_email_milestone_request_sent')->get()->first();
-                        $milestone_request_received_template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_milestone_request_received')->get()->first();
-                        if (!empty($milestone_request_received_template->id) || !empty($milestone_request_submitted_template->id)) {
-                            $template_receive_milestone_request = EmailTemplate::getEmailTemplateByID($milestone_request_received_template->id);
-                            $template_submit_milestone_request = EmailTemplate::getEmailTemplateByID($milestone_request_submitted_template->id);
-                            $email_params['employer'] = Helper::getUserName($job->employer->id);
-                            $email_params['employer_profile'] = url('profile/' . $job->employer->slug);
-                            $email_params['freelancer'] = Helper::getUserName(Auth::user()->id);
-                            $email_params['freelancer_profile'] = url('profile/' . $user->slug);
-                            $email_params['title'] = $job->title;
-                            $email_params['link'] = url('project/' . $job->slug);
-                            $email_params['currency'] = $currency;
-                            $email_params['count'] = count($request->ms_amount);
-                            $email_params['amount'] = $total;
-                            Mail::to($freelancer->email)
-                                ->send(
-                                    new FreelancerEmailMailable(
-                                        'freelancer_email_milestone_request_received',
-                                        $template_receive_milestone_request,
-                                        $email_params
-                                    )
-                                );
-                            Mail::to($job->employer->email)
-                                ->send(
-                                    new EmployerEmailMailable(
-                                        'employer_email_milestone_request_sent',
-                                        $template_submit_milestone_request,
-                                        $email_params
-                                    )
-                                );
-                        } else {
-                            $json['type'] = 'error';
-                            $json['message'] = trans('lang.something_wrong');
-                            return $json;
-                        }
-                    }
-                }
-                return $json;
-            } else {
-                $json['type'] = 'error';
-                $json['message'] = trans('lang.something_wrong');
-                return $json;
-            }
-        } else {
-            $json['type'] = 'error';
-            $json['message'] = trans('lang.something_wrong');
-            return $json;
-        }
-    }
-    
+
     /**
      * Get job proposal listing.
      *
@@ -461,14 +352,13 @@ class ProposalController extends Controller
         if (!empty($slug)) {
             $accepted_proposal = array();
             $job = Job::where('slug', $slug)->first();
-            if (!empty($job->currency)) {
-                $this->currency = $job->currency;
-            }
             $proposals = Job::latest()->find($job->id)->proposals;
             $accepted_proposal = Job::find($job->id)->proposals()->where('hired', 1)->first();
             $duration = !empty($job->duration) ? Helper::getJobDurationList($job->duration) : '';
-            $symbol = Helper::currencyList($this->currency);
-            $enable_package = !empty($this->payout_settings) && !empty($this->payout_settings[0]['enable_packages']) ? $this->payout_settings[0]['enable_packages'] : 'true';
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
+            $payment_settings = SiteManagement::getMetaValue('commision');
+            $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
             if (file_exists(resource_path('views/extend/back-end/employer/proposals/index.blade.php'))) {
                 return View(
                     'extend.back-end.employer.proposals.index',
@@ -540,9 +430,6 @@ class ProposalController extends Controller
         $user_slug = '';
         $attachments = array();
         $job = Job::where('slug', $slug)->first();
-        if (!empty($job->currency)) {
-            $this->currency = $job->currency;
-        }
         $accepted_proposal = Job::find($job->id)->proposals()->where('hired', 1)
             ->first();
         $freelancer_name = Helper::getUserName($accepted_proposal->freelancer_id);
@@ -561,7 +448,8 @@ class ProposalController extends Controller
         $rating = !empty($freelancer_rating) ? $freelancer_rating[0] : 0;
         $stars  =  !empty($freelancer_rating) ? $freelancer_rating[0] / 5 * 100 : 0;
         $feedbacks = Review::select('feedback')->where('receiver_id', $accepted_proposal->freelancer_id)->count();
-        $symbol = Helper::currencyList($this->currency);
+        $currency   = SiteManagement::getMetaValue('commision');
+        $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $cancel_proposal_text = trans('lang.cancel_proposal_text');
         $cancel_proposal_button = trans('lang.send_request');
         $validation_error_text = trans('lang.field_required');

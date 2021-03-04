@@ -3,7 +3,7 @@
     <div class="wt-dbsectionspace wt-haslayout la-ps-freelancer">
         <div class="freelancer-profile" id="user_profile">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9">
                     <div class="wt-dashboardbox wt-dashboardtabsholder">
                         @if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/tabs.blade.php'))) 
                             @include('extend.back-end.freelancer.profile-settings.tabs')
@@ -26,7 +26,7 @@
                                 </ul>
                             @endif
                             <div class="wt-personalskillshold tab-pane active fade show" id="wt-skills">
-                                {!! Form::open(['url' => url('freelancer/store-skills-specialization'), 'class' =>'wt-userform', 'id' => 'skills_specialization', '@submit.prevent'=>'submitSkillsSpecialization']) !!}
+                                {!! Form::open(['url' => url('freelancer/store-profile-settings'), 'class' =>'wt-userform', 'id' => 'skills_specialization', '@submit.prevent'=>'submitSkillsSpecialization']) !!}
                                     <div class="wt-skills la-skills-holder">
                                         @if (file_exists(resource_path('views/extend/back-end/freelancer/profile-settings/skills-specialization/specialty.blade.php'))) 
                                             @include('extend.back-end.freelancer.profile-settings.skills-specialization.specialty')

@@ -51,9 +51,7 @@ class FreelancerEmailMailable extends Mailable
         $from_email = EmailHelper::getEmailFrom();
         $from_email_id = EmailHelper::getEmailID();
         $subject = !empty($this->template->subject) ? $this->template->subject : '';
-        if ($this->type == 'freelancer_email_new_user') {
-            $email_message = $this->prepareFreelancerEmailUserRegistered($this->email_params);
-        } elseif ($this->type == 'freelancer_email_new_proposal_submitted') {
+        if ($this->type == 'freelancer_email_new_proposal_submitted') {
             $email_message = $this->prepareFreelancerEmailPropsalSubmitted($this->email_params);
         } elseif ($this->type == 'freelancer_email_hire_freelancer') {
             $email_message = $this->prepareFreelancerEmailFreelancerHired($this->email_params);
@@ -69,14 +67,6 @@ class FreelancerEmailMailable extends Mailable
             $email_message = $this->prepareFreelancerEmailJobCompleted($this->email_params);
         } elseif ($this->type == 'freelancer_email_new_order') {
             $email_message = $this->prepareFreelancerEmailNewOrder($this->email_params);
-        } elseif ($this->type == 'freelancer_email_milestone_request_received') {
-            $email_message = $this->prepareFreelancerEmailMilestoneRequestReceived($this->email_params);
-        } elseif ($this->type == 'freelancer_email_matched_latest_jobs') {
-            $email_message = $this->prepareFreelancerEmailMatchedLatestJobs($this->email_params);
-        } elseif ($this->type == 'freelancer_email_milestone_released') {
-            $email_message = $this->prepareFreelancerEmailMilestoneReleased($this->email_params);
-        } elseif ($this->type == 'freelancer_email_milestone_canceled') {
-            $email_message = $this->prepareFreelancerEmailMilestoneCanceled($this->email_params);
         }
         $message = $this->from($from_email, $from_email_id)
             ->subject($subject)->view('emails.index')
@@ -86,58 +76,6 @@ class FreelancerEmailMailable extends Mailable
                 ]
             );
         return $message;
-    }
-
-    /**
-     * Email new user
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareFreelancerEmailUserRegistered($email_params)
-    {
-        extract($email_params);
-        $user_name = $name;
-        $user_email = $email;
-        $user_password = $password;
-        $code_of_conduct = url('page/code-conduct');
-        $user_agreement = url('page/user-agreement');
-        $fees_charges = url('page/fees-and-charges');
-        $site_title = EmailHelper::getSiteTitle();
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    " Hi %name%!
-
-                                      Thanks for registering at ".$site_title.". You can now login to manage your account using the following credentials:
-
-                                      Username: %name%
-                                      Password: %password%
-                                      Email: %email%
-
-                                      Please setup your Profile, Account Settings, and Payout, so you can start receiving Projects.
-                                      Also read our <a href='%coc%'>Code of Conduct</a>, <a href='%ua%'>User Agreement</a>, and <a href='%fc%'>Fees &amp; Charges</a> to guide you.
-
-                                      %signature%";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        $app_content = str_replace("%name%", $user_name, $app_content);
-        $app_content = str_replace("%email%", $user_email, $app_content);
-        $app_content = str_replace("%password%", $user_password, $app_content);
-        $app_content = str_replace("%coc%", $code_of_conduct, $app_content);
-        $app_content = str_replace("%ua%", $user_agreement, $app_content);
-        $app_content = str_replace("%fc%", $fees_charges, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
     }
 
     /**
@@ -376,58 +314,6 @@ class FreelancerEmailMailable extends Mailable
         $body .= EmailHelper::getEmailFooter();
         return $body;
     }
-    
-    /**
-     * Proposal milestone received
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareFreelancerEmailMilestoneRequestReceived($email_params)
-    {
-        extract($email_params);
-        $employer_name = $employer;
-        $employer_link = $employer_profile;
-        $freelancer_name = $freelancer;
-        $freelancer_link = $freelancer_profile;
-        $project_title = $title;
-        $project_link = $link;
-        $count = $count;
-        $total_amount = $amount;
-        $currency = $currency;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hello <a href='%freelancer_link%'>%freelancer_name%</a>,
-
-                                    You have received %count% milestone requests from <a href='%employer_link%'>%employer_name%</a> on this job <a href='%project_link%'>%project_title%</a>.
-                                    Login to view the milestone requests more detail.
-                                    Total amount: %amount% %currency%
-                                    
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
-        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
-        $app_content = str_replace("%freelancer_link%", $freelancer_link, $app_content);
-        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%count%", $count, $app_content);
-        $app_content = str_replace("%amount%", $total_amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
 
     /**
      * Package Purchased
@@ -556,170 +442,6 @@ class FreelancerEmailMailable extends Mailable
         $app_content = str_replace("%service_link%", $service_link, $app_content);
         $app_content = str_replace("%service_title%", $service_title, $app_content);
         $app_content = str_replace("%service_amount%", $service_amount, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
-    /**
-     * Matched Latest Projects
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareFreelancerEmailMatchedLatestJobs($email_params)
-    {
-        extract($email_params);
-        $freelancer_name = $freelancer_name;
-        $project_title = $job_title;
-        $skills = $skills;
-        $symbol = $symbol;
-        $amount = $amount;
-        $currency = $currency;
-        $date = $date;
-        $details = $details;
-        $project_link = $posted_job_link;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hi %freelancer_name%,
-
-                                    As a freelancer with a good reputation we are sending you a special notification of projects which have not yet received high quality proposals. If you propose now you have a much higher chance of being awarded one of these projects:
-                                    <strong>Title: </strong><a href='%project_link%'>%project_title%</a>
-                                    <strong>Skills: </strong>%skills%<
-                                    <strong>Budget: </strong>%symbol%%amount% %currency%
-                                    <strong>Posted: </strong>%date% hour ago
-                                    <strong>Details: </strong>%details%
-                                    <strong>Propose on this project </strong><a href='%project_link%'>%project_link%</a>
-
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%skills%", $skills, $app_content);
-        $app_content = str_replace("%symbol%", $symbol, $app_content);
-        $app_content = str_replace("%amount%", $amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%date%", $date, $app_content);
-        $app_content = str_replace("%details%", $details, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
-    /**
-     * Milestone Release
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareFreelancerEmailMilestoneReleased($email_params)
-    {
-        extract($email_params);
-        $freelancer_name = $freelancer_name;
-        $employer_name = $employer_name;
-        $employer_link = $employer_link;
-        $project_title = $project_title;
-        $symbol = $symbol;
-        $amount = $amount;
-        $currency = $currency;
-        $date = $date;
-        $details = $details;
-        $project_link = $project_link;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hi %freelancer_name%,
-
-                                    Good news! <a href='%employer_link%'><strong>%employer_name% </strong></a>has released a Milestone Payment of %symbol%%amount% %currency% for <a href='%project_link%'>%project_title%</a>
-                                    <strong>Details: </strong>%details%
-                                    <strong>Date: </strong>%date%
-                    
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
-        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%symbol%", $symbol, $app_content);
-        $app_content = str_replace("%amount%", $amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%date%", $date, $app_content);
-        $app_content = str_replace("%details%", $details, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
-        $app_content = str_replace("%signature%", $signature, $app_content);
-
-        $body = "";
-        $body .= EmailHelper::getEmailHeader();
-        $body .= $app_content;
-        $body .= EmailHelper::getEmailFooter();
-        return $body;
-    }
-
-    /**
-     * Milestone Cancel
-     *
-     * @param array $email_params Email Parameters
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public function prepareFreelancerEmailMilestoneCanceled($email_params)
-    {
-        extract($email_params);
-        $freelancer_name = $freelancer_name;
-        $employer_name = $employer_name;
-        $employer_link = $employer_link;
-        $project_title = $project_title;
-        $symbol = $symbol;
-        $amount = $amount;
-        $currency = $currency;
-        $date = $date;
-        $details = $details;
-        $project_link = $project_link;
-        $signature = EmailHelper::getSignature();
-        $app_content = $this->template->content;
-        $email_content_default =    "Hi %freelancer_name%,
-
-                                    <a href='%employer_link%'><strong>%employer_name% </strong></a>has canceled a Milestone Payment of %symbol%%amount% %currency% for <a href='%project_link%'>%project_title%</a>
-                                    <strong>Details: </strong>%details%
-                                    <strong>Date: </strong>%date%
-
-                                    %signature%,";
-        //set default contents
-        if (empty($app_content)) {
-            $app_content = $email_content_default;
-        }
-        $app_content = str_replace("%freelancer_name%", $freelancer_name, $app_content);
-        $app_content = str_replace("%employer_name%", $employer_name, $app_content);
-        $app_content = str_replace("%employer_link%", $employer_link, $app_content);
-        $app_content = str_replace("%project_title%", $project_title, $app_content);
-        $app_content = str_replace("%symbol%", $symbol, $app_content);
-        $app_content = str_replace("%amount%", $amount, $app_content);
-        $app_content = str_replace("%currency%", $currency, $app_content);
-        $app_content = str_replace("%date%", $date, $app_content);
-        $app_content = str_replace("%details%", $details, $app_content);
-        $app_content = str_replace("%project_link%", $project_link, $app_content);
         $app_content = str_replace("%signature%", $signature, $app_content);
 
         $body = "";

@@ -19,16 +19,12 @@
 											@php
 												$image = '';
 												$duration  =  \App\Helper::getJobDurationList($job->duration);
-												if (!empty($job->currency)) {
-                                                    $symbol = Helper::currencyList($job->currency);
-                                                }
 												$user_name = $job->employer->first_name.' '.$job->employer->last_name;
 												$proposals = \App\Proposal::where('job_id', $job->id)->where('status', '!=', 'cancelled')->get();
 												$employer_img = \App\Profile::select('avater')->where('user_id', $job->employer->id)->first();
 												$image = !empty($employer_img->avater) ? '/uploads/users/'.$job->employer->id.'/'.$employer_img->avater : '';
 												$verified_user = \App\User::select('user_verified')->where('id', $job->employer->id)->pluck('user_verified')->first();
 												$project_type  = Helper::getProjectTypeList($job->project_type);
-												$description = strip_tags(stripslashes($job->description));
 											@endphp
 											<div class="wt-userlistinghold wt-featured wt-userlistingvtwo">
 												@if (!empty($job->is_featured) && $job->is_featured === 'true')
@@ -46,7 +42,7 @@
 																	{{{ $user_name }}}</a>
 																@endif
 																@if (!empty($job->title))
-																	<h2><a href="{{{ url('project/'.$job->slug) }}}">{{{ $job->title }}}</a></h2>
+																	<h2><a href="{{{ url('job/'.$job->slug) }}}">{{{ $job->title }}}</a></h2>
 																@endif
 															</div>
 														@endif
@@ -57,7 +53,7 @@
 															)
 															<ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
 																@if (!empty($job->price))
-																	<li><span class="wt-dashboraddoller"><i>{{ $symbol['symbol'] }}</i> {{{ $job->price }}}</span></li>
+																	<li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
 																@endif
 																@if (!empty($job->location->title))
 																	<li><span><img src="{{{asset(Helper::getLocationFlag($job->location->flag))}}}" alt="{{ trans('lang.img') }}"> {{{ $job->location->title }}}</span></li>
@@ -70,31 +66,10 @@
 																@endif
 															</ul>
 														@endif
-														@if (!empty($description))
-															<div class="wt-description mt-3">
-																<p>{{ str_limit($description, 300) }}</p>
-															</div>
-														@endif
-														@if ((!empty($job->categories) && $job->categories->count() > 0) || (!empty($job->skills) && $job->skills->count() > 0) || (!empty($job->rlevels) && $job->rlevels->count() > 0) || (!empty($job->citations) && $job->citations->count() > 0))
-															<div class="wt-tag wt-widgettag">
-																@foreach ($job->categories as $category)
-																	<a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-																@endforeach
-																@foreach ($job->skills as $skill)
-																	<a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-																@endforeach
-																@foreach ($job->rlevels as $rlevel)
-																	<a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-																@endforeach
-																@foreach ($job->citations as $citation)
-																	<a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-																@endforeach
-															</div>
-														@endif
 													</div>
 													<div class="wt-rightarea">
 														<div class="wt-btnarea">
-															<a href="{{{ url('project/'.$job->slug) }}}" class="wt-btn">{{ trans('lang.view_detail') }}</a>
+															<a href="{{{ url('job/'.$job->slug) }}}" class="wt-btn">{{ trans('lang.view_detail') }}</a>
 															<a href="{{{ url('job/edit-job/'.$job->slug) }}}" class="wt-btn">{{ trans('lang.edit_job') }}</a>
 															@if ($proposals->count() > 0)
 																<a href="{{{ url('employer/dashboard/job/'.$job->slug.'/proposals') }}}" class="wt-btn">{{ trans('lang.view_proposals') }}</a>

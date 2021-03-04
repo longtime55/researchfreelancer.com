@@ -7,9 +7,8 @@
                 </div>
                 <div class="wt-experiencecontent" v-if="certifications[index]">
                     <ul class="wt-userlisting-breadcrumb">
-                        <!--<li><span><i class="far fa-building"></i> {{ certifications[index].institute_title }}</span></li>-->
-                        <li><span><i class="far fa-calendar"></i> {{ certifications[index].start_date }}</span></li>
-                        <!--<li><span><i class="far fa-calendar"></i> {{ certifications[index].start_date }} - {{ certifications[index].end_date }}</span></li>-->
+                        <li><span><i class="far fa-building"></i> {{ certifications[index].institute_title }}</span></li>
+                        <li><span><i class="far fa-calendar"></i> {{ certifications[index].start_date }} - {{ certifications[index].end_date }}</span></li>
                     </ul>
                     <div class="wt-description">
                         <p>“ {{certifications[index].description}} ”</p>

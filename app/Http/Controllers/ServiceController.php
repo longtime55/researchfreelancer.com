@@ -613,33 +613,8 @@ class ServiceController extends Controller
         if (Auth::user() && !empty($id)) {
             if (Auth::user()) {
                 if (Auth::user()->getRoleNames()->first() === 'employer') {
-                    $employer = User::find(Auth::user()->id);
-                    $payout_settings = SiteManagement::getMetaValue('commision');
-                    $profile = $employer->profile;
-                    $payout = $profile->count() > 0 ? Helper::getUnserializeData($profile->payout_settings) : '';
-                    if(isset($payout['rave_email'])) {
-                        $rave_email = $payout['rave_email'];
-                    } else {
-                        $rave_email = '';
-                    }
-                    if (empty($rave_email)) {
-                        Session::flash('error', trans('lang.rave_email_address_is_required'));
-                    }
-                    $firstname = !empty($employer->first_name) ? $employer->first_name : '';
-                    $lastname = !empty($employer->last_name) ? $employer->last_name : '';
-                    // if (!empty($employer->location_id)) {
-                    //     $country = substr(Location:: find($employer->location_id)->title, 0, 2);
-                    // } else {
-                        $country = 'NG';
-                    // }
-                    if (!empty($profile->transaction_currency)) {
-                        $currency = $profile->transaction_currency;
-                    } elseif (!empty($payout_settings[0]['currency'])) {
-                        $currency = $payout_settings[0]['currency'];
-                    } else {
-                        $currency = 'USD';
-                    }
-                    $phonenumber = !empty($employer->phone_number) ? $employer->phone_number : '';
+                    $user_id = Auth::user()->id;
+                    $employer = User::find($user_id);
                     $service = Service::find($id);
                     $seller = Helper::getServiceSeller($service->id);
                     $freelancer = User::find($seller->user_id);
@@ -647,8 +622,10 @@ class ServiceController extends Controller
                     $profile = User::find($freelancer->id)->profile;
                     $user_image = !empty($profile) ? $profile->avater : '';
                     $profile_image = !empty($user_image) ? '/uploads/users/' . $freelancer->id . '/' . $user_image : 'images/user-login.png';
+                    $payout_settings = SiteManagement::getMetaValue('commision');
                     $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : null;
-                    $symbol = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? Helper::currencyList($payout_settings[0]['currency']) : array();
+                    $currency   = SiteManagement::getMetaValue('commision');
+                    $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
                     if (file_exists(resource_path('views/extend/back-end/employer/services/checkout.blade.php'))) {
                         return view(
                             'extend.back-end.employer.services.checkout',
@@ -659,13 +636,7 @@ class ServiceController extends Controller
                                 'payment_gateway',
                                 'symbol',
                                 'user_id',
-                                'freelancer',
-                                'rave_email',
-                                'firstname',
-                                'lastname',
-                                'country',
-                                'currency',
-                                'phonenumber'
+                                'freelancer'
                             )
                         );
                     } else {
@@ -678,13 +649,7 @@ class ServiceController extends Controller
                                 'payment_gateway',
                                 'symbol',
                                 'user_id',
-                                'freelancer',
-                                'rave_email',
-                                'firstname',
-                                'lastname',
-                                'country',
-                                'currency',
-                                'phonenumber'
+                                'freelancer'
                             )
                         );
                     }

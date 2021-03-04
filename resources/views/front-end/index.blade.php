@@ -12,32 +12,10 @@
 @section('description', "$app_description")
 @section('content')
     @php
-        $categories = App\Category::leftJoin('catables', 'categories.id', '=', 'catables.category_id')
-                        ->select('categories.*', \DB::raw("count(catables.catable_type) as job_count"))
-                        ->where('catables.catable_type', 'like', '%Job%')
-                        ->groupBy('id')
-                        ->orderBy('job_count', 'DESC')
-                        ->get()
-                        ->take(8);
-        $skills = App\Skill::leftJoin('job_skill', 'skills.id', '=', 'job_skill.skill_id')
-                        ->select('skills.*', \DB::raw("count(job_skill.skill_id) as job_count"))
-                        ->groupBy('id')
-                        ->orderBy('job_count', 'DESC')
-                        ->get()
-                        ->take(8);
-        $locations = App\Location::leftJoin('jobs', 'locations.id', '=', 'jobs.location_id')
-                        ->select('locations.*', \DB::raw("count(jobs.location_id) as job_count"))
-                        ->groupBy('id')
-                        ->orderBy('job_count', 'DESC')
-                        ->get()
-                        ->take(8);
-        $languages = App\Language::leftJoin('langables', 'languages.id', '=', 'langables.language_id')
-                        ->select('languages.*', \DB::raw("count(langables.langable_type) as job_count"))
-                        ->where('langables.langable_type', 'like', '%Job%')
-                        ->groupBy('id')
-                        ->orderBy('job_count', 'DESC')
-                        ->get()
-                        ->take(8);
+        $categories = App\Category::latest()->get()->take(8);
+        $skills = App\Skill::latest()->get()->take(8);
+        $locations = App\Location::latest()->get()->take(8);
+        $languages = App\Language::latest()->get()->take(8);
         $type = Helper::getAccessType() == 'services' ? 'service' : 'job';
         if (Schema::hasTable('services') && Schema::hasTable('service_user')) {
             $services = App\Service::latest()->paginate(6);
@@ -57,33 +35,28 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-5">
                         <div class="wt-bannerimages">
-                            <div id="wrapper">
-                    			<div id="carousel">
-                    				<img class="slide-image" src="{{{ asset('uploads\settings\home\postimg.png') }}}" alt="{{{ trans('lang.img') }}}" border="0" />
-                                	<img class="slide-image" src="{{{ asset('uploads\settings\home\findimg.png') }}}" alt="{{{ trans('lang.img') }}}" border="0" />
-                                	<img class="slide-image" src="{{{ asset('uploads\settings\home\paymentimg.png') }}}" alt="{{{ trans('lang.img') }}}" border="0" />
-                    			</div>
-                    			<div id="pager"></div>
-                    		</div>
+                            <figure class="wt-bannermanimg" data-tilt>
+                                <img src="{{{ asset(Helper::getHomeBanner('inner_image')) }}}" alt="{{{ trans('lang.img') }}}">
+                            </figure>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-                        <div class="wt-bannercontent pt-5 pb-5">
-                            <div class="wt-bannerhead pt-5 pb-5">
+                        <div class="wt-bannercontent">
+                            <div class="wt-bannerhead">
                                 <div class="wt-customtitle">
                                     <span>{{{ Helper::getHomeBanner('title') }}}</span>
                                     {{{ Helper::getHomeBanner('subtitle') }}}
                                 </div>
                             </div>
-                            <div class="wt-btnarea pt-5 pb-4">
+                            <div class="wt-btnarea pt-4 pb-4">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                            <a href="{{{ url(route('employerPostJob')) }}}" class="form-control wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.hire_writer') }}}</a>
+                                            <a href="{{{ url(route('employerDashboard')) }}}" class="form-control wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.hire_writer') }}}</a>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
-                                            <a href="{{{ url(route('jobs')) }}}" class="form-control wt-writebtn">{{{ trans('lang.be_writer') }}}</a>
+                                            <a href="{{{ url(route('freelancerDashboard')) }}}" class="form-control wt-writebtn">{{{ trans('lang.be_writer') }}}</a>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2"></div>
                                     </div>
@@ -100,7 +73,7 @@
                             :no_record_message="'{{ trans('lang.no_record') }}'"
                             >
                             </search-form>
-                            <div class="wt-videoholder pt-5 pb-4">
+                            <div class="wt-videoholder pb-5">
                                 <div class="wt-videoshow">
                                     <a data-rel="prettyPhoto[video]" href="{{{ Helper::getHomeBanner('video_url') }}}"><i class="fa fa-play"></i></a>
                                 </div>
@@ -113,7 +86,38 @@
                 </div>
             </div>
         </div>
-        <section class="wt-haslayout wt-bgwhite">
+        <!-- <section class="wt-haslayout wt-main-section">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    
+                    <div class="wt-categoryexpl">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left">
+                            <div class="wt-categorycontent" style="background: #fb590d">
+                                <h4 class="pt-3 wt-blue">{{{ date("Y") }}}</h4>
+                                <div class="wt-cattitle">
+                                    <p class="wt-counttitle wt-white">{{{ trans('lang.members_total_count') }}}</p>
+                                </div>
+                                <div class="wt-categoryslidup wt-bgwhite">
+                                    <h4 class="pt-3"><strong>{{{ $memebers_count }}}</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left">
+                            <div class="wt-categorycontent" style="background: #fb590d">
+                                <h4 class="pt-3 wt-blue">{{{ date("Y") }}}</h4>
+                                <div class="wt-cattitle">
+                                    <p class="wt-counttitle wt-white">{{{ trans('lang.projects_total_count') }}}</p>
+                                </div>
+                                <div class="wt-categoryslidup wt-bgwhite">
+                                    <h4 class="pt-3"><strong>{{{ $projects_count }}}</strong></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="wt-haslayout" style="background: linear-gradient(180deg, rgb(247, 243, 243), rgb(221, 234, 247)) !important;">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 float-left">
@@ -123,20 +127,20 @@
                                     <div class="row">
                                         <div class="wt-starthiringhold wt-innerspace wt-haslayout">
                                             <div class="wt-sectionhead wt-textcenter">
-                                                <div class="wt-sectiontitle p-5">
-                                                    <div class="wt-homedesc">
-                                                       <div class="wt-black">
-                                                       <!--<div class="wt-themecolor" style="padding: 0 20px; border: none; text-transform: capitalize; font: 50 16px/35px 'Poppins', Arial, Helvetica, sans-serif;">-->
+                                                <div class="wt-sectiontitle pl-5 pr-5">
+                                                    <div class="wt-desc">
+                                                        <!-- <div class="wt-themecolor"> -->
+                                                       <div class="wt-btn" style="padding: 0 20px; border: none; text-transform: capitalize; font: 50 16px/35px 'Poppins', Arial, Helvetica, sans-serif;">
                                                             {{{ Helper::getHomeBanner('description') }}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-n5">
+                                            <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                                         <div class="wt-textcenter">
-                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\idea.jpg') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
+                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\idea.png') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
                                                         </div>
                                                         <div class="wt-normal wt-textcenter pt-4">
                                                             <span class="wt-black">Find talented writers and editors</span>
@@ -144,7 +148,7 @@
                                                     </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                                         <div class="wt-textcenter">
-                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\web-programming.jpg') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
+                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\web-programming.png') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
                                                         </div>
                                                         <div class="wt-normal wt-textcenter pt-4">
                                                             <span class="wt-black">Hire the best researchers</span>
@@ -152,7 +156,7 @@
                                                     </div>
                                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4">
                                                         <div class="wt-textcenter">
-                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\shield.jpg') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
+                                                            <figure class="wt-icon-img"><img src="{{{ asset('uploads\settings\icon\shield.png') }}}" alt="{{{ trans('lang.img') }}}" /></figure>
                                                         </div>
                                                         <div class="wt-normal wt-textcenter pt-4">
                                                             <span class="wt-black">Browse our highest-rated writers & editors</span>
@@ -169,7 +173,7 @@
                 </div>
             </div>
         </section>
-        <section class="wt-haslayout wt-main-section" style="background: ghostwhite !important;">
+        <section class="wt-haslayout wt-main-section wt-bgwhite">
             <div class="container">
                 <div class="row justify-content-md-center">
                     <div class="col-xs-12 col-sm-12 col-md-8 push-md-2 col-lg-6 push-lg-3">
@@ -181,10 +185,10 @@
                         </div>
                     </div>
                     <div class="wt-categoryexpl">
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 float-left pb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left pb-4">
                             <div class="wt-categorycontent">
-                                <div class="wt-sectionhead mt-n5">
-                                    <div class="wt-topic wt-themecolor mt-n5">
+                                <div class="wt-sectionhead">
+                                    <div class="wt-topic wt-themecolor">
                                         <p>Hire a Research Writer</p>
                                     </div>
                                 </div>
@@ -193,7 +197,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 float-left pb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left pb-4">
                             <div class="wt-categorycontent">
                                 <div class="wt-sectionhead">
                                     <div class="wt-topic wt-themecolor">
@@ -202,23 +206,20 @@
                                 </div>
                                 <div class="wt-sectionbody" style="text-align: left;">
                                     <ul class="wt-themecolor">
-                                        <li style="list-style: square; line-height: 20px;">
-                                            <span class="wt-black">Track progress, monitor hours, communicate, share, and do much more.</span>
+                                        <li style="list-style: circle; line-height: 22px;">
+                                            <span class="wt-black">Track progress, monitor hours, communicate, share, and do much more. Always know what's going on with your project, what is getting done, and what still need done.</span>
                                         </li>
-                                        <li style="list-style: square; line-height: 20px;">
-                                            <span class="wt-black">Always know what's going on with your project, what's getting done, and what still need done.</span>
-                                        </li>
-                                        <li style="list-style: square; line-height: 20px;">
+                                        <li style="list-style: circle; line-height: 22px;">
                                             <span class="wt-black">Stay in touch with your writer whenever you have questions, updates, or have something to share.</span>
                                         </li>
-                                        <li style="list-style: square; line-height: 20px;">
+                                        <li style="list-style: circle; line-height: 22px;">
                                             <span class="wt-black">Control the completion of projects, and payments. Only release your payment when benchmarks are met, or when a project is completed to your satisfaction.</span>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 float-left pb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left pb-4">
                             <div class="wt-categorycontent">
                                 <div class="wt-sectionhead">
                                     <div class="wt-topic wt-themecolor">
@@ -245,7 +246,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 float-left pb-4">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-6 float-left pb-4">
                             <div class="wt-categorycontent">
                                 <div class="wt-sectionhead">
                                     <div class="wt-topic wt-themecolor">
@@ -253,13 +254,13 @@
                                     </div>
                                     <div class="wt-sectionbody" style="text-align: left;">
                                         <ul class="wt-themecolor">
-                                            <li style="list-style: square; line-height: 25px;">
+                                            <li style="list-style: circle; line-height: 25px;">
                                                 <span class="wt-black">It's easy. Simply post a research job and receive competitive bids from freelancers within minutes.</span>
                                             </li>
-                                            <li style="list-style: square; line-height: 25px;">
+                                            <li style="list-style: circle; line-height: 25px;">
                                                 <span class="wt-black">Whatever your research  needs are, there will be a writer to get it done: from research thesis, research project, data analysis, seminar, term paper, assignment, business plan, feasibility report and a whole lot more.</span>
                                             </li>
-                                            <li style="list-style: square; line-height: 25px;">
+                                            <li style="list-style: circle; line-height: 25px;">
                                                 <span class="wt-black">With secure payments and thousands of reviewed professional writers to choose from, researchfreelancer.com is the simplest and safest way to get research work done online.</span>
                                             </li>
                                         </ul>
@@ -267,8 +268,11 @@
                                 </div>
                             </div>
                             <div class="form-group pt-4">
-                                <div class="float-right">
-                                    <a href="{{route('employerPostJob')}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.post_job') }}}</a>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"></div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                        <a href="{{url('employer/post-job')}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.post_job') }}}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -285,7 +289,7 @@
                                 <div class="wt-contentarticle tab-pane active fade show">
                                     <div class="row">
                                         <div class="wt-starthiringhold wt-innerspace wt-haslayout">
-                                            <div class="wt-about-rf">
+                                            <div class="wt-about-rf" style="">
                                                 <div class="wt-sectionhead wt-textcenter">
                                                     <div class="wt-title">
                                                         <h3 class="wt-themecolor">What's great about ResearchFreelancer?</h3>
@@ -293,11 +297,11 @@
                                                 </div>
                                                 <div class="wt-sectionbody">
                                                     <ul class="wt-desc wt-themecolor">
-                                                        <li style="list-style: outside;"><span class="wt-normal wt-black">You only have to pay for work when it has been completed and you're 100% satisfied.</span></li> 
-                                                        <li style="list-style: outside;"><span class="wt-normal wt-black">You'll receive free bids from our talented writers within seconds.</span></li> 
-                                                        <li style="list-style: outside;"><span class="wt-normal wt-black">We're always here to help. Our support consists of real people who are available 24/7.</span></li>
-                                                        <li style="list-style: outside;"><span class="wt-normal wt-black">You can live chat with your writers to get constant updates on the progress of your work.</span></li>
-                                                        <li style="list-style: outside;"><span class="wt-normal wt-black">Find professionals you can trust by browsing their samples of previous work and reading their profile reviews.</span></li>
+                                                        <li style="list-style: outside;"><span class="wt-normal wt-white">You only have to pay for work when it has been completed and you're 100% satisfied.</span></li> 
+                                                        <li style="list-style: outside;"><span class="wt-normal wt-white">You'll receive free bids from our talented writers within seconds.</span></li> 
+                                                        <li style="list-style: outside;"><span class="wt-normal wt-white">We're always here to help. Our support consists of real people who are available 24/7.</span></li>
+                                                        <li style="list-style: outside;"><span class="wt-normal wt-white">You can live chat with your writers to get constant updates on the progress of your work.</span></li>
+                                                        <li style="list-style: outside;"><span class="wt-normal wt-white">Find professionals you can trust by browsing their samples of previous work and reading their profile reviews.</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -344,39 +348,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group pt-4">
-                                                    <div class="float-right">
-                                                        <a href="{{{ url(route('jobs')) }}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.browse_jobs') }}}</a>
+                                                    <div class="row">
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"></div>
+                                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                                            <a href="{{{ url(route('employerPostJob')) }}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.browse_jobs') }}}</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-6 float-left">
                                                 <div class="wt-mobileimg">
-                                                    <div class="wrap">
-                                                        <div class="cube">
-                                                            <div class="front">
-                                                                <h1 class="wt-fronttext">THESIS</h1>
-                                                            </div>
-                                                            <div class="back">
-                                                                <h1 class="wt-backtext">ASSIGNMENT</h1>
-                                                            </div>
-                                                            <div class="top">
-                                                                <h1 class="wt-toptext">SEMINAR</h1>
-                                                            </div>
-                                                            <div class="bottom">
-                                                                <h1 class="wt-bottomtext">DATA ANALYSIS</h1>
-                                                            </div>
-                                                            <div class="left">
-                                                                <h1 class="wt-lefttext">PLAGIARISM CHECK</h1>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h1 class="wt-righttext">RESEARCH PROJECT</h1>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-                                                    <!--<figure>-->
-                                                    <!--    <img src="{{{ asset('uploads\settings\home\best-writing-courses-the-writers-college.png') }}}" alt="{{{ trans('lang.img') }}}">-->
-                                                    <!--</figure>-->
+                                                    <figure>
+                                                        <img src="{{{ asset('uploads\settings\home\best-writing-courses-the-writers-college.png') }}}" alt="{{{ trans('lang.img') }}}">
+                                                    </figure>
                                                 </div>
                                             </div>
                                         </div>
@@ -469,15 +453,18 @@
                                             </ul>
                                         </div>
                                         <div class="form-group">
-                                            <div class="float-right">
-                                                <a href="{{{ url(route('jobs')) }}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.become_writer') }}}</a>
+                                            <div class="row pt-4">
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6"></div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                                    <a href="{{{ url(route('freelancerDashboard')) }}}" class="wt-btn" style="padding: 0 40px; border: none; text-transform: capitalize; font: 700 16px/50px 'Poppins', Arial, Helvetica, sans-serif;">{{{ trans('lang.become_writer') }}}</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 float-left mt-5">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 float-left">
                                     <div class="wt-howtoworkimg">
-                                        <figure><img src="{{{ asset('uploads\settings\home\manage_carrer.jpg') }}}" alt="{{{ trans('lang.img') }}}" alt="img description" width="415" height="386" /></figure>
+                                        <figure><img src="{{{ asset('uploads\settings\home\manage_carrer.png') }}}" alt="{{{ trans('lang.img') }}}" alt="img description" width="415" height="386" /></figure>
                                     </div>
                                 </div>
                             </div>
@@ -545,7 +532,7 @@
                                                             <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                         @endif
                                                         <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                        <span><strong>{{ $symbol['symbol'] }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
+                                                        <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                     </div>
                                                 </div>
                                                 <div class="wt-freelancers-rating">
@@ -664,7 +651,7 @@
                                     @if (!empty($categories))
                                         <ul class="wt-fwidgetcontent">
                                             @foreach ($categories as $category)
-                                                <li><a href="{{{url('search-results?type='.$type.'&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a></li>
+                                                <li><a href="{{{url('search-results?type='.$type.'&category%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a></li>
                                             @endforeach
                                         </ul>
                                     @endif
@@ -713,56 +700,32 @@
     <script src="{{ asset('js/tilt.jquery.js') }}"></script>
     <script src="{{ asset('js/prettyPhoto-min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.carouFredSel-6.0.4-packed.js') }}"></script>
     <script>
         jQuery("a[data-rel]").each(function () {
-    		jQuery(this).attr("rel", jQuery(this).data("rel"));
-    	});
-    	jQuery("a[data-rel^='prettyPhoto']").prettyPhoto({
-    		animation_speed: 'normal',
-    		theme: 'dark_square',
-    		slideshow: 3000,
-    		default_width: 800,
-            default_height: 500,
-            allowfullscreen: true,
-    		autoplay_slideshow: false,
-    		social_tools: false,
-    		iframe_markup: "<iframe src='{path}' width='{width}' height='{height}' frameborder='no' allowfullscreen='true'></iframe>",
-    		deeplinking: false
+		jQuery(this).attr("rel", jQuery(this).data("rel"));
+	});
+	jQuery("a[data-rel^='prettyPhoto']").prettyPhoto({
+		animation_speed: 'normal',
+		theme: 'dark_square',
+		slideshow: 3000,
+		default_width: 800,
+        default_height: 500,
+        allowfullscreen: true,
+		autoplay_slideshow: false,
+		social_tools: false,
+		iframe_markup: "<iframe src='{path}' width='{width}' height='{height}' frameborder='no' allowfullscreen='true'></iframe>",
+		deeplinking: false
+    });
+    var _wt_freelancerslider = jQuery('.wt-freelancerslider')
+        _wt_freelancerslider.owlCarousel({
+            items: 1,
+            loop:true,
+            nav:true,
+            margin: 0,
+            autoplay:false,
+            navClass: ['wt-prev', 'wt-next'],
+            navContainerClass: 'wt-search-slider-nav',
+            navText: ['<span class="lnr lnr-chevron-left"></span>', '<span class="lnr lnr-chevron-right"></span>'],
         });
-        var _wt_freelancerslider = jQuery('.wt-freelancerslider')
-            _wt_freelancerslider.owlCarousel({
-                items: 1,
-                loop:true,
-                nav:true,
-                margin: 0,
-                autoplay:false,
-                navClass: ['wt-prev', 'wt-next'],
-                navContainerClass: 'wt-search-slider-nav',
-                navText: ['<span class="lnr lnr-chevron-left"></span>', '<span class="lnr lnr-chevron-right"></span>'],
-            });
-		$(function() {
-			$('#carousel').carouFredSel({
-				items: 1,
-				scroll: {
-					fx: 'crossfade'
-				},
-				auto: {
-					timeoutDuration: 5000,
-					duration: 2000
-				},
-				pagination: {
-					container: '#pager',
-					duration: 300
-				}
-			});
-			$('#pager a').mouseenter(function() {
-				var index = $('#pager a').index( $(this) );
-				//	clear the queue
-				thumbs.trigger( 'queue', [[]] );
-				//	scroll
-				thumbs.trigger( 'slideTo', [index, { queue: true }] );
-			});
-		});
-	</script>
+    </script>
 @endpush

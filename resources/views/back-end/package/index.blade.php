@@ -27,10 +27,7 @@
                         </div>
                         @if (!empty($packages) && $packages->count() > 0)
                             @foreach ($packages as $key => $package)
-                                @php
-                                    $options = unserialize($package->options);
-                                    $symbol = Helper::currencyList($to_currency);
-                                @endphp
+                                @php  $options = unserialize($package->options); @endphp
                                 @if (!empty($package))
                                     <div class="wt-package wt-baiscpackage">
                                         @if (!empty($package->title || $package->subtitle ))
@@ -41,7 +38,7 @@
                                         @endif
                                         <div class="wt-packagecontent">
                                             <ul class="wt-packageinfo">
-                                                <li class="wt-packageprice"><span><sup>{{ $symbol['symbol'] }}</sup>{{{ Helper::convertCurrency($package->cost, $from_currency, $to_currency) }}}<sub>\ {{{ Helper::getPackageDurationList($options['duration']) }}}</sub></span></li>
+                                                <li class="wt-packageprice"><span><sup>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}</sup>{{{$package->cost}}}<sub>\ {{{ Helper::getPackageDurationList($options['duration']) }}}</sub></span></li>
                                                 @foreach ($options as $key => $option)
                                                     @php
                                                         if ($key == 'banner_option' || $key == 'private_chat') {
@@ -60,11 +57,12 @@
                                                 @endforeach
                                             </ul>
                                             @if (Auth::user()->getRoleNames()[0] != "admin")
-                                                @if (in_array($package->id, $purchase_packages))
+                                                <a class="wt-btn" href="{{url('user/package/checkout/'.$package->id)}}"><span>{{ trans('lang.buy_now') }}</span></a>
+                                                {{-- @if (in_array($package->id, $purchase_packages))
                                                     <a class="wt-btn" href="{{url('user/package/checkout/'.$package->id)}}"><span>{{ trans('lang.purchased') }}</span></a>
                                                 @else
                                                     <a class="wt-btn" href="{{url('user/package/checkout/'.$package->id)}}"><span>{{ trans('lang.buy_now') }}</span></a>
-                                                @endif
+                                                @endif --}}
                                             @endif
                                         </div>
                                     </div>

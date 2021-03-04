@@ -1,0 +1,71 @@
+{
+  "enabled": true,
+  "welcomeScreen": false,
+  "whiteLabel": true,
+  "colors": {
+    "background": "#ffffff",
+    "text": "#000000",
+    "theme": "#006cff",
+    "themeText": "#ffffff",
+    "responseBackground": "#e9eef4",
+    "responseText": "#646464"
+  },
+  "company": {
+    "name": "Research Freelancer",
+    "description": "Let's talk about Research Freelancer!",
+    "avatar": {
+      "enabled": true,
+      "url": "http://researchfreelancer.loc/js/widget/5ca71c7e431af645ebb0f6fc/hRAENq3Q4w_.png"
+    },
+    "background": {
+      "enabled": true,
+      "url": "http://researchfreelancer.loc/js/widget/5ca71c7e431af645ebb0f6fc/3cae7f0a67453b0cd63a.png"
+    },
+    "social": {
+      "facebook": "",
+      "twitter": "",
+      "linkedin": ""
+    }
+  },
+  "chatWindow": {
+    "theme": "default"
+  },
+  "chatButton": {
+    "theme": "bubble",
+    "text": "Chat with us!"
+  },
+  "storyId": "5ca71b94431af6a395b0f62e",
+  "greetings": [{
+    "name": "Home page - new visitor",
+    "message": "Hey 👋 I'm a manager! 🤖 Want to see what I can do?",
+    "rules": [{
+      "type": "timeOnCurrentPage",
+      "rule": "greater",
+      "value": 15
+    }]
+  }, {
+    "name": "Home page - returning visitor",
+    "message": "Welcome back! 🙌 How may I help you today? 🤖",
+    "rules": [{
+      "type": "timeOnCurrentPage",
+      "rule": "greater",
+      "value": 10
+    }, {
+      "type": "userReturnedToYourWebsite",
+      "rule": "is",
+      "value": true
+    }]
+  }, {
+    "name": "Features page",
+    "message": "Hi 👋 Want to learn more about my features? 🤖",
+    "rules": [{
+      "type": "currentPageAddress",
+      "rule": "is",
+      "value": "http://researchfreelancer.loc/features"
+    }, {
+      "type": "timeOnCurrentPage",
+      "rule": "greater",
+      "value": 5
+    }]
+  }]
+}

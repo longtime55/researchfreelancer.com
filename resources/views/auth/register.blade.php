@@ -1,7 +1,7 @@
 @extends(file_exists(resource_path('views/extend/front-end/master.blade.php')) ? 'extend.front-end.master' : 'front-end.master')
 @section('content')
 @php
-    $locations      = App\Location::orderBy('title')->pluck('title', 'id')->toArray();
+    $locations      = App\Location::select('title', 'id')->get()->pluck('title', 'id')->toArray();
     $roles          = Spatie\Permission\Models\Role::all()->toArray();
     $register_form = App\SiteManagement::getMetaValue('reg_form_settings');
     $reg_one_title = !empty($register_form) && !empty($register_form[0]['step1-title']) ? $register_form[0]['step1-title'] : trans('lang.join_for_good');
@@ -15,7 +15,7 @@
     $reg_page = !empty($register_form) && !empty($register_form[0]['step3-page']) ? $register_form[0]['step3-page'] : '';
     $reg_four_title = !empty($register_form) && !empty($register_form[0]['step4-title']) ? $register_form[0]['step4-title'] : trans('lang.congrats');
     $reg_four_subtitle = !empty($register_form) && !empty($register_form[0]['step4-subtitle']) ? $register_form[0]['step4-subtitle'] : trans('lang.acc_creation_note');
-    $show_reg_form_banner = !empty($register_form) && !empty($register_form[0]['show_reg_form_banner']) ? $register_form[0]['show_reg_form_banner'] : 'false';
+    $show_reg_form_banner = !empty($register_form) && !empty($register_form[0]['show_reg_form_banner']) ? $register_form[0]['show_reg_form_banner'] : 'true';
     $reg_form_banner = !empty($register_form) && !empty($register_form[0]['reg_form_banner']) ? $register_form[0]['reg_form_banner'] : null;
     $breadcrumbs_settings = \App\SiteManagement::getMetaValue('show_breadcrumb');
     $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
@@ -115,7 +115,7 @@
                                         @if (!empty($locations))
                                             <div class="form-group">
                                                 <span class="wt-select">
-                                                    {!! Form::select('locations', $locations, null, array('placeholder' => trans('lang.select_location'), 'v-bind:class' => '{ "is-invalid": form_step2.is_locations_error }')) !!}
+                                                    {!! Form::select('locations', $locations, null, array('placeholder' => trans('lang.select_locations'), 'v-bind:class' => '{ "is-invalid": form_step2.is_locations_error }')) !!}
                                                     <span class="help-block" v-if="form_step2.locations_error">
                                                         <strong v-cloak>@{{form_step2.locations_error}}</strong>
                                                     </span>

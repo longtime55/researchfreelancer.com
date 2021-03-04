@@ -32,10 +32,10 @@ class CreatePayoutsTable extends Migration
             function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('user_id')->unsigned()->index()->nullable();
-                $table->integer('amount');
+                $table->string('amount');
                 $table->string('payment_method');
                 $table->string('currency');
-                $table->string('paypal_id')->nullable();
+                $table->string('paypal_id');
                 $table->string('status');
                 $table->foreign('user_id')
                     ->references('id')->on('users')

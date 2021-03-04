@@ -13,7 +13,8 @@
     z-index: 0;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    margin-right: 145px; }
+    padding-right: 132px;
+    margin-right: 0; }
   .iti__flag-container {
     position: absolute;
     top: 0;

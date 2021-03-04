@@ -30,12 +30,12 @@ class UserSeeder extends Seeder
             [
                 //Admin
                 [
-                    'first_name' => 'Taofik',
-                    'last_name' => 'tijani',
-                    'phone_number' => '+23408096221646',
-                    'slug' => 'taofik-tijani',
-                    'email' => 'taofiktijani@gmail.com',
-                    'password' => bcrypt('Ak!nsola'),
+                    'first_name' => 'chris',
+                    'last_name' => 'evans',
+                    'phone_number' => '1264312',
+                    'slug' => 'chris-evans',
+                    'email' => 'admin@amentotech.com',
+                    'password' => bcrypt('google'),
                     'location_id' => 1,
                     'user_verified' => 1,
                     'badge_id' => null,
@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Ava',
                     'last_name' => 'Nguyen',
-                    'phone_number' => null,
+                    'phone_number' => '1545654',
                     'slug' => 'ava-nguyen',
                     'email' => 'ava@amentotech.com',
                     'password' => bcrypt('google'),
@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Charlotte',
                     'last_name' => 'Morton',
-                    'phone_number' => null,
+                    'phone_number' => '4353453',
                     'slug' => 'charlotte-morton',
                     'email' => 'Charlotte@amentotech.com',
                     'password' => bcrypt('google'),
@@ -73,11 +73,11 @@ class UserSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'first_name' => 'good',
-                    'last_name' => 'nice',
-                    'phone_number' => null,
-                    'slug' => 'good-nice',
-                    'email' => 'goodnice@outlook.com',
+                    'first_name' => 'Taofik',
+                    'last_name' => 'Tijani',
+                    'phone_number' => '2453443',
+                    'slug' => 'taofik-tijani',
+                    'email' => 'taofik@amentotech.com',
                     'password' => bcrypt('google'),
                     'location_id' => 9,
                     'user_verified' => 1,
@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Elijah',
                     'last_name' => 'Johnson',
-                    'phone_number' => null,
+                    'phone_number' => '9767565',
                     'slug' => 'elijah-johnson',
                     'email' => 'johnson@amentotech.com',
                     'password' => bcrypt('google'),
@@ -103,7 +103,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Brooklyn',
                     'last_name' => 'Chan',
-                    'phone_number' => null,
+                    'phone_number' => '3454654',
                     'slug' => 'brooklyn-chan',
                     'email' => 'chan@amentotech.com',
                     'password' => bcrypt('google'),
@@ -117,7 +117,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Beau',
                     'last_name' => 'Simard',
-                    'phone_number' => null,
+                    'phone_number' => '9078655',
                     'slug' => 'beau-simard',
                     'email' => 'beau@amentotech.com',
                     'password' => bcrypt('google'),
@@ -131,7 +131,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Isobel',
                     'last_name' => 'Jones',
-                    'phone_number' => null,
+                    'phone_number' => '4673454',
                     'slug' => 'isobel-jones',
                     'email' => 'isobel@amentotech.com',
                     'password' => bcrypt('google'),
@@ -145,7 +145,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Kian',
                     'last_name' => 'Johnson',
-                    'phone_number' => null,
+                    'phone_number' => '1346434',
                     'slug' => 'kian-johnson',
                     'email' => 'kian@amentotech.com',
                     'password' => bcrypt('google'),
@@ -159,7 +159,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Sarah',
                     'last_name' => 'Chapman',
-                    'phone_number' => null,
+                    'phone_number' => '8654544',
                     'slug' => 'sarah-chapman',
                     'email' => 'sarah@amentotech.com',
                     'password' => bcrypt('google'),
@@ -173,7 +173,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Abhinav',
                     'last_name' => 'Balasubramanium',
-                    'phone_number' => null,
+                    'phone_number' => '3088865',
                     'slug' => 'abhinav-balasubramanium',
                     'email' => 'balasubramanium@amentotech.com',
                     'password' => bcrypt('google'),
@@ -187,7 +187,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Anika',
                     'last_name' => 'Gavde',
-                    'phone_number' => null,
+                    'phone_number' => '5755545',
                     'slug' => 'anika-gavde',
                     'email' => 'anika@amentotech.com',
                     'password' => bcrypt('google'),
@@ -202,7 +202,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Shreyas',
                     'last_name' => 'Malhotra',
-                    'phone_number' => null,
+                    'phone_number' => '4564564',
                     'slug' => 'shreyas-malhotra',
                     'email' => 'shreyas@amentotech.com',
                     'password' => bcrypt('google'),
@@ -216,7 +216,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Alara',
                     'last_name' => 'Tekin',
-                    'phone_number' => null,
+                    'phone_number' => '0978787',
                     'slug' => 'alara-tekin',
                     'email' => 'tekin@amentotech.com',
                     'password' => bcrypt('google'),
@@ -230,7 +230,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Sait',
                     'last_name' => 'Karaca',
-                    'phone_number' => null,
+                    'phone_number' => '8634568',
                     'slug' => 'sait-karaca',
                     'email' => 'karaca@amentotech.com',
                     'password' => bcrypt('google'),
@@ -244,7 +244,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Hüsnü',
                     'last_name' => 'Çomak',
-                    'phone_number' => null,
+                    'phone_number' => '9787665',
                     'slug' => 'hüsnü-comak',
                     'email' => 'comak@amentotech.com',
                     'password' => bcrypt('google'),
@@ -258,7 +258,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Jack',
                     'last_name' => 'Mills',
-                    'phone_number' => null,
+                    'phone_number' => '9787666',
                     'slug' => 'jack-mills',
                     'email' => 'mills@amentotech.com',
                     'password' => bcrypt('google'),
@@ -272,7 +272,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Judy',
                     'last_name' => 'Dixon',
-                    'phone_number' => null,
+                    'phone_number' => '0898766',
                     'slug' => 'judy-dixon',
                     'email' => 'dixon@amentotech.com',
                     'password' => bcrypt('google'),
@@ -286,7 +286,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Ann',
                     'last_name' => 'Coleman',
-                    'phone_number' => null,
+                    'phone_number' => '1243543',
                     'slug' => 'ann-coleman',
                     'email' => 'coleman@amentotech.com',
                     'password' => bcrypt('google'),
@@ -300,7 +300,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Louis',
                     'last_name' => 'James',
-                    'phone_number' => null,
+                    'phone_number' => '9765675',
                     'slug' => 'louis-james',
                     'email' => 'james@amentotech.com',
                     'password' => bcrypt('google'),
@@ -314,7 +314,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Kai',
                     'last_name' => 'Clarke',
-                    'phone_number' => null,
+                    'phone_number' => '3454089',
                     'slug' => 'kai-clarke',
                     'email' => 'kai@amentotech.com',
                     'password' => bcrypt('google'),
@@ -328,7 +328,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Georgia',
                     'last_name' => 'Baker',
-                    'phone_number' => null,
+                    'phone_number' => '9776556',
                     'slug' => 'georgia-baker',
                     'email' => 'baker@amentotech.com',
                     'password' => bcrypt('google'),
@@ -342,7 +342,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Ralph',
                     'last_name' => 'Davis',
-                    'phone_number' => null,
+                    'phone_number' => '1343454',
                     'slug' => 'ralph-davis',
                     'email' => 'davis@amentotech.com',
                     'password' => bcrypt('google'),
@@ -356,7 +356,7 @@ class UserSeeder extends Seeder
                 [
                     'first_name' => 'Alexa',
                     'last_name' => 'Xavier',
-                    'phone_number' => null,
+                    'phone_number' => '9767654',
                     'slug' => 'jhon-xavier',
                     'email' => 'jhon@amentotech.com',
                     'password' => bcrypt('google'),

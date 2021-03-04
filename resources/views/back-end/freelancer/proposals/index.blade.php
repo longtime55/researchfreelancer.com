@@ -15,9 +15,6 @@
                                         @php
                                             $freelancer_proposal = \App\Proposal::find($proposal->id);
                                             $duration = Helper::getJobDurationList($proposal->job->duration);
-                                            if (!empty($proposal->job->currency)) {
-                                                $symbol = Helper::currencyList($proposal->job->currency);
-                                            }
                                             $status_btn = $proposal->status == 'cancelled' ? trans('lang.view_reason') : trans('lang.view_detail');
                                             $detail_link = $proposal->status == 'hired' ? url('freelancer/job/'.$proposal->job->slug) : 'javascript:void(0);';
                                             $user_name = Helper::getUserName($proposal->job->employer->id);
@@ -49,7 +46,7 @@
                                                         )
                                                         <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                             @if (!empty($proposal->job->price))
-                                                                <li><span class="wt-dashboraddoller"><i>{{ $symbol['symbol'] }}</i> {{{ $proposal->job->price }}}</span></li>
+                                                                <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $proposal->job->price }}}</span></li>
                                                             @endif
                                                             @if (!empty($proposal->job->location->title))
                                                                 <li><span><img src="{{{asset(Helper::getLocationFlag($proposal->job->location->flag))}}}" alt="{{{ trans('lang.locations') }}}"> {{{ $proposal->job->location->title }}}</span></li>

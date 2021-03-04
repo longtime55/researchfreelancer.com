@@ -38,4 +38,5 @@ class Payout extends Model
     {
         return $this->belongsTo('App\User');
     }
+
 }

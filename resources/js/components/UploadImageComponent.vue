@@ -30,7 +30,7 @@ const getImageUploadTemplate = () => `
     </div>
 `;
 import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import 'vue2-dropzone/dist/vue2Dropzone.css'
 export default {
     props: ['id', 'img_ref', 'url', 'name'],    
     components: {

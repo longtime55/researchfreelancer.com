@@ -25,8 +25,6 @@ use Auth;
 use DB;
 use App\Job;
 use App\Proposal;
-use App\User;
-use App\Profile;
 use App\Badge;
 use App\SiteManagement;
 use Illuminate\Support\Facades\Input;
@@ -46,8 +44,6 @@ class PackageController extends Controller
      * @var    array $package
      */
     protected $package;
-    protected $payout_settings;
-    protected $currency;
 
     /**
      * Create a new controller instance.
@@ -59,13 +55,6 @@ class PackageController extends Controller
     public function __construct(Package $package)
     {
         $this->package = $package;
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'USD';
-        }
-        
     }
 
     /**
@@ -78,17 +67,16 @@ class PackageController extends Controller
     public function index($role_type)
     {
         if (Auth::user() && Auth::user()->getRoleNames()[0] != "admin") {
-            $user = User::find(Auth::user()->id);
             $role = Role::where('role_type', $role_type)->first();
             $package_options = Helper::getPackageOptions($role_type);
             $packages = $this->package::all()->where('role_id', $role->id)->where('trial', 0);
             $purchase_packages = DB::table('items')->select('product_id')->where('subscriber', Auth::user()->id)->get()->pluck('product_id')->toArray();
-            $from_currency = $this->currency;
-            $to_currency = !empty($user->profile->transaction_currency) ? $user->profile->transaction_currency : $from_currency;
+            $currency   = SiteManagement::getMetaValue('commision');
+            $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
             if (file_exists(resource_path('views/extend/back-end/package/index.blade.php'))) {
-                return View::make('extend.back-end.package.index', compact('packages', 'package_options', 'purchase_packages', 'from_currency', 'to_currency'));
+                return View::make('extend.back-end.package.index', compact('packages', 'package_options', 'purchase_packages', 'symbol'));
             } else {
-                return View::make('back-end.package.index', compact('packages', 'package_options', 'purchase_packages', 'from_currency', 'to_currency'));
+                return View::make('back-end.package.index', compact('packages', 'package_options', 'purchase_packages', 'symbol'));
             }
             if (Auth::user()->getRoleNames()[0] != $role_type) {
                 abort(404);
@@ -196,7 +184,7 @@ class PackageController extends Controller
         if (!empty($slug)) {
             $package = $this->package::where('slug', $slug)->first();
             $options = unserialize($package->options);
-            $no_of_credits = !empty($options['no_of_credits']) ? $options['no_of_credits'] : null; 
+            $no_of_services = !empty($options['no_of_services']) ? $options['no_of_services'] : null; 
             $no_of_featured_services = !empty($options['no_of_featured_services']) ? $options['no_of_featured_services'] : null; 
             $roles = Role::where('name', '!=', 'admin')->pluck('name', 'id')->toArray();
             $durations = \App\Helper::getPackageDurationList();
@@ -209,7 +197,7 @@ class PackageController extends Controller
                     return View::make(
                         'extend.back-end.admin.packages.edit',
                         compact(
-                            'no_of_credits',
+                            'no_of_services',
                             'no_of_featured_services',
                             'package',
                             'options',
@@ -225,7 +213,7 @@ class PackageController extends Controller
                     return View::make(
                         'back-end.admin.packages.edit',
                         compact(
-                            'no_of_credits',
+                            'no_of_services',
                             'no_of_featured_services',
                             'package',
                             'options',

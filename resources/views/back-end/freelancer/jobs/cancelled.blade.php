@@ -16,15 +16,12 @@
                                     $user_name = $job->employer->first_name.' '.$job->employer->last_name;
                                     $verified_user = \App\User::select('user_verified')->where('id', $job->employer->id)->pluck('user_verified')->first();
                                     $project_type  = Helper::getProjectTypeList($job->project_type);
-                                    $symbol = Helper::currencyList($job->currency);
-                                    $description = strip_tags(stripslashes($job->description));
-                                    $accepted_proposal = \App\Job::find($job->id)->proposals()->where('status', 'hired')->first();
                                 @endphp
                                 <div class="wt-userlistinghold wt-featured wt-userlistingvtwo">
                                     @if (!empty($job->is_featured) && $job->is_featured === 'true')
                                         <span class="wt-featuredtag"><img src="{{{ asset('images/featured.png') }}}" alt="{{ trans('lang.is_featured') }}" data-tipso="Plus Member" class="template-content tipso_style"></span>
                                     @endif
-                                    <div class="col-xm-12 col-sm-12 col-md-12 col-lg-6 wt-userlistingcontent">
+                                    <div class="wt-userlistingcontent">
                                         <div class="wt-contenthead">
                                             @if (!empty($user_name) || !empty($job->title) )
                                                 <div class="wt-title">
@@ -43,7 +40,7 @@
                                                 )
                                                 <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                     @if (!empty($job->price))
-                                                        <li><span class="wt-dashboraddoller"><i>{{ $symbol['symbol'] }}</i> {{{ $job->price }}} {{ $job->currency }}</span></li>
+                                                        <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
                                                     @endif
                                                     @if (!empty($job->location->title))
                                                         <li><span><img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.locations') }}}"> {{{ $job->location->title }}}</span></li>
@@ -63,41 +60,6 @@
                                                 <a href="{{{ url('freelancer/dispute/'.$job->slug) }}}" class="wt-btn">{{ trans('lang.raise_dispute') }}</a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xm-12 col-sm-12 col-md-12 col-lg-6 wt-userlistingcontent mt-5">
-                                        <div class="wt-description">
-                                            <h4>{{{trans('lang.milestone')}}}</h4>
-                                        </div>
-                                        <table class="wt-tablecategories">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>{{{ trans('lang.description') }}}</th>
-                                                    <th>{{{ trans('lang.amount') }}}</th>
-                                                    <th>{{{ trans('lang.date') }}}</th>
-                                                    <th>{{{ trans('lang.status') }}}</th>
-                                                    <!--<th>{{{ trans('lang.action') }}}</th>-->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php 
-                                                    $milestones = \App\Milestone::where('proposal_id', $accepted_proposal->id)->orderBy('id', 'asc')->get();
-                                                    $n = 0;
-                                                @endphp
-                                                @if (!empty($milestones)) 
-                                                    @foreach ($milestones as $milestone)
-                                                        @php $n++; @endphp
-                                                        <tr>
-                                                            <td>{{ $n }}</td>
-                                                            <td>{{ $milestone->description }}</td>
-                                                            <td>{{ $symbol['symbol'] }} {{ $milestone->amount }}</td>
-                                                            <td>{{ $milestone->updated_at->format('Y-m-d') }}</td>
-                                                            <td>{{ $milestone->status }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
                             @endforeach

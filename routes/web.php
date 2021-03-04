@@ -13,11 +13,11 @@
  * @link    http://www.amentotech.com
  */
 
-// Route::fallback(
-//     function () {
-//         return View('errors.404 ');
-//     }
-// );
+Route::fallback(
+    function () {
+        return View('errors.404 ');
+    }
+);
 // Authentication route
 Auth::routes();
 // Cache clear route
@@ -56,7 +56,6 @@ Route::get(
     }
 );
 
-// Route::get('/', function () { return view('sitemap.html'); });
 
 Route::get('profile/{slug}', 'PublicController@showUserProfile')->name('showUserProfile');
 Route::get('categories', 'CategoryController@categoriesList')->name('categoriesList');
@@ -64,10 +63,7 @@ Route::get('page/{slug}', 'PageController@show')->name('showPage');
 Route::post('store/project-offer', 'UserController@storeProjectOffers');
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'jobs') {
     Route::get('jobs', 'JobController@listjobs')->name('jobs');
-    Route::get('project/{slug}', 'JobController@show')->name('jobDetail');
-    //Project Post Routes
-    Route::get('post-project', 'JobController@postJob')->name('employerPostJob');
-    Route::post('job/post-job', 'JobController@store');
+    Route::get('job/{slug}', 'JobController@show')->name('jobDetail');
 }
 
 if (Helper::getAccessType() == 'both' || Helper::getAccessType() == 'services') {
@@ -83,7 +79,6 @@ Route::post('register/form-step1-custom-errors', 'PublicController@RegisterStep1
 Route::post('register/form-step2-custom-errors', 'PublicController@RegisterStep2Validation');
 Route::get('search-results', 'PublicController@getSearchResult')->name('searchResults');
 Route::post('user/add-wishlist', 'UserController@addWishlist');
-Route::get('logout', 'LoginController@logout')->name('logout');
 // Admin Routes
 Route::group(
     ['middleware' => ['role:admin']],
@@ -98,15 +93,6 @@ Route::group(
         Route::get('users', 'UserController@userListing')->name('userListing');
         Route::get('admin/home-page-settings', 'SiteManagementController@homePageSettings')->name('homePageSettings');
         Route::post('admin/get-page-option', 'SiteManagementController@getPageOption');
-        // Category Routes
-        Route::get('admin/categories', 'CategoryController@index')->name('categories');
-        Route::get('admin/categories/edit-cats/{id}', 'CategoryController@edit')->name('editCategories');
-        Route::post('admin/store-category', 'CategoryController@store');
-        Route::get('admin/categories/search', 'CategoryController@index');
-        Route::post('admin/categories/delete-cats', 'CategoryController@destroy');
-        Route::post('admin/categories/update-cats/{id}', 'CategoryController@update');
-        Route::post('admin/categories/upload-temp-image', 'CategoryController@uploadTempImage');
-        Route::post('admin/delete-checked-cats', 'CategoryController@deleteSelected');
         // Skill Routes
         Route::get('admin/skills', 'SkillController@index')->name('skills');
         Route::get('admin/skills/edit-skills/{id}', 'SkillController@edit')->name('editSkill');
@@ -115,24 +101,6 @@ Route::group(
         Route::get('admin/skills/search', 'SkillController@index');
         Route::post('admin/skills/delete-skills', 'SkillController@destroy');
         Route::post('admin/delete-checked-skills', 'SkillController@deleteSelected');
-        // Research and Freelancer Level Routes
-        Route::get('admin/levels/{which}', 'LevelController@index')->name('levels');
-        Route::get('admin/levels/search/{which}', 'LevelController@index')->name('searchLevels');
-        Route::get('admin/levels/edit/{which}/{id}', 'LevelController@edit')->name('editLevels');
-        Route::post('admin/levels/store/{which}', 'LevelController@store')->name('storeLevels');
-        Route::post('admin/levels/delete/{which}', 'LevelController@destroy')->name('destroyLevels');
-        Route::post('admin/levels/update/{which}/{id}', 'LevelController@update')->name('updateLevels');
-        Route::post('admin/levels/upload-temp-image/{which}', 'LevelController@uploadTempImage')->name('level.uploadTempImg');
-        Route::post('admin/levels/delete-checked/{which}', 'LevelController@deleteSelected')->name('level.delSelected');
-        // Citation Routes
-        Route::get('admin/citations', 'CitationController@index')->name('citations');
-        Route::get('admin/citations/edit-cits/{id}', 'CitationController@edit')->name('editCitations');
-        Route::post('admin/store-citation', 'CitationController@store');
-        Route::get('admin/citations/search', 'CitationController@index');
-        Route::post('admin/citations/delete-cits', 'CitationController@destroy');
-        Route::post('admin/citations/update-cits/{id}', 'CitationController@update');
-        Route::post('admin/citations/upload-temp-image', 'CitationController@uploadTempImage');
-        Route::post('admin/delete-checked-cits', 'CitationController@deleteSelected');
         // Department Routes
         Route::get('admin/departments', 'DepartmentController@index')->name('departments');
         Route::get('admin/departments/edit-dpts/{id}', 'DepartmentController@edit')->name('editDepartment');
@@ -149,6 +117,24 @@ Route::group(
         Route::post('admin/languages/delete-langs', 'LanguageController@destroy');
         Route::post('admin/languages/update-langs/{id}', 'LanguageController@update');
         Route::post('admin/delete-checked-langs', 'LanguageController@deleteSelected');
+        // Category Routes
+        Route::get('admin/categories', 'CategoryController@index')->name('categories');
+        Route::get('admin/categories/edit-cats/{id}', 'CategoryController@edit')->name('editCategories');
+        Route::post('admin/store-category', 'CategoryController@store');
+        Route::get('admin/categories/search', 'CategoryController@index');
+        Route::post('admin/categories/delete-cats', 'CategoryController@destroy');
+        Route::post('admin/categories/update-cats/{id}', 'CategoryController@update');
+        Route::post('admin/categories/upload-temp-image', 'CategoryController@uploadTempImage');
+        Route::post('admin/delete-checked-cats', 'CategoryController@deleteSelected');
+        // Citation Routes
+        Route::get('admin/citations', 'CitationController@index')->name('citations');
+        Route::get('admin/citations/edit-cits/{id}', 'CitationController@edit')->name('editCitations');
+        Route::post('admin/store-citation', 'CitationController@store');
+        Route::get('admin/citations/search', 'CitationController@index');
+        Route::post('admin/citations/delete-cits', 'CitationController@destroy');
+        Route::post('admin/citations/update-cits/{id}', 'CitationController@update');
+        Route::post('admin/citations/upload-temp-image', 'CitationController@uploadTempImage');
+        Route::post('admin/delete-checked-cits', 'CitationController@deleteSelected');
         // Badges Routes
         Route::get('admin/badges', 'BadgeController@index')->name('badges');
         Route::get('admin/badges/edit-badges/{id}', 'BadgeController@edit')->name('editbadges');
@@ -247,6 +233,7 @@ Route::group(
         Route::post('admin/store/package', 'PackageController@store');
         Route::post('admin/packages/delete-package', 'PackageController@destroy');
         Route::post('package/get-package-options', 'PackageController@getPackageOptions');
+
         Route::get('admin/profile', 'UserController@adminProfileSettings')->name('adminProfile');
         Route::post('admin/store-profile-settings', 'UserController@storeProfileSettings');
         Route::post('admin/upload-temp-image', 'UserController@uploadTempImage');
@@ -283,6 +270,9 @@ Route::group(
         Route::post('service/update-service', 'ServiceController@update');
     }
 );
+//Project Post Routes
+Route::get('project/post-project', 'JobController@postJob')->name('employerPostJob');
+Route::post('job/post-job', 'JobController@store');
 
 //Employer Routes
 Route::group(
@@ -302,8 +292,6 @@ Route::group(
         Route::get('employer/service/{service_id}/{id}/{status}', 'EmployerController@showServiceDetail');
         Route::get('employer/payout-settings', 'EmployerController@payoutSettings')->name('employerPayoutsSettings');
         Route::get('employer/payouts', 'EmployerController@getPayouts')->name('getEmployerPayouts');
-        Route::post('employer/proposal/change-milestone/{proposal_id}', 'ProposalController@updateSave');
-        Route::get('employer/milestone/{milestone_id}/{status}', 'UserController@employerReleaseCancel');
     }
 );
 // Freelancer Routes
@@ -312,6 +300,8 @@ Route::group(
     function () {
         Route::get('/get-freelancer-skills', 'SkillController@getFreelancerSkills');
         Route::get('/get-skills', 'SkillController@getSkills');
+        Route::get('freelancer/dispute/{slug}', 'UserController@raiseDispute');
+        Route::post('freelancer/store-dispute', 'UserController@storeDispute');
         Route::get('freelancer/dashboard/education-certification-experience', 'FreelancerController@experienceEducationSettings')->name('experienceEducation');
         Route::get('freelancer/dashboard/payment-settings', 'FreelancerController@paymentSettings')->name('paymentSettings');
         Route::get('freelancer/dashboard/project-awards', 'FreelancerController@projectAwardsSettings')->name('projectAwards');
@@ -369,12 +359,9 @@ Route::group(
         Route::get('freelancer/{type}/invoice', 'UserController@getFreelancerInvoices')->name('freelancerInvoice');
         Route::get('show/invoice/{id}', 'UserController@showInvoice');
         Route::post('service/upload-temp-message_attachments', 'ServiceController@uploadTempMessageAttachments');
-        Route::post('user/verify/emailcode', 'UserController@verifyUserEmailCode');
+        // Route::post('user/verify/emailcode', 'UserController@verifyUserEmailCode');
         Route::post('user/update-payout-detail', 'UserController@updatePayoutDetail');
         Route::get('user/get-payout-detail', 'UserController@getPayoutDetail');
-        Route::get('employer/{job}/{milestone_id}/dispute', 'UserController@raiseDispute');
-        Route::get('freelancer/dispute/{slug}', 'UserController@raiseDispute');
-        Route::post('freelancer/store-dispute', 'UserController@storeDispute');
     }
 );
 Route::post('job/get-wishlist', 'JobController@getWishlist');
@@ -408,10 +395,15 @@ Route::post('get-freelancer-certifications', 'PublicController@getFreelancerCert
 Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe', 'uses' => 'StripeController@payWithStripe',));
 Route::post('addmoney/stripe', array('as' => 'addmoney.stripe', 'uses' => 'StripeController@postPaymentWithStripe',));
 //Rave
+Route::get('/success', function () {
+    return view('success');
+});
+Route::get('/failed', function () {
+    return view('failed');
+});
+// Route::post('addmoney/rave', 'RaveController@aa')->name('paywithrave');
 Route::post('addmoney/rave', 'RaveController@initialize')->name('paywithrave');
 Route::post('/rave/callback', 'RaveController@callback')->name('callback');
-Route::get('rave/ec-checkout-success', 'RaveController@getExpressCheckoutSuccess');
-Route::get('rave/redirect-url', 'RaveController@getIndex');
 
 
 Route::get('service/payment-process/{id}', 'ServiceController@employerPaymentProcess');

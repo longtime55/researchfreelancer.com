@@ -46,7 +46,7 @@
                                             )
                                             <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                 @if (!empty($job->price))
-                                                    <li><span class="wt-dashboraddoller"><i>{{ $symbol['symbol'] }}</i> {{{ $job->price }}}</span></li>
+                                                    <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
                                                 @endif
                                                 @if (!empty($job->location->title))
                                                     <li><span><img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{ trans('lang.img') }}"> {{{ $job->location->title }}}</span></li>
@@ -99,7 +99,6 @@
                                         $completion_time = !empty($accepted_proposal->completion_time) ? \App\Helper::getJobDurationList($accepted_proposal->completion_time) : '';
                                         $p_attachments = !empty($accepted_proposal->attachments) ? unserialize($accepted_proposal->attachments) : '';
                                         $feedbacks = \App\Review::select('feedback')->where('receiver_id', $user->id)->count();
-                                        $accepted_symbol = Helper::currencyList($accepted_proposal->currency);
                                         $badge = Helper::getUserBadge($user->id);
                                         if (!empty($enable_package) && $enable_package === 'true') {
                                             $feature_class = !empty($badge) ? 'wt-featured' : '';
@@ -141,14 +140,14 @@
                                                     <a href="{{{ url('proposal/'.$job->slug.'/'.$job->status) }}}"  class="wt-btn">{{ trans('lang.view_detail') }}</a>
                                                 </div>
                                                 <div class="wt-hireduserstatus">
-                                                    <h5>{{ $accepted_symbol['symbol'] }}{{{ $accepted_proposal->amount }}}</h5>
+                                                    <h5>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{ $accepted_proposal->amount }}}</h5>
                                                     @if(!empty($completion_time))
                                                         <span>{{{ $completion_time }}}</span>
                                                     @endif
                                                 </div>
                                                 <div class="wt-hireduserstatus">
                                                     <i class="far fa-envelope"></i>
-                                                    <a href="javascript:void(0);" v-on:click.prevent="showCoverLetter('{{ $accepted_proposal->id }}')" ><span>{{ trans('lang.proposal_details') }}</span></a>
+                                                    <a href="javascript:void(0);" v-on:click.prevent="showCoverLetter('{{ $accepted_proposal->id }}')" ><span>{{ trans('lang.cover_letter') }}</span></a>
                                                 </div>
                                                 <div class="wt-hireduserstatus">
                                                     <i class="fa fa-paperclip"></i>
@@ -173,8 +172,8 @@
                                 </div>
                                 <b-modal ref="myModalRef-{{ $accepted_proposal->id }}" hide-footer title="Cover Letter" v-cloak>
                                     <div class="d-block text-center">
-                                        {{{$accepted_proposal->content}}}
-                                    </div>
+                                            {{{$accepted_proposal->content}}}
+                                        </div>
                                 </b-modal>
                             @endif 
                             <div class="wt-freelancerholder wt-rcvproposalholder">
@@ -197,7 +196,6 @@
                                                     $feedbacks = \App\Review::select('feedback')->where('receiver_id', $proposal->freelancer_id)->count();
                                                     $completion_time = !empty($proposal->completion_time) ? \App\Helper::getJobDurationList($proposal->completion_time) : '';
                                                     $attachments = !empty($proposal->attachments) ? unserialize($proposal->attachments) : '';
-                                                    $proposal_symbol = Helper::currencyList($proposal->currency);
                                                     $attachments_count = 0;
                                                     if (!empty($attachments)){
                                                         $attachments_count = count($attachments);
@@ -239,25 +237,20 @@
                                                         </div>
                                                     </div>
                                                     <div class="wt-rightarea">
-                                                        <div class="wt-btnarea" style="padding: 0 10px">
-                                                            @if (empty($accepted_proposal))
-                                                                <a href="{{ url('profile/'.$user->slug) }}" class="wt-btn">{{ trans('lang.start_chatting') }}</a>
-                                                            @endif
-                                                        </div>
                                                         <div class="wt-btnarea">
                                                             @if (empty($accepted_proposal))
-                                                                <a href="javascript:void(0);" v-on:click.prevent="hireFreelancer('{{{$proposal->id}}}')" class="wt-btn">{{ trans('lang.hire_now') }}</a>
+                                                                <a href="javascript:void(0);"  v-on:click.prevent="hireFreelancer('{{{$proposal->id}}}')" class="wt-btn">{{ trans('lang.hire_now') }}</a>
                                                             @endif
                                                         </div>
                                                         <div class="wt-hireduserstatus">
-                                                            <h5>{{ $proposal_symbol['symbol'] }}{{{$proposal->amount}}}</h5>
+                                                            <h5>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}{{{$proposal->amount}}}</h5>
                                                             @if(!empty($completion_time))
                                                                 <span>{{{ $completion_time }}}</span>
                                                             @endif
                                                         </div>
                                                         <div class="wt-hireduserstatus">
                                                             <i class="far fa-envelope"></i>
-                                                            <a href="javascript:void(0);"  v-on:click.prevent="showCoverLetter('{{ $proposal->id }}')" ><span>{{ trans('lang.proposal_details') }}</span></a>
+                                                            <a href="javascript:void(0);"  v-on:click.prevent="showCoverLetter('{{ $proposal->id }}')" ><span>{{ trans('lang.cover_letter') }}</span></a>
                                                         </div>
                                                         <div class="wt-hireduserstatus">
                                                             <i class="fa fa-paperclip"></i>
@@ -288,37 +281,10 @@
                                         @endif
                                     @endif
                                 </div>
-                                <b-modal ref="myModalRef-{{ $proposal->id }}" hide-footer title="Proposal Details" v-cloak>
+                                <b-modal ref="myModalRef-{{ $proposal->id }}" hide-footer title="Cover Letter" v-cloak>
                                     <div class="d-block text-center">
                                         {{{$proposal->content}}}
                                     </div>
-                                    <table class="wt-tablecategories">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>{{{ trans('lang.description') }}}</th>
-                                                <th>{{{ trans('lang.amount') }}}</th>
-                                                <th>{{{ trans('lang.date') }}}</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php 
-                                                $milestones = \App\Milestone::where('proposal_id', $proposal->id)->orderBy('id', 'asc')->get();
-                                                $n = 0;
-                                            @endphp
-                                            @if (!empty($milestones)) 
-                                                @foreach ($milestones as $milestone)
-                                                    @php $n++; @endphp
-                                                    <tr>
-                                                        <td>{{ $n }}</td>
-                                                        <td>{{ $milestone->description }}</td>
-                                                        <td>{{ $milestone->amount }}</td>
-                                                        <td>{{ $milestone->updated_at->format('Y-m-d') }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                    </table>
                                 </b-modal>
                             </div>
                             @if ( method_exists($proposals,'links') )

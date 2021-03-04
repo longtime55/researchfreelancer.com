@@ -1,7 +1,6 @@
 @if( Schema::hasTable('site_managements'))
     @php
         $footer = \App\SiteManagement::getMetaValue('footer_settings');
-        $footer['copyright'] = str_replace("%date%", date("Y"), $footer['copyright']);
         $search_menu = \App\SiteManagement::getMetaValue('search_menu');
         $menu_title = DB::table('site_managements')->select('meta_value')->where('meta_key', 'menu_title')->get()->first();
     @endphp
@@ -38,7 +37,7 @@
                                                     <li><a href="{{{ url('page/'.$page->slug) }}}">{{{ $page->title }}}</a></li>
                                                 @endif
                                             @endforeach
-                                            <li><a target="_blank" href="http://researchfreelancer.com/sitemap.html">{{{ trans('lang.sitemap') }}}</a></li>
+                                            <li class="wt-sitemap wt-themecolor pt-4"><a style="color: #ff0000" href="http://sitemap.com/">{{{ trans('lang.sitemap') }}}</a></li>
                                         </ul>
                                     @endif
                                 </div>
@@ -92,8 +91,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <!--<p class="wt-copyrights">-->
-                        <p class="wt-textcenter">{{{ !empty($footer['copyright']) ? $footer['copyright'] : 'Copyright ©'. date("Y").' '. 'Research Freelancer. All Rights Reserved.'  }}}</p>
+                        <p class="wt-copyrights"><span>{{{ !empty($footer['copyright']) ? $footer['copyright'] : 'Research Freelancer. All Rights Reserved. Amentotech.'  }}}</p>
                         @if(!empty($footer['pages']))
                             <nav class="wt-addnav">
                                 <ul>

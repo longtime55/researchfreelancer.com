@@ -25,7 +25,7 @@ const getTemplate = () => `
   </li>
 `;
 import vueDropzone from "vue2-dropzone";
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+import 'vue2-dropzone/dist/vue2Dropzone.css'
 export default {
     props: ['option','int', 'temp_url'],
  data () {

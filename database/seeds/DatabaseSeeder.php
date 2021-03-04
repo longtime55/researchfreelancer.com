@@ -31,8 +31,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LanguageSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(CitationSeeder::class);
-        $this->call(FreelancerLevelSeeder::class);
-        $this->call(ResearchLevelSeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(EmailTypeSeeder::class);
         $this->call(ReviewOptionsSeeder::class);

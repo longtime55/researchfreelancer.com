@@ -44,7 +44,7 @@ class CitationSeeder extends Seeder
                 ],
                 [
                     'title' => 'Chicago/Turabian',
-                    'slug'  => 'chicago-turabian',
+                    'slug'  => 'chicago/turabian',
                     'image'  => '3.png',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),

@@ -91,7 +91,7 @@ class CategoryController extends Controller
         }
         $this->validate(
             $request, [
-                'category_title'    => 'required|unique:categories,title',
+                'category_title'    => 'required',
             ]
         );
         $this->category->saveCategories($request);
@@ -140,7 +140,7 @@ class CategoryController extends Controller
         }
         $this->validate(
             $request, [
-                'category_title' => 'required|unique:categories,title',
+                'category_title' => 'required',
             ]
         );
         $this->category->updateCategories($request, $id);

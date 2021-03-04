@@ -1,6 +1,6 @@
 <template>
-    <div class="wt-chatpopup">
-        <div class="wt-chatbox">
+  <div class="wt-chatpopup">
+    <div class="wt-chatbox">
             <div class="wt-messages wt-verticalscrollbar wt-dashboardscrollbar">
                 <div v-for="(msg, index) in messages" :key="index" v-bind:class="[msg.type===1 ? 'wt-memessage wt-readmessage' : 'wt-offerermessage']">
                     <figure v-if="image">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <a id="wt-getsupport" class="wt-themeimgborder"><img :src="this.receiver_profile_image" :alt="trans_image_alt"></a>
-    </div>
+  </div>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
             newmessage: '',
             messages: [],
             receiver: this.receiver_id,
-            socket : io('researchfreelancer.com:3001')
+            socket : io('localhost:3001')
         }
     },
     methods: {

@@ -76,13 +76,8 @@
                                                 <i class="fa fa-paypal"></i>
                                                 <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
                                             </a>
-                                        @elseif ($gatway == "rave")
-                                        <a href="javascript:void(0);" v-on:click.prevent="getRaveForm">
-                                            <i class="fa fa-credit-card"></i>
-                                            <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
-                                        </a>
                                         @elseif ($gatway == "stripe")
-                                            <a href="javascript:void(0);" v-on:click.prevent="getStriprForm">
+                                            <a href="javascrip:void(0);" v-on:click.prevent="getStriprForm">
                                                 <i class="fab fa-stripe-s"></i>
                                                 <span><em>{{ trans('lang.pay_amount_via') }}</em> {{ Helper::getPaymentMethodList($gatway)['title']}} {{ trans('lang.pay_gateway') }}</span>
                                             </a>
@@ -141,38 +136,6 @@
                                 </div>
                             </fieldset>
                         </form>
-                    </b-modal>
-                    <b-modal ref="myRaveModalRef" hide-footer title="Rave Payment" class="la-pay-rave" :no-close-on-backdrop="true">
-                        <div class="d-block text-center">
-                            <form class="wt-formtheme wt-form-paycard" method="POST" role="form" action="{{ route('paywithrave') }}">
-                            <!-- <form class="wt-formtheme wt-form-paycard" method="POST" id="rave-payment-form" role="form" action="" @submit.prevent='submitRaveFrom'> -->
-                                {{ csrf_field() }}
-                                <fieldset>
-                                    <div class="form-group">
-                                        <label>{{ trans('lang.email_address') }}</label>
-                                        {!! Form::email( 'email', e($rave_email), ['class' =>'form-control', 'readonly'] ) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{ trans('lang.ph_first_name') }}</label>
-                                        {!! Form::text( 'firstname', e($firstname), ['class' =>'form-control', 'readonly'] ) !!}
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{ trans('lang.ph_last_name') }}</label>
-                                        {!! Form::text( 'lastname', e($lastname), ['class' =>'form-control', 'readonly'] ) !!}
-                                    </div>
-                                    {!! Form::hidden( 'phonenumber', e('08071585713'), ['class' =>''] ) !!}
-                                    <!-- {!! Form::hidden( 'phonenumber', e($phonenumber), ['class' =>''] ) !!} -->
-                                    {!! Form::hidden( 'country', e('NG'), ['class' =>''] ) !!}
-                                    <!-- {!! Form::hidden( 'country', e($country), ['class' =>''] ) !!} -->
-                                    {!! Form::hidden( 'currency', e($currency), ['class' =>''] ) !!}
-                                    {!! Form::hidden( 'amount', e($service->price), ['class' =>''] ) !!}
-                                    {!! Form::hidden( 'description', e('Flutterwave Jersey'), ['class' =>''] ) !!}
-                                    <div class="form-group wt-btnarea">
-                                        <input type="submit" name="button" class="wt-btn" value="Pay {{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$service->price}}">
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
                     </b-modal>
                 </div>
             </div>

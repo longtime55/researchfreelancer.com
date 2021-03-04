@@ -35,7 +35,7 @@
                                             </td>
                                             <td>{{{ $invoice->invoice_id }}}</td>
                                             <td>{{{ \Carbon\Carbon::parse($invoice->created_at)->format('M d, Y') }}}</td>
-                                            <td>{{ Helper::currencyList($invoice->currency_code)['symbol'] }}{{{ $invoice->price }}}</td>
+                                            <td>{{ !empty($symbol) ? $symbol['symbol'] : '$'  }}{{{ $invoice->price }}}</td>
                                             <td>
                                                 <div class="wt-actionbtn">
                                                     <a class="print-window wt-addinfo wt-skillsaddinfo" href="{{ url('show/invoice/'.$invoice->id) }}">{{ trans('lang.view_invoice') }}</a>

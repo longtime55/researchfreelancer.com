@@ -208,21 +208,13 @@ export default {
       end_date: "",
       stored_experiences: [],
       experience: {
-        company_title: "",
+        company_title: this.ph_company_title,
         start_date: this.ph_start_date,
         end_date: this.ph_end_date,
-        job_title: "",
+        job_title: this.ph_job_title,
         description: "",
         count: 0
       },
-      // experience: {
-      //   company_title: this.ph_company_title,
-      //   start_date: this.ph_start_date,
-      //   end_date: this.ph_end_date,
-      //   job_title: this.ph_job_title,
-      //   description: "",
-      //   count: 0
-      // },
       experiences: [],
       freelancer_experiences: [],
       count: 0
@@ -242,7 +234,8 @@ export default {
         .parents(".wt-tabsinfo")
         .find("ul#experience-list span.experience-inner-list li").length;
       if (this.$refs.experiencelistelement) {
-        this.experience.count = expereience_list_count + this.$refs.experiencelistelement.length;
+        this.experience.count =
+          expereience_list_count + this.$refs.experiencelistelement.length;
       } else {
         this.experience.count = expereience_list_count - 1;
       }

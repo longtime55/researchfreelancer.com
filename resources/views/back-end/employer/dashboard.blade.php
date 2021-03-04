@@ -27,7 +27,7 @@
                                     <div class="wt-insightdetails">
                                         <div class="wt-title">
                                             <h3>{{ trans('lang.latest_proposals') }}</h3>
-                                            <a href="{{{ url('employer/dashboard/manage-jobs') }}}">{{ trans('lang.click_view') }}</a>
+                                            <a href="{{{ url('employer/dashboard/manage-projects') }}}">{{ trans('lang.click_view') }}</a>
                                         </div>
                                     </div>
                                 </div>

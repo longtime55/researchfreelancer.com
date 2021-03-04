@@ -31,17 +31,13 @@ use App\Profile;
 use App\Category;
 use App\Location;
 use App\Skill;
-use App\ResearchLevel;
-use App\FreelancerLevel;
-use App\Citation;
 use Session;
 use Storage;
 use App\Report;
 use App\Job;
 use App\Proposal;
 use App\EmailTemplate;
-use App\Mail\FreelancerEmailMailable;
-use App\Mail\EmployerEmailMailable;
+use App\Mail\GeneralEmailMailable;
 use App\Mail\AdminEmailMailable;
 use App\SiteManagement;
 use App\Review;
@@ -63,32 +59,6 @@ use App\ResponseTime;
  */
 class PublicController extends Controller
 {
-    /**
-     * Defining scope of the variable
-     *
-     * @access protected
-     * @var    array $payout_settings
-     * @var    array $currency
-     */
-    protected $payout_settings;
-    
-    protected $currency;
-    /**
-     * Create a new controller instance.
-     *
-     * @param instance $proposal instance
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'NGN';
-        }
-    }
 
     /**
      * User Login Function
@@ -185,38 +155,20 @@ class PublicController extends Controller
                     //send mail
                     if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
                         $email_params = array();
-                        if ($user->getUserRoleType($user->id)->name === 'employer') {
-                            $template = DB::table('email_types')->select('id')->where('email_type', 'employer_email_new_user')->get()->first();
-                            if (!empty($template->id)) {
-                                $template_data = EmailTemplate::getEmailTemplateByID($template->id);
-                                $email_params['name'] = Helper::getUserName($id);
-                                $email_params['email'] = $email;
-                                $email_params['password'] = $password;
-                                Mail::to($email)
-                                    ->send(
-                                        new EmployerEmailMailable(
-                                            'employer_email_new_user',
-                                            $template_data,
-                                            $email_params
-                                        )
-                                    );
-                            }
-                        } else {
-                            $template = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_new_user')->get()->first();
-                            if (!empty($template->id)) {
-                                $template_data = EmailTemplate::getEmailTemplateByID($template->id);
-                                $email_params['name'] = Helper::getUserName($id);
-                                $email_params['email'] = $email;
-                                $email_params['password'] = $password;
-                                Mail::to($email)
-                                    ->send(
-                                        new FreelancerEmailMailable(
-                                            'freelancer_email_new_user',
-                                            $template_data,
-                                            $email_params
-                                        )
-                                    );
-                            }
+                        $template = DB::table('email_types')->select('id')->where('email_type', 'new_user')->get()->first();
+                        if (!empty($template->id)) {
+                            $template_data = EmailTemplate::getEmailTemplateByID($template->id);
+                            $email_params['name'] = Helper::getUserName($id);
+                            $email_params['email'] = $email;
+                            $email_params['password'] = $password;
+                            Mail::to($email)
+                                ->send(
+                                    new GeneralEmailMailable(
+                                        'new_user',
+                                        $template_data,
+                                        $email_params
+                                    )
+                                );
                         }
                         $admin_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_registration')->get()->first();
                         if (!empty($template->id)) {
@@ -297,9 +249,6 @@ class PublicController extends Controller
             $skills = $user->skills()->get();
             $job = Job::where('user_id', $user->id)->get();
             $profile = Profile::all()->where('user_id', $user->id)->first();
-            if (!empty($profile->transaction_currency)) {
-                $this->currency = $profile->transaction_currency;
-            }
             $reasons = Helper::getReportReasons();
             $avatar = !empty($profile->avater) ? '/uploads/users/' . $profile->user_id . '/' . $profile->avater : '/images/user.jpg';
             $banner = !empty($profile->banner) ? '/uploads/users/' . $profile->user_id . '/' . $profile->banner : Helper::getUserProfileBanner($user->id);
@@ -327,19 +276,21 @@ class PublicController extends Controller
                 $feature_class = !empty($badge) ? 'wt-featured' : '';
                 $badge_color = !empty($badge) ? $badge->color : '';
                 $badge_img  = !empty($badge) ? $badge->image : '';
-                $wallets = Payout::where('user_id', $user->id)->select('amount', 'currency')->pluck('amount', 'currency')->first();
+                $amount = Payout::where('user_id', $user->id)->select('amount')->pluck('amount')->first();
                 $employer_projects = Auth::user() ? Helper::getEmployerJobs(Auth::user()->id) : array();
-                $symbol  = Helper::currencyList($this->currency);
+                $currency_symbol  = !empty($payment_settings) && !empty($payment_settings[0]['currency']) ? Helper::currencyList($payment_settings[0]['currency']) : array();
+                $symbol = !empty($currency_symbol['symbol']) ? $currency_symbol['symbol'] : '$';
                 $settings = !empty(SiteManagement::getMetaValue('settings')) ? SiteManagement::getMetaValue('settings') : array();
                 $display_chat = !empty($settings[0]['chat_display']) ? $settings[0]['chat_display'] : false;
-                $enable_package = !empty($this->payout_settings) && !empty($this->payout_settings[0]['enable_packages']) ? $this->payout_settings[0]['enable_packages'] : 'true';
+                $payment_settings = SiteManagement::getMetaValue('commision');
+                $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
                 if (file_exists(resource_path('views/extend/front-end/users/freelancer-show.blade.php'))) {
                     return View(
                         'extend.front-end.users.freelancer-show',
                         compact(
                             'services',
                             'profile',
-                            'wallets',
+                            'amount',
                             'skills',
                             'user',
                             'job',
@@ -362,6 +313,7 @@ class PublicController extends Controller
                             'badge_color',
                             'badge_img',
                             'employer_projects',
+                            'currency_symbol',
                             'current_date',
                             'symbol',
                             'tagline',
@@ -376,7 +328,7 @@ class PublicController extends Controller
                         compact(
                             'services',
                             'profile',
-                            'wallets',
+                            'amount',
                             'skills',
                             'user',
                             'job',
@@ -399,6 +351,7 @@ class PublicController extends Controller
                             'badge_color',
                             'badge_img',
                             'employer_projects',
+                            'currency_symbol',
                             'current_date',
                             'symbol',
                             'tagline',
@@ -413,7 +366,8 @@ class PublicController extends Controller
                 $followers = DB::table('followers')->where('following', $profile->user_id)->get();
                 $save_employer = !empty(auth()->user()->profile->saved_employers) ? unserialize(auth()->user()->profile->saved_employers) : array();
                 $save_jobs = !empty(auth()->user()->profile->saved_jobs) ? unserialize(auth()->user()->profile->saved_jobs) : array();
-                $symbol = Helper::currencyList($this->currency);
+                $currency = SiteManagement::getMetaValue('commision');
+                $symbol   = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
                 $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
                 $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
                 if (file_exists(resource_path('views/extend/front-end/users/employer-show.blade.php'))) {
@@ -531,23 +485,16 @@ class PublicController extends Controller
     public function getSearchResult($search_type = "")
     {
         $categories = array();
-        $locations = array();
-        $languages = array();
-        $categories = Category::leftJoin('catables', 'categories.id', '=', 'catables.category_id')
-                        ->select('categories.*', \DB::raw("count(catables.catable_type) as job_count"))
-                        ->where('catables.catable_type', 'like', '%Job%')
-                        ->groupBy('id')
-                        ->orderBy('job_count', 'DESC')
-                        ->get();
-        $locations = Location::all()->sortBy('title');
-        $languages = Language::all()->sortBy('title');
-        $skills = Skill::all()->sortBy('title');
-        $citations = Citation::all()->sortBy('title');
-        $rlevels = ResearchLevel::all()->sortBy('title');
-        $flevels = FreelancerLevel::all()->sortBy('title');
-        $symbol = Helper::currencyList($this->currency);
+        $locations  = array();
+        $languages  = array();
+        $categories = Category::all();
+        $locations  = Location::all();
+        $languages  = Language::all();
+        $skills     = Skill::all();
+        $currency   = SiteManagement::getMetaValue('commision');
+        $symbol     = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $freelancer_skills = Helper::getFreelancerLevelList();
-        $project_lengths = Helper::getJobDurationList();
+        $project_length = Helper::getJobDurationList();
         $keyword = !empty($_GET['s']) ? $_GET['s'] : '';
         $type = !empty($_GET['type']) ? $_GET['type'] : $search_type;
         // if ($type == 'job') {
@@ -560,36 +507,36 @@ class PublicController extends Controller
         //         abort(404);
         //     }
         // }
-        $search_categories = !empty($_GET['categories']) ? $_GET['categories'] : array();
+        $search_categories = !empty($_GET['category']) ? $_GET['category'] : array();
         $search_locations = !empty($_GET['locations']) ? $_GET['locations'] : array();
         $search_skills = !empty($_GET['skills']) ? $_GET['skills'] : array();
-        $search_citations = !empty($_GET['citations']) ? $_GET['citations'] : array();
-        $search_levels = !empty($_GET['rlevels']) ? $_GET['rlevels'] : array();
         $search_project_lengths = !empty($_GET['project_lengths']) ? $_GET['project_lengths'] : array();
         $search_languages = !empty($_GET['languages']) ? $_GET['languages'] : array();
         $search_employees = !empty($_GET['employees']) ? $_GET['employees'] : array();
         $search_hourly_rates = !empty($_GET['hourly_rate']) ? $_GET['hourly_rate'] : array();
-        $search_freelancer_types = !empty($_GET['freelancer_type']) ? $_GET['freelancer_type'] : array();
+        $search_freelaner_types = !empty($_GET['freelaner_type']) ? $_GET['freelaner_type'] : array();
         $search_english_levels = !empty($_GET['english_level']) ? $_GET['english_level'] : array();
         $search_delivery_time = !empty($_GET['delivery_time']) ? $_GET['delivery_time'] : array();
         $search_response_time = !empty($_GET['response_time']) ? $_GET['response_time'] : array();
         $current_date = Carbon::now()->toDateTimeString();
+        $currency = SiteManagement::getMetaValue('commision');
+        $symbol = !empty($currency) && !empty($currency[0]['currency']) ? Helper::currencyList($currency[0]['currency']) : array();
         $inner_page = SiteManagement::getMetaValue('inner_page_data');
-        $enable_package = !empty($this->payout_settings) && !empty($this->payout_settings[0]['enable_packages']) ? $this->payout_settings[0]['enable_packages'] : 'true';
+        $payment_settings = SiteManagement::getMetaValue('commision');
+        $enable_package = !empty($payment_settings) && !empty($payment_settings[0]['enable_packages']) ? $payment_settings[0]['enable_packages'] : 'true';
         $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
         $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
         if (!empty($_GET['type'])) {
             if ($type == 'employer' || $type == 'freelancer') {
+                $users_total_records = User::count();
                 $search =  User::getSearchResult(
                     $type,
                     $keyword,
                     $search_locations,
                     $search_employees,
                     $search_skills,
-                    $search_citations,
-                    $search_levels,
                     $search_hourly_rates,
-                    $search_freelancer_types,
+                    $search_freelaner_types,
                     $search_english_levels,
                     $search_languages
                 );
@@ -611,9 +558,10 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'freelancer_skills',
-                                'project_lengths',
+                                'project_length',
                                 'keyword',
                                 'type',
+                                'users_total_records',
                                 'save_employer',
                                 'current_date',
                                 'emp_list_meta_title',
@@ -632,9 +580,10 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'freelancer_skills',
-                                'project_lengths',
+                                'project_length',
                                 'keyword',
                                 'type',
+                                'users_total_records',
                                 'save_employer',
                                 'current_date',
                                 'emp_list_meta_title',
@@ -661,9 +610,9 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'skills',
-                                'flevels',
-                                'project_lengths',
+                                'project_length',
                                 'keyword',
+                                'users_total_records',
                                 'save_freelancer',
                                 'symbol',
                                 'current_date',
@@ -685,9 +634,9 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'skills',
-                                'flevels',
-                                'project_lengths',
+                                'project_length',
                                 'keyword',
+                                'users_total_records',
                                 'save_freelancer',
                                 'symbol',
                                 'current_date',
@@ -765,22 +714,18 @@ class PublicController extends Controller
                     );
                 }
             } else {
+                $Jobs_total_records = Job::count();
                 $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
                 $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
                 $show_job_banner = !empty($inner_page) && !empty($inner_page[0]['show_job_banner']) ? $inner_page[0]['show_job_banner'] : 'true';
                 $job_inner_banner = !empty($inner_page) && !empty($inner_page[0]['job_inner_banner']) ? $inner_page[0]['job_inner_banner'] : null;
                 $results = Job::getSearchResult(
-                    $type,
                     $keyword,
-                    // $search_prices,
                     $search_categories,
+                    $search_locations,
                     $search_skills,
-                    $search_levels,
-                    $search_citations,
-                    $search_freelancer_types,
                     $search_project_lengths,
-                    $search_languages,
-                    $search_locations
+                    $search_languages
                 );
                 $jobs = $results['jobs'];
                 if (!empty($jobs)) {
@@ -793,11 +738,10 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'freelancer_skills',
-                                'project_lengths',
+                                'project_length',
+                                'Jobs_total_records',
                                 'keyword',
                                 'skills',
-                                'citations',
-                                'rlevels',
                                 'type',
                                 'current_date',
                                 'symbol',
@@ -817,11 +761,10 @@ class PublicController extends Controller
                                 'locations',
                                 'languages',
                                 'freelancer_skills',
-                                'project_lengths',
+                                'project_length',
+                                'Jobs_total_records',
                                 'keyword',
                                 'skills',
-                                'citations',
-                                'rlevels',
                                 'type',
                                 'current_date',
                                 'symbol',

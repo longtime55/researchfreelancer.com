@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wt-tabscontenttitle wt-addnew">
-      <h2>{{ trans('lang.add_your_prof_cert') }}</h2>
+      <h2>{{ trans('lang.add_your_cert') }}</h2>
       <a
         href="javascript:void(0);"
         @click="addCertification"
@@ -20,11 +20,7 @@
               :id="'certificationaccordion-'+index+''"
               data-toggle="collapse"
               :data-target="'#certificationaccordioninner-'+index+''"
-            >{{stored_certification.degree_title}} ({{stored_certification.start_date}})</span>
-            <!--<span-->
-            <!--  :id="'certificationaccordion-'+index+''"-->
-            <!--  data-toggle="collapse"-->
-            <!--  :data-target="'#certificationaccordioninner-'+index+''">{{stored_certification.degree_title}} ({{stored_certification.start_date}} - {{stored_certification.end_date}})</span>-->
+            >{{stored_certification.degree_title}} ({{stored_certification.start_date}} - {{stored_certification.end_date}})</span>
             <div class="wt-rightarea">
               <a
                 href="javascript:void(0);"
@@ -58,7 +54,7 @@
                   :value="stored_certification.degree_title"
                   v-bind:name="'certification['+[index]+'][degree_title]'"
                   class="form-control"
-                  :placeholder="ph_degree_title"
+                  :placeholder="ph_job_title"
                 />
               </div>
               <div class="form-group form-group-half">
@@ -69,23 +65,23 @@
                   :value="stored_certification.start_date"
                 />
               </div>
-              <!--<div class="form-group form-group-half">-->
-              <!--  <date-pick v-model="stored_certification.end_date"></date-pick>-->
-              <!--  <input-->
-              <!--    type="hidden"-->
-              <!--    v-bind:name="'certification['+[index]+'][end_date]'"-->
-              <!--    :value="stored_certification.end_date"-->
-              <!--  />-->
-              <!--</div>-->
-              <!--<div class="form-group form-group-half">-->
-              <!--  <input-->
-              <!--    type="text"-->
-              <!--    :value="stored_certification.institute_title"-->
-              <!--    v-bind:name="'certification['+[index]+'][institute_title]'"-->
-              <!--    class="form-control"-->
-              <!--    :placeholder="ph_institute_title"-->
-              <!--  />-->
-              <!--</div>-->
+              <div class="form-group form-group-half">
+                <date-pick v-model="stored_certification.end_date"></date-pick>
+                <input
+                  type="hidden"
+                  v-bind:name="'certification['+[index]+'][end_date]'"
+                  :value="stored_certification.end_date"
+                />
+              </div>
+              <div class="form-group form-group-half">
+                <input
+                  type="text"
+                  :value="stored_certification.institute_title"
+                  v-bind:name="'certification['+[index]+'][institute_title]'"
+                  class="form-control"
+                  :placeholder="ph_institute_title"
+                />
+              </div>
               <div class="form-group">
                 <textarea
                   :value="stored_certification.description"
@@ -113,11 +109,7 @@
               :id="'certificationaccordion-'+certification.count+''"
               data-toggle="collapse"
               :data-parent="'#certificationaccordioninner-'+certification.count+''"
-            >{{certification.degree_title}} ( {{certification.start_date}} )</span>
-            <!--<span-->
-            <!--  :id="'certificationaccordion-'+certification.count+''"-->
-            <!--  data-toggle="collapse"-->
-            <!--  :data-parent="'#certificationaccordioninner-'+certification.count+''">{{certification.degree_title}} ( {{certification.start_date}} - {{certification.end_date}} )</span>-->
+            >{{certification.degree_title}} ( {{certification.start_date}} - {{certification.end_date}} )</span>
             <div class="wt-rightarea">
               <a
                 href="javascript:void(0);"
@@ -146,7 +138,7 @@
                   type="text"
                   v-bind:name="'certification['+[certification.count]+'][degree_title]'"
                   class="form-control"
-                  :placeholder="ph_degree_title"
+                  :placeholder="ph_job_title"
                   v-model="certification.degree_title"
                 />
               </div>
@@ -159,23 +151,23 @@
                   :placeholder="ph_start_date"
                 />
               </div>
-              <!--<div class="form-group form-group-half">-->
-              <!--  <date-pick v-model="certification.end_date"></date-pick>-->
-              <!--  <input-->
-              <!--    type="hidden"-->
-              <!--    v-bind:name="'certification['+[certification.count]+'][end_date]'"-->
-              <!--    :value="certification.end_date"-->
-              <!--    :placeholder="ph_end_date"-->
-              <!--  />-->
-              <!--</div>-->
-              <!--<div class="form-group form-group-half">-->
-              <!--  <input-->
-              <!--    type="text"-->
-              <!--    v-bind:name="'certification['+[certification.count]+'][institute_title]'"-->
-              <!--    class="form-control"-->
-              <!--    :placeholder="ph_institute_title"-->
-              <!--  />-->
-              <!--</div>-->
+              <div class="form-group form-group-half">
+                <date-pick v-model="certification.end_date"></date-pick>
+                <input
+                  type="hidden"
+                  v-bind:name="'certification['+[certification.count]+'][end_date]'"
+                  :value="certification.end_date"
+                  :placeholder="ph_end_date"
+                />
+              </div>
+              <div class="form-group form-group-half">
+                <input
+                  type="text"
+                  v-bind:name="'certification['+[certification.count]+'][institute_title]'"
+                  class="form-control"
+                  :placeholder="ph_institute_title"
+                />
+              </div>
               <div class="form-group">
                 <textarea
                   v-bind:name="'certification['+[certification.count]+'][description]'"
@@ -214,21 +206,13 @@ export default {
       end_date: "",
       stored_certifications: [],
       certification: {
-        institute_title: "",
+        institute_title: this.ph_institute_title,
         start_date: this.ph_start_date,
         end_date: this.ph_end_date,
-        degree_title: "",
-        description: "",
+        degree_title: this.ph_degree_title,
+        description: this.ph_desc,
         count: 0
       },
-      // certification: {
-      //   institute_title: this.ph_institute_title,
-      //   start_date: this.ph_start_date,
-      //   end_date: this.ph_end_date,
-      //   degree_title: this.ph_degree_title,
-      //   description: this.ph_desc,
-      //   count: 0
-      // },
       certifications: [],
       freelancer_certifications: [],
       count: 0
@@ -241,16 +225,17 @@ export default {
         .get(APP_URL + "/freelancer/get-freelancer-certifications")
         .then(function(response) {
           self.stored_certifications = response.data.certifications;
-          // console.log(self.stored_certifications);
+          console.log(self.stored_certifications);
         });
     },
     addCertification: function() {
       var certification_list_count = jQuery(".add-certification-btn")
         .parents(".wt-tabsinfo")
         .find("ul#certification-list span.certification-inner-list li").length;
-      // console.log(certification_list_count);
+      console.log(certification_list_count);
       if (this.$refs.certificationlistelement) {
-        this.certification.count = certification_list_count + this.$refs.certificationlistelement.length;
+        this.certification.count =
+          certification_list_count + this.$refs.certificationlistelement.length;
       } else {
         this.certification.count = certification_list_count - 1;
       }

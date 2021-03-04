@@ -27,9 +27,9 @@
             <h3 id="valid-msg" class="wt-mobilevalid">✓ Valid</h3>
             <h3 id="error-msg" class="wt-mobileinvalid"></h3>
         </div>
-        <!--<div class="form-group">-->
-        <!--    {!! Form::text( 'withd_details', e($withd_details), ['class' =>'form-control', 'placeholder' => trans('lang.ph_withd_details')] ) !!}-->
-        <!--</div>-->
+        <div class="form-group">
+            {!! Form::text( 'withd_details', e($withd_details), ['class' =>'form-control', 'placeholder' => trans('lang.ph_withd_details')] ) !!}
+        </div>
         <div class="form-group">
             {!! Form::text( 'tagline', e($tagline), ['class' =>'form-control', 'placeholder' => trans('lang.ph_add_tagline')] ) !!}
         </div>

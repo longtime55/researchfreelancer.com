@@ -19,7 +19,6 @@ use Session;
 use DB;
 use Auth;
 use App\User;
-use App\Job;
 use App\Helper;
 use App\SiteManagement;
 
@@ -127,15 +126,7 @@ class PageController extends Controller
     public function show($slug)
     {
         if (!empty($slug)) {
-            $user_id = array();
-            $user_by_role =  User::role('freelancer')->select('id')->get()->pluck('id')->toArray();
-            $total_users = User::count() ? User::count() : 0;
-            $total_jobs = Job::totalProjectCount();
             $page = $this->page->getPageData($slug);
-            $body = $page->body;
-            $body = str_replace('{$total_jobs}', $total_jobs, $body);
-            $body = str_replace('{$total_users}', $total_users, $body);
-            $page->body = $body;
             $page_meta = SiteManagement::where('meta_key', 'seo-desc-'.$page->id)->select('meta_value')->pluck('meta_value')->first();
             $page_banner = SiteManagement::where('meta_key', 'page-banner-'.$page->id)->select('meta_value')->pluck('meta_value')->first();
             $show_banner = SiteManagement::where('meta_key', 'show-banner-'.$page->id)->select('meta_value')->pluck('meta_value')->first();

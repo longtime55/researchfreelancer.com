@@ -26,7 +26,6 @@ use App\Location;
 use App\Profile;
 use Auth;
 use App\Package;
-use App\Milestone;
 use App\Helper;
 use App\Job;
 use Carbon\Carbon;
@@ -50,7 +49,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'slug', 'email',
+        'first_name', 'last_name', 'phone_number', 'slug', 'email',
         'password', 'avatar', 'banner', 'tagline', 'description',
         'location_id', 'verification_code', 'address',
         'longitude', 'latitude'
@@ -109,26 +108,6 @@ class User extends Authenticatable
     {
         return $this->morphToMany('App\Citation', 'citable');
     }
-    
-    /**
-     * Get all of the freelancer levels for the user.
-     *
-     * @return relation
-     */
-    public function flevels()
-    {
-        return $this->morphToMany('App\FreelancerLevel', 'flevable');
-    }
-    
-    /**
-     * Get all of the research levels for the user.
-     *
-     * @return relation
-     */
-    public function rlevels()
-    {
-        return $this->morphToMany('App\ResearchLevel', 'rlevable');
-    }
 
     /**
      * Get all of the languages for the user.
@@ -169,7 +148,7 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Payout');
     }
-    
+
     /**
      * Get the jobs for the employer.
      *
@@ -345,9 +324,6 @@ class User extends Authenticatable
                 $department = Department::find($request['department_name']);
                 $profile->department()->associate($department);
             }
-            $payouts['type'] = 'rave';
-            $payouts['rave_email'] = filter_var($request['email'], FILTER_VALIDATE_EMAIL);
-            $profile->payout_settings = serialize($payouts);
             $profile->save();
             $role_id = Helper::getRoleByUserID($user_id);
             $package = Package::select('id', 'title', 'cost')->where('role_id', $role_id)->where('trial', 1)->get()->first();
@@ -410,10 +386,8 @@ class User extends Authenticatable
         $search_locations,
         $search_employees,
         $search_skills,
-        $search_citations,
-        $search_levels,
         $search_hourly_rates,
-        $search_freelancer_types,
+        $search_freelaner_types,
         $search_english_levels,
         $search_languages
     ) {
@@ -473,10 +447,9 @@ class User extends Authenticatable
                 }
                 $users->whereIn('id', $user_id);
             }
-            if (!empty($search_freelancer_types)) {
-                $filters['freelancer_type'] = $search_freelancer_types;
-                $freelancers = Profile::whereIn('freelancer_type', $search_freelancer_types)->get();
-                
+            if (!empty($search_freelaner_types)) {
+                $filters['freelaner_type'] = $search_freelaner_types;
+                $freelancers = Profile::whereIn('freelancer_type', $search_freelaner_types)->get();
                 foreach ($freelancers as $key => $freelancer) {
                     if (!empty($freelancer->user_id)) {
                         $user_id[] = $freelancer->user_id;
@@ -534,23 +507,17 @@ class User extends Authenticatable
         $user = User::find(Auth::user()->id);
         DB::table('disputes')->insert(
             [
-                'proposal_id' => $request['proposal_id'],
-                'user_id' => $user->id,
+                'proposal_id' => $request['proposal_id'], 'user_id' => $user->id,
                 'reason' => $request['reason'], 'description' => $request['description'],
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]
         );
-        if (!empty($request['milestone_id'])) {
-            $milestone = Milestone::find($request['milestone_id']);
-            $milestone->status = 'Waiting';
-            $milestone->save();
-        }
         return 'success';
     }
 
     /**
-     * Update cancel project
+     * Update calcel project
      *
      * @param string $request $req->attr
      *
@@ -575,7 +542,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Update cancel project
+     * Update calcel project
      *
      * @param string $request $req->attr
      *
@@ -590,7 +557,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Save refund payout.
+     * Save refound payout.
      *
      * @param string $request $req->attr
      *
@@ -600,7 +567,8 @@ class User extends Authenticatable
     {
         $json = array();
         if (!empty($request['refundable_user_id'])) {
-            $currency = $request['currency'];
+            $payment_settings = SiteManagement::getMetaValue('commision');
+            $currency  = !empty($payment_settings) && !empty($payment_settings[0]['currency']) ? $payment_settings[0]['currency'] : 'USD';
             $user = User::find($request['refundable_user_id']);
             $payout_id = !empty($user->profile->payout_id) ? $user->profile->payout_id : '';
             $payout_detail = !empty($user->profile->payout_settings) ? $user->profile->payout_settings : array();
@@ -617,15 +585,15 @@ class User extends Authenticatable
                         } elseif (Schema::hasColumn('payouts', 'paypal_id')) {
                             $payout->paypal_id = $payment_details['paypal_email'];
                         }
-                    } elseif ($payment_details['type'] == 'rave') {
+                    } else if ($payment_details['type'] == 'rave') {
                         $payout->rave_id = $payment_details['rave_email'];
-                    } elseif ($payment_details['type'] == 'bacs') {
+                    } else if ($payment_details['type'] == 'bacs') {
                         $payout->bank_details = $user->profile->payout_settings;
                     } else {
                         $payout->paypal_id = '';
                     }
                     $payout->payment_method = Helper::getPayoutsList()[$payment_details['type']]['title'];
-                } elseif (!empty($payout_id)) {
+                } else if (!empty($payout_id)) {
                     $payout->payment_method = 'paypal';
                     if (Schema::hasColumn('payouts', 'email')) {
                         $payout->email = $payout_id;
@@ -657,90 +625,5 @@ class User extends Authenticatable
     {
         $total_count = User::where('user_verified', 1)->count()? User::where('user_verified', 1)->count() : 0;
         return $total_count;
-    }
-
-    /**
-     * Save release and cancel milestone payout.
-     *
-     * @param string $milestone_id
-     * @param string $status
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function milstoneReleaseCancel($milestone_id, $status)
-    {
-        $json = array();
-        if (!empty($milestone_id) && !empty($status)) {
-            
-            $milestone = Milestone::find($milestone_id);
-            $proposal = Proposal::find($milestone->proposal_id);
-            $job = Job::find($proposal->job_id);
-            $user = User::find($job->user_id);
-            $freelancer = User::find($proposal->freelancer_id);
-            $from_currency = $job->currency;
-            $amount = $milestone->amount;
-            $json['project_title'] = $job->title;
-            $json['project_link'] = url('/project/' . $job->slug);
-            $json['employer_link'] = url('/profile/' . $user->slug);
-            $json['freelancer_id'] = $proposal->freelancer_id;
-            $json['amount'] = $amount;
-            $json['currnecy'] = $from_currency;
-            $json['details'] = $milestone->description;
-            $json['employer_email'] = $user->email;
-            $json['freelancer_email'] = $freelancer->email;
-            $payout_id = !empty($user->profile->payout_id) ? $user->profile->payout_id : '';
-            $payout_detail = !empty($user->profile->payout_settings) ? $user->profile->payout_settings : array();
-            $m_status = 'Rejected';
-            if ($status == 'release') {
-                $to_currency = $freelancer->profile->transaction_currency;
-                $amount = Helper::convertCurrency($amount, $from_currency, $to_currency);
-                $from_currency = $to_currency;
-                $m_status = 'Released';
-            } 
-            if (!empty($payout_id) || !empty($payout_detail)) {
-                $payout = new Payout();
-                $payout->user()->associate($proposal->freelancer_id);
-                $payout->amount = $amount;
-                $payout->currency = $from_currency;
-                if (!empty($payout_detail)) {
-                    $payment_details  = Helper::getUnserializeData($user->profile->payout_settings);
-                    if ($payment_details['type'] == 'paypal') {
-                        if (Schema::hasColumn('payouts', 'email')) {
-                            $payout->email = $payment_details['paypal_email'];
-                        } elseif (Schema::hasColumn('payouts', 'paypal_id')) {
-                            $payout->paypal_id = $payment_details['paypal_email'];
-                        }
-                    } elseif ($payment_details['type'] == 'rave') {
-                        $payout->rave_id = $payment_details['rave_email'];
-                    } elseif ($payment_details['type'] == 'bacs') {
-                        $payout->bank_details = $user->profile->payout_settings;
-                    } else {
-                        $payout->paypal_id = '';
-                    }
-                    $payout->payment_method = Helper::getPayoutsList()[$payment_details['type']]['title'];
-                } elseif (!empty($payout_id)) {
-                    $payout->payment_method = 'paypal';
-                    if (Schema::hasColumn('payouts', 'email')) {
-                        $payout->email = $payout_id;
-                    } elseif (Schema::hasColumn('payouts', 'paypal_id')) {
-                        $payout->paypal_id = $payout_id;
-                    }
-                }
-                $payout->status = 'pending';
-                if (!empty($request['order_id'])) {
-                    $payout->order_id = intval($request['order_id']);
-                }
-                $payout->type = 'Job';
-                $payout->save();
-                $milestone->status = $m_status;
-                $milestone->save();
-                $json['status'] = 'success';
-            } else {
-                $json['status'] = 'payout_not_available';
-            }
-        } else {
-            $json['status'] = 'error';
-        }
-        return $json;
     }
 }

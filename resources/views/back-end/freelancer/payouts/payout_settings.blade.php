@@ -50,10 +50,10 @@
                                                         </div>
                                                         <div class="fields-wrapper wt-haslayout" v-if="{{$vue_display}}">
                                                             <div class="wt-description">
-                                                                @if ($payrol['id'] == 'rave')
-                                                                    <p>{{ trans('lang.rave_payout_id_text') }} <a target="_blank" href="https://www.flutterwave.com/"> {{ trans('lang.rave') }} </a> | <a target="_blank" href="https://rave.flutterwave.com/signup?referrals=RV34552">{{ trans('lang.payout_id_create_acc') }}</a></p>
-                                                                @elseif ($payrol['id'] == 'paypal')
+                                                                @if ($payrol['id'] == 'paypal')
                                                                     <p>{{ trans('lang.paypal_payout_id_text') }} <a target="_blank" href="https://www.paypal.com/"> {{ trans('lang.paypal') }} </a> | <a target="_blank" href="https://www.paypal.com/signup/">{{ trans('lang.payout_id_create_acc') }}</a></p>
+                                                                @elseif ($payrol['id'] == 'rave')
+                                                                    <p>{{ trans('lang.rave_payout_id_text') }} <a target="_blank" href="https://www.flutterwave.com/"> {{ trans('lang.rave') }} </a> | <a target="_blank" href="https://rave.flutterwave.com/signup?referrals=RV34552">{{ trans('lang.payout_id_create_acc') }}</a></p>
                                                                 @elseif ($payrol['id'] == 'bacs')
                                                                     <p>{{ trans('lang.bank_payout_id_text') }}</p>
                                                                 @endif

@@ -75,14 +75,14 @@
                                     </li>
                                 @if ($type =='jobs' || $type == 'both')
                                         <li>
-                                            <a href="{{route('jobs')}}">
+                                            <a href="{{url('search-results?type=job')}}">
                                                 {{{ trans('lang.browse_jobs') }}}
                                             </a>
                                         </li>
                                     @endif
                                 @if ($type =='services' || $type == 'both')
                                     <li>
-                                        <a href="{{url('search-results?type=services')}}">
+                                        <a href="{{url('search-results?type=service')}}">
                                             {{{ trans('lang.browse_services') }}}
                                         </a>
                                     </li>

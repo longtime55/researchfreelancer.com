@@ -34,36 +34,6 @@ class Service extends Model
     {
         return $this->morphToMany('App\Category', 'catable');
     }
-    
-    /**
-     * Get all of the citations for the service.
-     *
-     * @return relation
-     */
-    public function citations()
-    {
-        return $this->morphToMany('App\Citation', 'citable');
-    }
-    
-    /**
-     * Get all of the freelancer levels for the service.
-     *
-     * @return relation
-     */
-    public function flevels()
-    {
-        return $this->morphToMany('App\FreelancerLevel', 'flevable');
-    }
-    
-    /**
-     * Get all of the research levels for the service.
-     *
-     * @return relation
-     */
-    public function rlevels()
-    {
-        return $this->morphToMany('App\ResearchLevel', 'rlevable');
-    }
 
     /**
      * Get all of the languages for the service.

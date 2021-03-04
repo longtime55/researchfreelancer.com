@@ -104,7 +104,7 @@
                                                                         <a href="{{{ url('profile/'.$service->seller[0]->slug) }}}"><i class="fa fa-check-circle"></i> {{{Helper::getUserName($service->seller[0]->id)}}}</a>
                                                                     @endif
                                                                     <a href="{{{url('service/'.$service->slug)}}}"><h3>{{{$service->title}}}</h3></a>
-                                                                    
+                                                                    <span><strong>{{ (!empty($symbol['symbol'])) ? $symbol['symbol'] : '$' }}{{{$service->price}}}</strong> {{trans('lang.starting_from')}}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="wt-freelancers-rating">

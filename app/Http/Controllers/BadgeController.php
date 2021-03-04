@@ -21,7 +21,7 @@ use View;
 use App\Helper;
 
 /**
- * Class Badge Controller
+ * Class Category Controller
  *
  */
 class BadgeController extends Controller

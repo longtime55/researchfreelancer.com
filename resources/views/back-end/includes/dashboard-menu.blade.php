@@ -137,10 +137,8 @@
                                 <span>{{ trans('lang.taxonomies') }}</span>
                             </a>
                             <ul class="sub-menu">
-                                <li><hr><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
                                 <li><hr><a href="{{{ route('skills') }}}">{{ trans('lang.skills') }}</a></li>
-                                <li><hr><a href="{{{ route('levels',['which'=>'research']) }}}">{{ trans('lang.research_levels') }}</a></li>
-                                <li><hr><a href="{{{ route('levels',['which'=>'freelancer']) }}}">{{ trans('lang.freelancer_levels') }}</a></li>
+                                <li><hr><a href="{{{ route('categories') }}}">{{ trans('lang.job_cats') }}</a></li>
                                 <li><hr><a href="{{{ route('citations') }}}">{{ trans('lang.writer_cits') }}</a></li>
                                 <li><hr><a href="{{{ route('departments') }}}">{{ trans('lang.dpts') }}</a></li>
                                 <li><hr><a href="{{{ route('languages') }}}">{{ trans('lang.langs') }}</a></li>

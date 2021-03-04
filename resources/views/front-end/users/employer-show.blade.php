@@ -4,9 +4,7 @@
 @section('title'){{ $user_name }} | {{ $tagline }} @stop
 @section('description', "$desc")
 @section('content')
-    @php 
-        $breadcrumbs = Breadcrumbs::generate('showUserProfile', $user->slug);
-    @endphp
+    @php $breadcrumbs = Breadcrumbs::generate('showUserProfile', $user->slug); @endphp
     <div class="wt-haslayout wt-innerbannerholder">
         <div class="container">
             <div class="row justify-content-md-center">
@@ -171,9 +169,6 @@
                                 @foreach ($jobs as $job)
                                     @php
                                         $job = \App\Job::find($job->id);
-                                        if (!empty($job->currency)) {
-                                            $symbol = Helper::currencyList($job->currency);
-                                        }
                                         $description = strip_tags(stripslashes($job->description));
                                         $featured_class = $job->is_featured == 'true' ? 'wt-featured' : '';
                                         $project_type  = Helper::getProjectTypeList($job->project_type);
@@ -197,31 +192,14 @@
                                                     <p>@php echo htmlspecialchars_decode(stripslashes(str_limit($description, 200))); @endphp</p>
                                                 </div>
                                                 <div class="wt-tag wt-widgettag">
-                                                    @if (!empty($job->categories) && $job->categories->count() > 0)
-                                                        @foreach ($job->categories as $category)
-                                                            <a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                        @endforeach
-                                                    @endif
-                                                    @if (!empty($job->skills) && $job->skills->count() > 0)
-                                                        @foreach ($job->skills as $skill)
-                                                            <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                        @endforeach
-                                                    @endif
-                                                    @if (!empty($job->rlevels) && $job->rlevels->count() > 0)
-                                                        @foreach ($job->rlevels as $rlevel)
-                                                            <a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-                                                        @endforeach
-                                                    @endif
-                                                    @if (!empty($job->citations) && $job->citations->count() > 0)
-                                                        @foreach ($job->citations as $citation)
-                                                            <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                        @endforeach
-                                                    @endif
+                                                    @foreach ($job->skills as $skill )
+                                                        <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{$skill->title}}</a>
+                                                    @endforeach
                                                 </div>
                                             </div>
                                             <div class="wt-viewjobholder">
                                                 <ul>
-                                                    <li><span><i class="wt-viewjobdollar">{{ !empty($job->currency) ? Helper::currencyList($job->currency)['symbol'] : $symbol['symbol'] }}</i>{{{$job->price}}}</span></li>
+                                                    <li><span><i class="wt-viewjobdollar">{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i>{{{$job->price}}}</span></li>
                                                     @if (!empty($job->location->title))
                                                         <li><span><img src="{{{asset(App\Helper::getLocationFlag($job->location->flag))}}}" alt="{{{ trans('lang.location') }}}"> {{{ $job->location->title }}}</span></li>
                                                     @endif
@@ -241,7 +219,7 @@
                                                             </a>
                                                         </li>
                                                     @endif
-                                                    <li class="wt-btnarea"><a href="{{url('project/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
+                                                    <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -91,8 +91,9 @@ class Profile extends Model
         }
         if (!empty($request['phone_number'])) {
             $user->phone_number = "+". $request['dialcode']. trim(preg_replace("/[^0-9]/", "", filter_var($request['phone_number'], FILTER_SANITIZE_STRING)));
+            // $user->phone_number = filter_var($request['phone_number'], FILTER_SANITIZE_STRING);
         }
-        
+
         $location = Location::find($request['location']);
         $user->location()->associate($location);
         $user->save();
@@ -116,7 +117,7 @@ class Profile extends Model
         }
 
         $profile->user()->associate($user_id);
-        $profile->freelancer_type = 'Beginner';
+        $profile->freelancer_type = 'Basic';
         $profile->hourly_rate = intval($request['hourly_rate']);
         $profile->gender = filter_var($request['gender'], FILTER_SANITIZE_STRING);
         $profile->tagline = filter_var($request['tagline'], FILTER_SANITIZE_STRING);
@@ -242,13 +243,13 @@ class Profile extends Model
         $old_path = Helper::PublicPath() . '/uploads/users/temp';
         if (!empty($request['project'])) {
             foreach ($request['project'] as $key => $project) {
-                if ($project['project_title'] == 'Project title here' || $project['project_date'] == 'Project date here') {
+                if ($project['project_title'] == 'Project title here' || $project['project_url'] == 'Project url here') {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.empty_fields_not_allowed');
                     return $json;
                 }
                 $request_project[$count]['project_title'] = $project['project_title'];
-                $request_project[$count]['project_date'] = $project['project_date'];
+                $request_project[$count]['project_url'] = $project['project_url'];
                 if (!empty($project['project_hidden_image'])) {
                     $filename = $project['project_hidden_image'];
                     if (file_exists($old_path . '/' . $project['project_hidden_image'])) {
@@ -398,12 +399,9 @@ class Profile extends Model
         }
         if ($request['certification']) {
             foreach ($request['certification'] as $key => $cert) {
-                // if (
-                //     $cert['degree_title'] == 'Degree title' || $cert['start_date'] == 'Start Date'
-                //     || $cert['end_date'] == 'End Date'
-                // ) {
                 if (
-                    $cert['degree_title'] == 'Certification Title' || $cert['start_date'] == 'Date'
+                    $cert['degree_title'] == 'Degree title' || $cert['start_date'] == 'Start Date'
+                    || $cert['end_date'] == 'End Date'
                 ) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.empty_fields_not_allowed');
@@ -473,7 +471,7 @@ class Profile extends Model
     public function updateSkillsSpecialization($request, $user_id)
     {
         $json = array();
-        $citations = !empty($request['citations']) ? $request['citations'] : '';
+        $citation_id = !empty($request['citation_id']) ? $request['citation_id'] : '';
         $years_exp = !empty($request['years_exp']) ? $request['years_exp'] : '';
         $market_profile = !empty($request['market_profile']) ? $request['market_profile'] : '';
         $categories = !empty($request['categories']) ? $request['categories'] : '';
@@ -496,10 +494,11 @@ class Profile extends Model
             $profile = $this;
         }
         $profile->user()->associate($user_id);
+        $profile->citation_id = $citation_id;
         $profile->years_exp = $years_exp;
         $profile->market_profile = $market_profile;
         $profile->save();
-        $user->citations()->sync($citations);
+        $user = User::find($user_id);
         $user->categories()->sync($categories);
         $json['type'] = 'success';
         return $json;

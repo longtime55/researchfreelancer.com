@@ -15,7 +15,7 @@
                 </span> 
             @endforeach
         </div>
-        <!--@if ($departments->count() > 0)
+        @if ($departments->count() > 0)
             <div class="wt-radioboxholder">
                 <div class="wt-title">
                     <h4>{{{ trans('lang.your_department') }}}</h4>
@@ -28,6 +28,6 @@
                     </span>                                                        
                 @endforeach
             </div>
-        @endif  -->
+        @endif  
     </div>
 </div>

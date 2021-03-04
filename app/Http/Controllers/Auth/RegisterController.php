@@ -91,11 +91,7 @@ class RegisterController extends Controller
             if (empty(config('mail.username')) && empty(config('mail.password'))) {
                 $json['email'] = $user['email'];
                 $json['url'] = $user['url'];
-            } else {
-                $json['email'] = 'a';
-                $json['url'] = 'b';
             }
-            
             $json['type'] = 'success';
             return $json;
         }

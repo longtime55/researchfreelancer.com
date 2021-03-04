@@ -50,39 +50,6 @@ class Helper extends Model
         $gender = ['male' => 'Male', 'female' => 'Female'];
         return $gender;
     }
-    
-    /**
-     * Code for Currency Conversion
-     *
-     * @access public
-     *
-     * @return array
-     */
-    public static function convertCurrency($amount,$from_currency,$to_currency)
-    {
-        // if( ini_get('allow_url_fopen') ) {
-        //     die('allow_url_fopen is enabled. file_get_contents should work well');
-        // } else {
-        //     die('allow_url_fopen is disabled. file_get_contents would not work');
-        // }
-        $apikey = 'b632ce8352864f845236';
-        $from_Currency = urlencode($from_currency);
-        $to_Currency = urlencode($to_currency);
-        $query =  "{$from_Currency}_{$to_Currency}";
-        // change to the free URL if you're using the free version
-        $c = curl_init();
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($c, CURLOPT_URL, "https://free.currconv.com/api/v7/convert?q={$query}&compact=ultra&apiKey={$apikey}");
-        $contents = curl_exec($c);
-        curl_close($c);
-        if ($contents) $json = $contents;
-        else $json = 'FALSE';
-        // $json = file_get_contents("https://free.currconv.com/api/v7/convert?q={$query}&compact=ultra&apiKey={$apikey}");
-        $obj = json_decode($json, true);
-        $val = floatval($obj["$query"]);
-        $total = $val * $amount;
-        return number_format($total, 2, '.', '');
-    }
 
     /**
      * Generate random code
@@ -177,42 +144,6 @@ class Helper extends Model
             return '/uploads/categories/' . $image;
         } else {
             return 'uploads/categories/img-09.png';
-        }
-    }
-    
-    /**
-     * Get citation image
-     *
-     * @param image $image location flag
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public static function getCitationImage($image)
-    {
-        if (!empty($image)) {
-            return '/uploads/citations/' . $image;
-        } else {
-            return 'uploads/citations/img-01.png';
-        }
-    }
-    
-    /**
-     * Get level image
-     *
-     * @param image $image location flag
-     *
-     * @access public
-     *
-     * @return string
-     */
-    public static function getLevelImage($image)
-    {
-        if (!empty($image)) {
-            return '/uploads/researchlevels/' . $image;
-        } else {
-            return 'uploads/researchlevels/img-01.png';
         }
     }
 
@@ -823,11 +754,7 @@ class Helper extends Model
     public static function getUserName($user_id)
     {
         if (!empty($user_id)) {
-            $user = User::find($user_id);
-            $first_name = !empty($user->first_name) ? $user->first_name : ''; 
-            $last_name = !empty($user->last_name) ? $user->last_name : ''; 
-            $name =   $first_name . ' ' . $last_name;
-            return $name;
+            return User::find($user_id)->first_name . ' ' . User::find($user_id)->last_name;
         } else {
             return '';
         }
@@ -873,26 +800,14 @@ class Helper extends Model
                     '0' => trans('lang.freelancer_pkg_opt.price'),
                     '1' => trans('lang.freelancer_pkg_opt.no_of_credits'),
                     '2' => trans('lang.freelancer_pkg_opt.no_of_skills'),
-                    '3' => trans('lang.freelancer_pkg_opt.no_of_categories'),
-                    '4' => trans('lang.freelancer_pkg_opt.pkg_duration'),
-                    '5' => trans('lang.freelancer_pkg_opt.badge'),
-                    '6' => trans('lang.freelancer_pkg_opt.banner'),
-                    '7' => trans('lang.freelancer_pkg_opt.pvt_cht'),
+                    '3' => trans('lang.freelancer_pkg_opt.no_of_services'),
+                    '4' => trans('lang.freelancer_pkg_opt.no_of_featured_services'),
+                    '5' => trans('lang.freelancer_pkg_opt.pkg_duration'),
+                    '6' => trans('lang.freelancer_pkg_opt.badge'),
+                    '7' => trans('lang.freelancer_pkg_opt.banner'),
+                    '8' => trans('lang.freelancer_pkg_opt.pvt_cht'),
                 );
             }
-            // } elseif ($role == 'freelancer') {
-            //     $list = array(
-            //         '0' => trans('lang.freelancer_pkg_opt.price'),
-            //         '1' => trans('lang.freelancer_pkg_opt.no_of_credits'),
-            //         '2' => trans('lang.freelancer_pkg_opt.no_of_skills'),
-            //         '3' => trans('lang.freelancer_pkg_opt.no_of_services'),
-            //         '4' => trans('lang.freelancer_pkg_opt.no_of_featured_services'),
-            //         '5' => trans('lang.freelancer_pkg_opt.pkg_duration'),
-            //         '6' => trans('lang.freelancer_pkg_opt.badge'),
-            //         '7' => trans('lang.freelancer_pkg_opt.banner'),
-            //         '8' => trans('lang.freelancer_pkg_opt.pvt_cht'),
-            //     );
-            // }
             return $list;
         }
     }
@@ -1199,7 +1114,7 @@ class Helper extends Model
             foreach ($social_unserialize_array as $key => $value) {
                 if (array_key_exists($value['title'], $social_list)) {
                     $socialList = $social_list[$value['title']];
-                    $output .= "<li class='wt-{$value['title']}'><a target='_blank' href='{$value["url"]}'><i class='fa {$socialList["icon"]}' ></i></a></li>";
+                    $output .= "<li class='wt-{$value['title']}'><a href = '{$value["url"]}'><i class='fa {$socialList["icon"]}' ></i></a></li>";
                 }
             }
             $output .= "</ul>";
@@ -1218,17 +1133,13 @@ class Helper extends Model
      */
     public static function getProfileImage($user_id)
     {
-        $profile_image = !empty(User::find($user_id)->profile->avater) ? 
-            User::find($user_id)->profile->avater : '';
-        if (!empty($profile_image)) {
-            if (file_exists('/uploads/users/' . $user_id . '/' . $profile_image)) {
-                return !empty($profile_image) ? '/uploads/users/' . $user_id . '/' . $profile_image : '/images/user.jpg';
-            } else {
-                return '/images/user.jpg';
-            }    
+        $profile_image = User::find($user_id)->profile->avater;
+        if (file_exists('/uploads/users/' . $user_id . '/' . $profile_image)) {
+            return !empty($profile_image) ? '/uploads/users/' . $user_id . '/' . $profile_image : '/images/user.jpg';
         } else {
             return '/images/user.jpg';
-        } 
+        }
+        
     }
 
     /**
@@ -1379,8 +1290,7 @@ class Helper extends Model
      */
     public static function getProjectImage($image, $user_id)
     {
-        return !empty($image) ? '/uploads/users/' . $user_id . '/' . $image : 'images/user-login.png';
-        // return !empty($image) ? '/uploads/users/' . $user_id . '/' . $image : 'images/projects/img-01.jpg';
+        return !empty($image) ? '/uploads/users/' . $user_id . '/' . $image : 'images/projects/img-01.jpg';
     }
 
     /**
@@ -1434,20 +1344,10 @@ class Helper extends Model
     {
         $service_balance = 0;
         $commision = SiteManagement::getMetaValue('commision');
-        if (!empty($commision[0]['currency'])) {
-            $service_currency = $commision[0]['currency'];
-        }
-         else {
-            $service_currency = 'USD';
-        }
         $admin_commission = !empty($commision) && !empty($commision[0]['commision']) ? $commision[0]['commision'] : 0;
-        $query = DB::table('proposals as p')->select('*')
-            ->join('milestones as m', 'm.proposal_id', '=', 'p.id')
-            ->where(['p.freelancer_id'=> $user_id, 'm.status' => $status]);
-            
-        $job_balance = $query->sum('m.amount') ? $query->sum('m.amount') : 0;
-        $from_currency = !empty($query->first()) ? $query->first()->currency : 'USD';
-        $to_currency = Profile::find($user_id)->transaction_currency ? Profile::find($user_id)->transaction_currency : 'USD';
+        $job_balance =  Proposal::select('amount')
+            ->where('freelancer_id', $user_id)
+            ->where('status', $status)->sum('amount');
         $job_total_amount = !empty($job_balance) ? $job_balance - ($job_balance / 100) * $admin_commission : 0;
         if (Schema::hasTable('services') && Schema::hasTable('service_user')) {
             $services = DB::table('service_user')->select('service_id')->where('type', 'employer')
@@ -1459,9 +1359,7 @@ class Helper extends Model
             }
         }
         $service_total_amount = !empty($service_balance) ? $service_balance - ($service_balance / 100) * $admin_commission : 0;
-        $service_amount = Helper::convertCurrency($service_total_amount, $service_currency, $to_currency);
-        $job_total_balance = Helper::convertCurrency($job_total_amount, $from_currency, $to_currency);
-        return $job_total_balance + $service_amount;
+        return $job_total_amount + $service_total_amount;
     }
 
     /**
@@ -1534,14 +1432,6 @@ class Helper extends Model
     public static function currencyList($code = "")
     {
         $currency_array = array(
-            'NGN' => array(
-                'numeric_code'  => 566,
-                'code'          => 'NGN',
-                'name'          => 'Nigerian naira',
-                'symbol'        => '₦',
-                'fraction_name' => 'Naira',
-                'decimals'      => 2
-            ),
             'USD' => array(
                 'numeric_code'  => 840,
                 'code'          => 'USD',
@@ -1558,14 +1448,6 @@ class Helper extends Model
                 'fraction_name' => 'Cent',
                 'decimals'      => 2
             ),
-            'BIF' => array(
-                'numeric_code'  => 108,
-                'code'          => 'BIF',
-                'name'          => 'Burundian franc',
-                'symbol'        => 'FBu',
-                'fraction_name' => 'Centime',
-                'decimals'      => 0
-            ),
             'BRL' => array(
                 'numeric_code'  => 986,
                 'code'          => 'BRL',
@@ -1580,30 +1462,6 @@ class Helper extends Model
                 'name'          => 'Canadian dollar',
                 'symbol'        => '$',
                 'fraction_name' => 'Cent',
-                'decimals'      => 2
-            ),
-            'CDF' => array(
-                'numeric_code'  => 976,
-                'code'          => 'CDF',
-                'name'          => 'Congolese franc',
-                'symbol'        => 'FC',
-                'fraction_name' => 'Centime',
-                'decimals'      => 2
-            ),
-            'CHF' => array(
-                'numeric_code'  => 756,
-                'code'          => 'CHF',
-                'name'          => 'Swiss franc',
-                'symbol'        => 'Fr',
-                'fraction_name' => 'Rappen[I]',
-                'decimals'      => 2
-            ),
-            'CVE' => array(
-                'numeric_code'  => 132,
-                'code'          => 'CVE',
-                'name'          => 'Cape Verdean Escudo',
-                'symbol'        => '$',
-                'fraction_name' => 'Centavo',
                 'decimals'      => 2
             ),
             'CZK' => array(
@@ -1629,38 +1487,6 @@ class Helper extends Model
                 'symbol'        => '€',
                 'fraction_name' => 'Cent',
                 'decimals'      => 2
-            ),
-            'GBP' => array(
-                'numeric_code'  => 826,
-                'code'          => 'GBP',
-                'name'          => 'British pound sterling',
-                'symbol'        => '£',
-                'fraction_name' => 'Penny',
-                'decimals'      => 2
-            ),
-            'GHS' => array(
-                'numeric_code'  => 936,
-                'code'          => 'GHS',
-                'name'          => 'Ghanaian cedi',
-                'symbol'        => 'GH₵',
-                'fraction_name' => 'Cedi',
-                'decimals'      => 2
-            ),
-            'GMD' => array(
-                'numeric_code'  => 270,
-                'code'          => 'GMD',
-                'name'          => 'Gambian dalasi',
-                'symbol'        => 'D',
-                'fraction_name' => 'Butut',
-                'decimals'      => 2
-            ),
-            'GNF' => array(
-                'numeric_code'  => 324,
-                'code'          => 'GNF',
-                'name'          => 'Guinean franc',
-                'symbol'        => 'FG',
-                'fraction_name' => 'Centime',
-                'decimals'      => 0
             ),
             'HKD' => array(
                 'numeric_code'  => 344,
@@ -1700,38 +1526,6 @@ class Helper extends Model
                 'name'          => 'Japanese yen',
                 'symbol'        => '¥',
                 'fraction_name' => 'Sen[G]',
-                'decimals'      => 0
-            ),
-            'KES' => array(
-                'numeric_code'  => 404,
-                'code'          => 'KES',
-                'name'          => 'Kenyan shilling',
-                'symbol'        => 'Ksh',
-                'fraction_name' => 'Cent',
-                'decimals'      => 2
-            ),
-            'LRD' => array(
-                'numeric_code'  => 430,
-                'code'          => 'LRD',
-                'name'          => 'Liberian dollar',
-                'symbol'        => 'L$',
-                'fraction_name' => 'Cent',
-                'decimals'      => 2
-            ),
-            'MWK' => array(
-                'numeric_code'  => 454,
-                'code'          => 'MWK',
-                'name'          => 'Malawian kwacha',
-                'symbol'        => 'MK',
-                'fraction_name' => 'Tambala',
-                'decimals'      => 2
-            ),
-            'MXN' => array(
-                'numeric_code'  => 484,
-                'code'          => 'MXN',
-                'name'          => 'Mexican peso',
-                'symbol'        => '$',
-                'fraction_name' => 'Centavo',
                 'decimals'      => 2
             ),
             'MYR' => array(
@@ -1742,11 +1536,11 @@ class Helper extends Model
                 'fraction_name' => 'Sen',
                 'decimals'      => 2
             ),
-            'MZN' => array(
-                'numeric_code'  => 943,
-                'code'          => 'MZN',
-                'name'          => 'Mozambian metical',
-                'symbol'        => 'MT',
+            'MXN' => array(
+                'numeric_code'  => 484,
+                'code'          => 'MXN',
+                'name'          => 'Mexican peso',
+                'symbol'        => '$',
                 'fraction_name' => 'Centavo',
                 'decimals'      => 2
             ),
@@ -1782,28 +1576,12 @@ class Helper extends Model
                 'fraction_name' => 'Grosz',
                 'decimals'      => 2
             ),
-            'RUB' => array(
-                'numeric_code'  => 643,
-                'code'          => 'RUB',
-                'name'          => 'Russian ruble',
-                'symbol'        => 'руб.',
-                'fraction_name' => 'Kopek',
-                'decimals'      => 2
-            ),
-            'RWF' => array(
-                'numeric_code'  => 646,
-                'code'          => 'RWF',
-                'name'          => 'Rwandan Franc',
-                'symbol'        => 'FRw',
-                'fraction_name' => 'Centime',
-                'decimals'      => 0
-            ),
-            'SEK' => array(
-                'numeric_code'  => 752,
-                'code'          => 'SEK',
-                'name'          => 'Swedish krona',
-                'symbol'        => 'kr',
-                'fraction_name' => 'Öre',
+            'GBP' => array(
+                'numeric_code'  => 826,
+                'code'          => 'GBP',
+                'name'          => 'British pound[C]',
+                'symbol'        => '£',
+                'fraction_name' => 'Penny',
                 'decimals'      => 2
             ),
             'SGD' => array(
@@ -1814,28 +1592,20 @@ class Helper extends Model
                 'fraction_name' => 'Cent',
                 'decimals'      => 2
             ),
-            'SLL' => array(
-                'numeric_code'  => 694,
-                'code'          => 'SLL',
-                'name'          => 'Sierra Leonean Leone',
-                'symbol'        => 'Le',
-                'fraction_name' => 'Cent',
+            'SEK' => array(
+                'numeric_code'  => 752,
+                'code'          => 'SEK',
+                'name'          => 'Swedish krona',
+                'symbol'        => 'kr',
+                'fraction_name' => 'Öre',
                 'decimals'      => 2
             ),
-            'STD' => array(
-                'numeric_code'  => 930,
-                'code'          => 'STD',
-                'name'          => 'São Tomé and Príncipe Dobra',
-                'symbol'        => 'Db',
-                'fraction_name' => 'Cêntimo',
-                'decimals'      => 2
-            ),
-            'THB' => array(
-                'numeric_code'  => 764,
-                'code'          => 'THB',
-                'name'          => 'Thai baht',
-                'symbol'        => '฿',
-                'fraction_name' => 'Satang',
+            'CHF' => array(
+                'numeric_code'  => 756,
+                'code'          => 'CHF',
+                'name'          => 'Swiss franc',
+                'symbol'        => 'Fr',
+                'fraction_name' => 'Rappen[I]',
                 'decimals'      => 2
             ),
             'TWD' => array(
@@ -1846,70 +1616,30 @@ class Helper extends Model
                 'fraction_name' => 'Cent',
                 'decimals'      => 2
             ),
-            'TZS' => array(
-                'numeric_code'  => 834,
-                'code'          => 'TZS',
-                'name'          => 'Tanzanian shilling',
-                'symbol'        => 'TSh',
-                'fraction_name' => 'Senti',
+            'THB' => array(
+                'numeric_code'  => 764,
+                'code'          => 'THB',
+                'name'          => 'Thai baht',
+                'symbol'        => '฿',
+                'fraction_name' => 'Satang',
                 'decimals'      => 2
             ),
-            'UGX' => array(
-                'numeric_code'  => 800,
-                'code'          => 'UGX',
-                'name'          => 'Ugandan shilling',
-                'symbol'        => 'USh.',
-                'fraction_name' => 'Cent',
+            'RUB' => array(
+                'numeric_code'  => 643,
+                'code'          => 'RUB',
+                'name'          => 'Russian ruble',
+                'symbol'        => 'руб.',
+                'fraction_name' => 'Kopek',
                 'decimals'      => 2
             ),
-            'XAF' => array(
-                'numeric_code'  => 950,
-                'code'          => 'XAF',
-                'name'          => 'CFA Franc BEAC',
-                'symbol'        => 'FCFA',
-                'fraction_name' => 'Centime',
-                'decimals'      => 0
-            ),
-            'XOF' => array(
-                'numeric_code'  => 952,
-                'code'          => 'XOF',
-                'name'          => 'CFA Franc BCEAO',
-                'symbol'        => 'CFA',
-                'fraction_name' => 'Centime',
-                'decimals'      => 0
-            ),
-            'ZAR' => array(
-                'numeric_code'  => 710,
-                'code'          => 'ZAR',
-                'name'          => 'South African rand',
-                'symbol'        => 'R',
-                'fraction_name' => 'Cent',
+            'NGN' => array(
+                'numeric_code'  => 566,
+                'code'          => 'NGN',
+                'name'          => 'Nigerian naira',
+                'symbol'        => '₦',
+                'fraction_name' => 'Naira',
                 'decimals'      => 2
             ),
-            'ZMK' => array(
-                'numeric_code'  => 967,
-                'code'          => 'UGX',
-                'name'          => 'Zambian kwacha (pre-2013)',
-                'symbol'        => 'ZK',
-                'fraction_name' => 'Ngwee',
-                'decimals'      => 2
-            ),
-            'ZMW' => array(
-                'numeric_code'  => 967,
-                'code'          => 'ZMW',
-                'name'          => 'Zambian kwacha',
-                'symbol'        => 'K',
-                'fraction_name' => 'Ngwee',
-                'decimals'      => 2
-            ),
-            'ZWD' => array(
-                'numeric_code'  => 932,
-                'code'          => 'ZWD',
-                'name'          => 'Zimbabwean dollar',
-                'symbol'        => '$',
-                'fraction_name' => 'Cent',
-                'decimals'      => 2
-            )
         );
 
         if (!empty($code) && array_key_exists($code, $currency_array)) {
@@ -1917,36 +1647,6 @@ class Helper extends Model
         } else {
             return $currency_array;
         }
-    }
-    
-    /**
-     * Get country code via currency
-     *
-     * @access public
-     *
-     * @return array
-     */
-    public static function getCountry($currency)
-    {
-        switch ($currency) {
-            case 'KES':
-             $country = 'KE';
-              break;
-            case 'GHS':
-              $country = 'GH';
-              break;
-            case 'ZAR':
-              $country = 'ZA';
-              break;
-            case 'TZS':
-              $country = 'TZ';
-              break;
-            
-            default:
-              $country = 'NG';
-              break;
-        }
-        return $country;
     }
 
     /**
@@ -2011,10 +1711,6 @@ class Helper extends Model
     public static function getPaymentMethodList($key = "")
     {
         $list = array(
-            'rave' => array(
-                'title' => trans('lang.payment_methods.rave'),
-                'value' => 'rave',
-            ),
             'paypal' => array(
                 'title' => trans('lang.payment_methods.paypal'),
                 'value' => 'paypal',
@@ -2022,6 +1718,10 @@ class Helper extends Model
             'stripe' => array(
                 'title' => trans('lang.payment_methods.stripe'),
                 'value' => 'stripe',
+            ),
+            'rave' => array(
+                'title' => trans('lang.payment_methods.rave'),
+                'value' => 'rave',
             ),
         );
         if (!empty($key) && array_key_exists($key, $list)) {
@@ -2101,7 +1801,8 @@ class Helper extends Model
         $payout_settings = SiteManagement::getMetaValue('commision');
         $min_payount = !empty($payout_settings) && !empty($payout_settings[0]['min_payout']) ? $payout_settings[0]['min_payout'] : '';
         // $payment_gateway = !empty($payout_settings) && !empty($payout_settings[0]['payment_method']) ? $payout_settings[0]['payment_method'] : 'paypal';
-        $currency  = !empty($payout_settings) && !empty($payout_settings[0]['currency']) ? $payout_settings[0]['currency'] : 'USD';
+        $payment_settings = SiteManagement::getMetaValue('commision');
+        $currency  = !empty($payment_settings) && !empty($payment_settings[0]['currency']) ? $payment_settings[0]['currency'] : 'USD';
         $query = Proposal::select('freelancer_id', DB::raw('sum(amount) earning'))->where('status', 'completed')
             ->groupBy('freelancer_id')
             ->get();
@@ -2126,7 +1827,7 @@ class Helper extends Model
                     // $payout->payment_method = 'paypal';
                     // $payout->currency = $currency;
                     $user = User::find($q->freelancer_id);
-                    $currency  = $q->currency;
+                    
                     if ($user->profile->count() > 0) {
                         $payout_id = !empty($user->profile->payout_id) ? $user->profile->payout_id : '';
                         $payout_detail = !empty($user->profile->payout_settings) ? $user->profile->payout_settings : array();
@@ -2192,15 +1893,14 @@ class Helper extends Model
             foreach ($purchased_services as $q) {
                 if ($q->price >= $min_payount) {
                     $user = User::find($q->seller);
-                    $currency = $user->profile->transaction_currency;
                     // if (!empty($user->profile->payout_id)) {
-                    //         $user_payout = Payout::select('id')->where('user_id', $q->seller)
-                    //             ->get()->first();
-                    //         if (!empty($user_payout->id)) {
-                    //             $payout = Payout::find($user_payout->id);
-                    //         } else {
-                    //             $payout = new Payout();
-                    //         }
+                    //     // $user_payout = Payout::select('id')->where('user_id', $q->seller)
+                    //     //     ->get()->first();
+                    //     // if (!empty($user_payout->id)) {
+                    //     //     $payout = Payout::find($user_payout->id);
+                    //     // } else {
+                    //     //     $payout = new Payout();
+                    //     // }
                     //     $payout = new Payout();
                     //     $payout->user()->associate($q->seller);
                     //     $payout->amount = $q->price;
@@ -2399,7 +2099,7 @@ class Helper extends Model
         $banner_title  = !empty($banner_settings) && !empty($banner_settings['banner_title']) ? $banner_settings['banner_title'] : 'Hire expert freelancers';
         $banner_subtitle  = !empty($banner_settings) && !empty($banner_settings['banner_subtitle']) ? $banner_settings['banner_subtitle'] : 'for any job, Online';
         $banner_description  = !empty($banner_settings) && !empty($banner_settings['banner_description']) ? $banner_settings['banner_description'] : 'Consectetur adipisicing elit sed dotem eiusmod tempor incuntes ut labore etdolore maigna aliqua enim';
-        $banner_video_link  = !empty($banner_settings) && !empty($banner_settings['video_link']) ? $banner_settings['video_link'] : 'https://youtu.be/X6B0t7hpvAQ';
+        $banner_video_link  = !empty($banner_settings) && !empty($banner_settings['video_link']) ? $banner_settings['video_link'] : 'https://www.youtube.com/watch?v=B-ph2g5o2K4';
         $banner_video_title  = !empty($banner_settings) && !empty($banner_settings['video_title']) ? $banner_settings['video_title'] : 'See For Yourself!';
         $banner_video_desc  = !empty($banner_settings) && !empty($banner_settings['video_desc']) ? $banner_settings['video_desc'] : 'How it works & experience the ultimate joy.';
         if ($type == 'image') {

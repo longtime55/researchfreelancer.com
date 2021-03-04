@@ -17,10 +17,11 @@ class UpdateProfileTable extends Migration
             'profiles',
             function (Blueprint $table) {
                 $table->text('certification')->nullable();
-                $table->string('transaction_currency')->default('USD');
+                $table->string('transaction_currency')->nullable();
                 $table->string('withdraw_details')->nullable();
                 $table->year('years_exp')->nullable();
                 $table->string('market_profile')->nullable();
+                $table->integer('citation_id')->nullable();
             }
         );
     }
@@ -40,6 +41,7 @@ class UpdateProfileTable extends Migration
                 $table->dropColumn('withdraw_details');
                 $table->dropColumn('years_exp');
                 $table->dropColumn('market_profile');
+                $table->dropColumn('citation_id');
             }
         );
     }

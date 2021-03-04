@@ -122,7 +122,7 @@ input[type="color"],
 	display: inline-block;
 	vertical-align: middle;
 	border: 1px solid #ddd;
-	/* text-transform: inherit; */
+	text-transform: inherit;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -247,7 +247,7 @@ address { font-style: italic; }
 .wt-select:after {
 	top: 0;
 	right: 15px;
-	z-index: 0;
+	z-index: 1;
 	color: #666;
 	display: block;
 	content: '\e874';
@@ -258,7 +258,7 @@ address { font-style: italic; }
 	font-family: 'Linearicons-Free';
 }
 .wt-select select {
-	z-index: 1;
+	z-index: 2;
 	width: 100%;
 	position: relative;
 	appearance: none;
@@ -1347,7 +1347,7 @@ body.wt-login .wt-userlogedin{display: block;}
 .wt-bannerimages{
 	float: left;
 	width: 540px;
-	padding: 80px 0;
+	padding: 99px 0;
 	margin-left:-125px;
 }
 .wt-bannermanimg{
@@ -3363,7 +3363,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 18px;
 	line-height: 22px;
 	overflow: hidden;
-	white-space: normal;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 .wt-contenthead .wt-title a i{color: #00cc8d}
@@ -4091,7 +4091,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	right:80px;
 	color: #999;
 	font-size: 16px;
-	line-height: 110px;
+	line-height: 50px;
 	position: absolute;
 }
 .wt-proposalamount .form-group span i{color: #2ecc71;}
@@ -5249,17 +5249,15 @@ body.wt-login .wt-userlogedin{display: block;}
 }
 .wt-chatbox {
     right: 0;
-	width: 30em;
-    height: 58ccc0px;
+    width: 370px;
     padding: 20px;
-    bottom: 90px;
+    bottom: 100px;
     display: none;
     background: #fff;
     position: absolute;
     border-radius: 10px 10px 0 10px;
-    -webkit-box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
+        -webkit-box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
     box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
-    overflow-y: auto;
 }
 .wt-chatbox:before {
     top: 100%;
@@ -5283,14 +5281,14 @@ body.wt-login .wt-userlogedin{display: block;}
 	box-shadow: 0 0 25px 0 rgba(0,0,0,0.25);
 }
 .wt-chatbox .wt-replaybox .form-control{height: 70px;}
-.wt-chatbox .wt-messages{height: 300px;}
+.wt-chatbox .wt-messages{height: 400px;}
 .wt-chatbox .wt-memessage figure,
 .wt-chatbox .wt-offerermessage figure{
 	width: 30px;
 	height: 30px;
 }
 .wt-chatbox .wt-offerermessage,
-.wt-chatbox .wt-memessage{padding-left: 50px;}
+.wt-chatbox .wt-memessage{padding: 0 50px;}
 .wt-themeimgborder:after{
 	top:0;
 	left:0;
@@ -5345,6 +5343,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	display: block;
 	border-radius: 50px;
 }
+.wt-offersmessages .wt-verticalscrollbar .mCSB_scrollTools{width: 0;}
 .wt-adcontent{
 	overflow: hidden;
 	padding: 1px 0 1px 10px;
@@ -5444,7 +5443,7 @@ body.wt-login .wt-userlogedin{display: block;}
 	float: left;
 	margin: 8px 0;
 	position: relative;
-	padding: 0;
+	padding: 0 70px;
 }
 .wt-offerermessage figure,
 .wt-memessage figure{
@@ -5466,10 +5465,9 @@ body.wt-login .wt-userlogedin{display: block;}
 	font-size: 14px;
 	color: #323232;
 	margin: 0 0 5px;
-	max-width: 100%;
+	max-width: 485px;
 	line-height: 24px;
 	background: #f7f7f7;
-	overflow-wrap: break-word;
 }
 .wt-offerermessage .wt-description p{float: left;}
 .wt-memessage .wt-description p{float: right;}
@@ -6295,7 +6293,73 @@ select.is-invalid {border-color: #dc3545;}
 	float: left;
 }
 .wt-chatarea .form-group{margin: 0;}
+.wt-offerermessage,
+.wt-memessage{
+	width: 100%;
+	float: left;
+	margin: 8px 0;
+	position: relative;
+	padding: 0 70px;
+}
+.wt-offerermessage figure,
+.wt-memessage figure{
+	margin: 0;
+	bottom: 21px;
+	width: 60px;
+	height:60px;
+	overflow: hidden;
+	border-radius: 50%;
+	position: absolute;
+}
+.wt-offerermessage figure{left: 0;}
+.wt-memessage figure{right: 0;}
+.wt-offerermessage figure img,
+.wt-memessage figure img{display: block;}
+.wt-offerermessage .wt-description p,
+.wt-memessage .wt-description p{
+	padding: 10px;
+	font-size: 14px;
+	color: #323232;
+	margin: 0 0 5px;
+	max-width: 485px;
+	line-height: 24px;
+	background: #f7f7f7;
+}
+.wt-offerermessage .wt-description p{float: left;}
+.wt-memessage .wt-description p{float: right;}
+.wt-offerermessage .wt-description p{border-radius: 10px 10px 10px 0;}
+.wt-memessage .wt-description p{border-radius: 10px 10px 0 10px;}
+.wt-offerermessage .wt-description p a,
+.wt-memessage .wt-description p a{
+	color: #55acee;
+	text-decoration: none;
+}
+.wt-offerermessage .wt-description time,
+.wt-memessage .wt-description time{
+	width: 100%;
+	float: left;
+	color: #666;
+	font-size: 11px;
+	line-height: 16px;
+}
+.wt-offerermessage .wt-description time{text-align: left;}
 .wt-memessage .wt-description time{text-align: right;}
+.wt-readmessage .wt-description time{
+	position: relative;
+	padding: 0 16px 0 0;
+}
+.wt-readmessage .wt-description time:before{
+	top: 0;
+	right: 0;
+	width: 16px;
+	height: 16px;
+	color: #00cc67;
+	font-size: 11px;
+	line-height: 16px;
+	content: '\f00c';
+	position: absolute;
+	font-family: 'FontAwesome';
+}
 .wt-offersmessages ul li .wt-messages.wt-dashboardscrollbar {
 	height: 631px;
 	margin: 0 0 20px;
@@ -6599,13 +6663,6 @@ select.is-invalid {border-color: #dc3545;}
 	border-top: 0;
 	border-radius: 0;
 }
-.la-projects .wt-experienceaccordion .project-inner-list .wt-collapseexp fieldset{overflow:visible;}
-.la-projects .wt-experienceaccordion .project-inner-list .wt-collapseexp fieldset .vdpComponent input,
-.la-projects .wt-experienceaccordion .project-inner-list .wt-collapseexp fieldset .vdpComponent{width: 100%;}
-.la-projects .wt-experienceaccordion .project-inner-list + .project-inner-list li:first-child .wt-accordioninnertitle{
-	border-top: 0;
-	border-radius: 0;
-}
 .wt-messages > div:first-child{margin-top:50px; }
 .wt-companysinfoholder .la-employerpagintaion .wt-pagination{margin: 15px 0;}
 .wt-packagedetails:after{display: none;}
@@ -6783,7 +6840,7 @@ span.wt-stars span:after{
     text-align: left;
     line-height: 18px;
     font-weight: 400;
-    padding: 15px 20px;
+    padding: 15px 30px;
     border: 1px solid #eee;
 }
 .sj-checkouttable > tbody > tr > td {
@@ -7749,15 +7806,3 @@ body.lang-ja .wt-loginfooterinfo a + a:before {
 .la-free-proposal .wt-proposalitem .wt-btnarea .wt-btn + .wt-btn {margin: 0 0 0 7px;}
 .wt-settingscontent .la-payout-settings .fields-wrapper .wt-description p{margin: 0 0 10px;}
 .wt-settingscontent .la-payout-settings .fields-wrapper .wt-description p a{text-decoration: none;}
-.wt-jobcurrency {
-	right: 20px;
-    color: #2ecc71;
-    font-size: 16px;
-    line-height: 50px;
-    position: absolute;
-    border-left: 1px solid #dddddd;
-    padding: 0 2px;
-}
-.wt-servicefee {
-    margin-top: 2rem !important;
-}

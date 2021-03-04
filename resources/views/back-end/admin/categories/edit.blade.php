@@ -10,13 +10,6 @@
                 <flash_messages :message_class="'danger'" :time ='5' :message="'{{{ Session::get('error') }}}'" v-cloak></flash_messages>
             </div>
         @endif
-        @if (isset($errors) && count($errors))
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li><flash_messages :message_class="'danger'" :time ='5' :message="'{{{$error }}}'" v-cloak></flash_messages></li>
-                @endforeach
-            </ul>
-        @endif
         <section class="wt-haslayout wt-dbsectionspace la-editcategory">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 float-left">

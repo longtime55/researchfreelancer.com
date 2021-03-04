@@ -98,7 +98,7 @@
                                 </figure>
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
-                                        <h3>{{ $symbol['symbol'] }}{{{ Helper::getProposalsBalance(Auth::user()->id, 'pending') }}} {{$currency}}</h3>
+                                        <h3>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{ Helper::getProposalsBalance(Auth::user()->id, 'hired') }}}</h3>
                                         <h3>{{ trans('lang.pending_bal') }}</h3>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                 </figure>
                                 <div class="wt-insightdetails">
                                     <div class="wt-title">
-                                    <h3>{{ $symbol['symbol'] }}{{{ Helper::getProposalsBalance(Auth::user()->id, 'released') }}} {{$currency}}</h3>
+                                    <h3>{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{ Helper::getProposalsBalance(Auth::user()->id, 'completed') }}}</h3>
                                         <h3>{{ trans('lang.curr_bal') }}</h3>
                                     </div>
                                 </div>
@@ -203,7 +203,6 @@
                                                 $project = \App\Proposal::find($projects->id);
                                                 $user = \App\User::find($project->job->user_id);
                                                 $user_name = Helper::getUsername($project->job->user_id);
-                                                $project_symbol = Helper::currencyList($project->currency)['symbol'];
                                             @endphp
                                             <tr>
                                                 <td data-th="Project title"><span class="bt-content"><a target="_blank" href="{{{ url('freelancer/job/'.$project->job->slug) }}}">{{{ $project->job->title }}}</a></span></td>
@@ -217,7 +216,7 @@
                                                         </a>
                                                     </span>
                                                 </td>
-                                                <td data-th="Project cost"><span class="bt-content">{{$project_symbol}}{{$projects->amount}} {{ $project->currency }}</span></td>
+                                                <td data-th="Project cost"><span class="bt-content">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{$projects->amount}}</span></td>
                                                 <td data-th="Actions">
                                                     <span class="bt-content">
                                                         <div class="wt-btnarea">
@@ -254,7 +253,7 @@
                     @if ((!empty($completed_projects) && $completed_projects->count() > 0) || $pastearing_check)
                         @php
                             $commision = \App\SiteManagement::getMetaValue('commision');
-                            $admin_commission = !empty($commision[0]['commision']) ? $commision[0]['commision'] : 20;
+                            $admin_commission = !empty($commision[0]['commision']) ? $commision[0]['commision'] : 0;
                         @endphp
                         <div class="wt-dashboardboxcontent wt-hiredfreelance">
                             <table class="wt-tablecategories">
@@ -272,12 +271,12 @@
                                                 @php
                                                     $project = \App\Proposal::find($projects->id);
                                                     $user_name = Helper::getUsername($project->job->user_id);
-                                                    $amount = !empty($project->amount) ? $project->amount - ($project->amount / 100) * $admin_commission : 20;
+                                                    $amount = !empty($project->amount) ? $project->amount - ($project->amount / 100) * $admin_commission : 0;
                                                 @endphp
                                                 <tr class="wt-earning-contents">
                                                     <td class="wt-earnig-single" data-th="Project Title"><span class="bt-content">{{{ $project->job->title }}}</span></td>
                                                     <td data-th="Date"><span class="bt-content">{{$project->updated_at}}</span></td>
-                                                    <td data-th="Earnings"><span class="bt-content">{{$project_symbol}}{{{$amount}}} {{ $project->currency }}</span></td>
+                                                    <td data-th="Earnings"><span class="bt-content">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$amount}}}</span></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -295,7 +294,7 @@
                                                 <tr class="wt-earning-contents">
                                                     <td class="wt-earnig-single" data-th="Project Title"><span class="bt-content">{{{ $service->title }}}</span></td>
                                                     <td data-th="Date"><span class="bt-content">{{$service->updated_at}}</span></td>
-                                                    <td data-th="Earnings"><span class="bt-content">{{ $symbol['symbol'] }}{{{$amount}}} {{$currency}}</span></td>
+                                                    <td data-th="Earnings"><span class="bt-content">{{ !empty($symbol['symbol']) ? $symbol['symbol'] : '$' }}{{{$amount}}}</span></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

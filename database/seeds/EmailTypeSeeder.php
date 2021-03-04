@@ -31,6 +31,13 @@ class EmailTypeSeeder extends Seeder
                 // General Email Types
                 [
                     'role_id' => null,
+                    'email_type' => 'new_user',
+                    'variables' => 'a:6:{i:0;a:2:{s:3:"key";s:4:"name";s:5:"value";s:6:"%name%";}i:1;a:2:{s:3:"key";s:5:"email";s:5:"value";s:7:"%email%";}i:2;a:2:{s:3:"key";s:8:"username";s:5:"value";s:10:"%username%";}i:3;a:2:{s:3:"key";s:8:"password";s:5:"value";s:10:"%password%";}i:4;a:2:{s:3:"key";s:17:"verification_code";s:5:"value";s:19:"%verification_code%";}i:5;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                ],
+                [
+                    'role_id' => null,
                     'email_type' => 'verification_code',
                     'variables' => 'a:4:{i:0;a:2:{s:3:"key";s:4:"name";s:5:"value";s:6:"%name%";}i:1;a:2:{s:3:"key";s:5:"email";s:5:"value";s:7:"%email%";}i:2;a:2:{s:3:"key";s:17:"verification_code";s:5:"value";s:19:"%verification_code%";}i:3;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -118,13 +125,6 @@ class EmailTypeSeeder extends Seeder
                 // Employer Email Types
                 [
                     'role_id' => 2,
-                    'email_type' => 'employer_email_new_user',
-                    'variables' => 'a:6:{i:0;a:2:{s:3:"key";s:4:"name";s:5:"value";s:6:"%name%";}i:1;a:2:{s:3:"key";s:5:"email";s:5:"value";s:7:"%email%";}i:2;a:2:{s:3:"key";s:8:"username";s:5:"value";s:10:"%username%";}i:3;a:2:{s:3:"key";s:8:"password";s:5:"value";s:10:"%password%";}i:4;a:2:{s:3:"key";s:17:"verification_code";s:5:"value";s:19:"%verification_code%";}i:5;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 2,
                     'email_type' => 'employer_email_proposal_received',
                     'variables' => 'a:9:{i:0;a:2:{s:3:"key";s:15:"freelancer_link";s:5:"value";s:17:"%freelancer_link%";}i:1;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:2;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:3;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:4;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:5;a:2:{s:3:"key";s:15:"proposal_amount";s:5:"value";s:17:"%proposal_amount%";}i:6;a:2:{s:3:"key";s:17:"proposal_duration";s:5:"value";s:19:"%proposal_duration%";}i:7;a:2:{s:3:"key";s:7:"message";s:5:"value";s:9:"%message%";}i:8;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -146,13 +146,6 @@ class EmailTypeSeeder extends Seeder
                 ],
                 [
                     'role_id' => 2,
-                    'email_type' => 'employer_email_milestone_request_sent',
-                    'variables' => 'a:10:{i:0;a:2:{s:3:"key";s:15:"freelancer_link";s:5:"value";s:17:"%freelancer_link%";}i:1;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:2;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:3;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:4;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:5;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:6;a:2:{s:3:"key";s:5:"count";s:5:"value";s:7:"%count%";}i:7;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:8;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:9;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 2,
                     'email_type' => 'employer_email_package_subscribed',
                     'variables' => 'a:6:{i:0;a:2:{s:3:"key";s:12:"package_name";s:5:"value";s:14:"%package_name%";}i:1;a:2:{s:3:"key";s:13:"package_price";s:5:"value";s:15:"%package_price%";}i:2;a:2:{s:3:"key";s:14:"package_expiry";s:5:"value";s:16:"%package_expiry%";}i:3;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:4;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:5;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -160,13 +153,6 @@ class EmailTypeSeeder extends Seeder
                 ],
 
                 // Freelancer Email Types
-                [
-                    'role_id' => 3,
-                    'email_type' => 'freelancer_email_new_user',
-                    'variables' => 'a:6:{i:0;a:2:{s:3:"key";s:4:"name";s:5:"value";s:6:"%name%";}i:1;a:2:{s:3:"key";s:5:"email";s:5:"value";s:7:"%email%";}i:2;a:2:{s:3:"key";s:8:"username";s:5:"value";s:10:"%username%";}i:3;a:2:{s:3:"key";s:8:"password";s:5:"value";s:10:"%password%";}i:4;a:2:{s:3:"key";s:17:"verification_code";s:5:"value";s:19:"%verification_code%";}i:5;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
                 [
                     'role_id' => 3,
                     'email_type' => 'freelancer_email_new_proposal_submitted',
@@ -204,13 +190,6 @@ class EmailTypeSeeder extends Seeder
                 ],
                 [
                     'role_id' => 3,
-                    'email_type' => 'freelancer_email_milestone_request_received',
-                    'variables' => 'a:10:{i:0;a:2:{s:3:"key";s:15:"freelancer_link";s:5:"value";s:17:"%freelancer_link%";}i:1;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:2;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:3;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:4;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:5;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:6;a:2:{s:3:"key";s:5:"count";s:5:"value";s:7:"%count%";}i:7;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:8;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:9;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 3,
                     'email_type' => 'freelancer_email_package_subscribed',
                     'variables' => 'a:6:{i:0;a:2:{s:3:"key";s:12:"package_name";s:5:"value";s:14:"%package_name%";}i:1;a:2:{s:3:"key";s:13:"package_price";s:5:"value";s:15:"%package_price%";}i:2;a:2:{s:3:"key";s:14:"package_expiry";s:5:"value";s:16:"%package_expiry%";}i:3;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:4;a:2:{s:3:"key";s:15:"freelancer_link";s:5:"value";s:17:"%freelancer_link%";}i:5;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -241,55 +220,6 @@ class EmailTypeSeeder extends Seeder
                     'role_id' => null,
                     'email_type' => 'admin_email_cancel_job',
                     'variables' => 'a:8:{i:0;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:1;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:2;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:3;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:4;a:2:{s:3:"key";s:15:"freelancer_link";s:5:"value";s:17:"%freelancer_link%";}i:5;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:6;a:2:{s:3:"key";s:7:"message";s:5:"value";s:9:"%message%";}i:7;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 3,
-                    'email_type' => 'freelancer_email_matched_latest_jobs',
-                    'variables' => 'a:10:{i:0;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:1;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:2;a:2:{s:3:"key";s:6:"skills";s:5:"value";s:8:"%skills%";}i:3;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:4;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:5;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:6;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:7;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:8;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:9;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 3,
-                    'email_type' => 'freelancer_email_milestone_released',
-                    'variables' => 'a:11:{i:0;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:1;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:2;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:3;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:4;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:5;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:6;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:7;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:8;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:9;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:10;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 3,
-                    'email_type' => 'freelancer_email_milestone_canceled',
-                    'variables' => 'a:11:{i:0;a:2:{s:3:"key";s:15:"freelancer_name";s:5:"value";s:17:"%freelancer_name%";}i:1;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:2;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:3;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:4;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:5;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:6;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:7;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:8;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:9;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:10;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 2,
-                    'email_type' => 'employer_email_milestone_released',
-                    'variables' => 'a:9:{i:0;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:1;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:2;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:3;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:4;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:5;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:6;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:7;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:8;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 2,
-                    'email_type' => 'employer_email_milestone_canceled',
-                    'variables' => 'a:9:{i:0;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:1;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:2;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:3;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:4;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:5;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:6;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:7;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:8;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 1,
-                    'email_type' => 'admin_email_milestone_released',
-                    'variables' => 'a:11:{i:0;a:2:{s:3:"key";s:12:"company_name";s:5:"value";s:14:"%company_name%";}i:1;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:2;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:3;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:4;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:5;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:6;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:7;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:8;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:9;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:10;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'role_id' => 1,
-                    'email_type' => 'admin_email_milestone_canceled',
-                    'variables' => 'a:11:{i:0;a:2:{s:3:"key";s:12:"company_name";s:5:"value";s:14:"%company_name%";}i:1;a:2:{s:3:"key";s:13:"employer_link";s:5:"value";s:15:"%employer_link%";}i:2;a:2:{s:3:"key";s:13:"employer_name";s:5:"value";s:15:"%employer_name%";}i:3;a:2:{s:3:"key";s:13:"project_title";s:5:"value";s:15:"%project_title%";}i:4;a:2:{s:3:"key";s:6:"symbol";s:5:"value";s:8:"%symbol%";}i:5;a:2:{s:3:"key";s:6:"amount";s:5:"value";s:8:"%amount%";}i:6;a:2:{s:3:"key";s:8:"currency";s:5:"value";s:10:"%currency%";}i:7;a:2:{s:3:"key";s:7:"details";s:5:"value";s:9:"%details%";}i:8;a:2:{s:3:"key";s:4:"date";s:5:"value";s:6:"%date%";}i:9;a:2:{s:3:"key";s:12:"project_link";s:5:"value";s:14:"%project_link%";}i:10;a:2:{s:3:"key";s:9:"signature";s:5:"value";s:11:"%signature%";}}',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],

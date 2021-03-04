@@ -23,9 +23,6 @@ use Illuminate\Support\Facades\Input;
 use App\Language;
 use App\Category;
 use App\Skill;
-use App\FreelancerLevel;
-use App\ResearchLevel;
-use App\Citation;
 use App\Location;
 use App\Helper;
 use App\Proposal;
@@ -38,7 +35,6 @@ use Spatie\Permission\Models\Role;
 use App\SiteManagement;
 use App\Mail\AdminEmailMailable;
 use App\Mail\EmployerEmailMailable;
-use App\Mail\FreelancerEmailMailable;
 use App\EmailTemplate;
 use App\Item;
 use Carbon\Carbon;
@@ -55,14 +51,10 @@ class JobController extends Controller
      *
      * @access protected
      * @var    array $job
-     * @var    array $payout_settings
-     * @var    array $currency
      */
     protected $job;
 
     protected $payout_settings;
-    
-    protected $currency;
 
     /**
      * Defining scope of the variable
@@ -83,11 +75,6 @@ class JobController extends Controller
     {
         $this->job = $job;
         $this->payout_settings = SiteManagement::getMetaValue('commision');
-        if (!empty($this->payout_settings[0]['currency'])) {
-            $this->currency = $this->payout_settings[0]['currency'];
-        } else {
-            $this->currency = 'USD';
-        }
     }
 
     /**
@@ -97,25 +84,25 @@ class JobController extends Controller
      */
     public function postJob()
     {
-        $languages = Language::orderBy('title')->pluck('title', 'id');
-        $locations = Location::orderBy('title')->pluck('title', 'id');
-        $citations = Citation::orderBy('title')->pluck('title', 'id');
-        $project_levels = ResearchLevel::orderBy('title')->pluck('title', 'id');
+        $languages = Language::pluck('title', 'id');
+        $locations = Location::pluck('title', 'id');
+        $english_levels = Helper::getEnglishLevelList();
+        $project_levels = Helper::getProjectLevel();
         $job_duration = Helper::getJobDurationList();
-        $freelancer_levels = FreelancerLevel::orderBy('title')->pluck('title', 'id');
-        $existing_currency = $this->currency;
+        $freelancer_level = Helper::getFreelancerLevelList();
+        $existing_currency = !empty($this->payout_settings[0]['currency']) ? $this->payout_settings[0]['currency'] : '';
         $currency = array_pluck(Helper::currencyList(), 'code', 'code');
-        $skills = Skill::orderBy('title')->pluck('title', 'id');
-        $categories = Category::orderBy('title')->pluck('title', 'id');
+        $skills = Skill::pluck('title', 'id');
+        $categories = Category::pluck('title', 'id');
         if (file_exists(resource_path('views/extend/back-end/employer/jobs/create.blade.php'))) {
             return view(
                 'extend.back-end.employer.jobs.create',
                 compact(
-                    'citations',
+                    'english_levels',
                     'languages',
                     'project_levels',
                     'job_duration',
-                    'freelancer_levels',
+                    'freelancer_level',
                     'skills',
                     'categories',
                     'locations',
@@ -127,11 +114,11 @@ class JobController extends Controller
             return view(
                 'back-end.employer.jobs.create',
                 compact(
-                    'citations',
+                    'english_levels',
                     'languages',
                     'project_levels',
                     'job_duration',
-                    'freelancer_levels',
+                    'freelancer_level',
                     'skills',
                     'categories',
                     'locations',
@@ -149,12 +136,8 @@ class JobController extends Controller
      */
     public function index()
     {
-        $job = $this->job->where('user_id', Auth::user()->id)->get()->first();
-        if (!empty($job->currency)) {
-            $this->currency = $job->currency;
-        }
-        $symbol = Helper::currencyList($this->currency);
         $job_details = $this->job->latest()->where('user_id', Auth::user()->id)->paginate(5);
+        $symbol = !empty($this->payout_settings) && !empty($this->payout_settings[0]['currency']) ? Helper::currencyList($this->payout_settings[0]['currency']) : array();
         if (file_exists(resource_path('views/extend/back-end/employer/jobs/index.blade.php'))) {
             return view('extend.back-end.employer.jobs.index', compact('job_details', 'symbol'));
         } else {
@@ -173,20 +156,19 @@ class JobController extends Controller
     {
         if (!empty($job_slug)) {
             $job = Job::where('slug', $job_slug)->first();
-            if (!empty($job->currency)) {
-                $this->currency = $job->currency;
-            }
             $json = array();
-            $languages = Language::orderBy('title')->pluck('title', 'id');
-            $locations = Location::orderBy('title')->pluck('title', 'id');
-            $citations = Citation::orderBy('title')->pluck('title', 'id');
-            $project_levels = ResearchLevel::orderBy('title')->pluck('title', 'id');
+            $languages = Language::pluck('title', 'id');
+            $locations = Location::pluck('title', 'id');
+            $skills = Skill::pluck('title', 'id');
+            $categories = Category::pluck('title', 'id');
+            $project_levels = Helper::getProjectLevel();
+            $english_levels = Helper::getEnglishLevelList();
             $job_duration = Helper::getJobDurationList();
-            $freelancer_levels = FreelancerLevel::orderBy('title')->pluck('title', 'id');
-            $existing_currency = $this->currency;
+            $freelancer_level_list = Helper::getFreelancerLevelList();
+            $profile = Profile::where('user_id', Auth::user()->id)
+            ->get()->first();
             $currency = array_pluck(Helper::currencyList(), 'code', 'code');
-            $skills = Skill::orderBy('title')->pluck('title', 'id');
-            $categories = Category::orderBy('title')->pluck('title', 'id');
+            $existing_currency = !empty($profile->transaction_currency) ? $profile->transaction_currency : '';
             $attachments = !empty($job->attachments) ? unserialize($job->attachments) : '';
             if (!empty($job)) {
                 if (file_exists(resource_path('views/extend/back-end/employer/jobs/edit.blade.php'))) {
@@ -194,17 +176,17 @@ class JobController extends Controller
                         'extend.back-end.employer.jobs.edit',
                         compact(
                             'job',
-                            'citations',
-                            'languages',
                             'project_levels',
+                            'english_levels',
                             'job_duration',
-                            'freelancer_levels',
-                            'skills',
+                            'freelancer_level_list',
+                            'languages',
                             'categories',
+                            'skills',
                             'locations',
+                            'attachments',
                             'currency',
-                            'existing_currency',
-                            'attachments'
+                            'existing_currency'
                         )
                     );
                 } else {
@@ -212,17 +194,17 @@ class JobController extends Controller
                         'back-end.employer.jobs.edit',
                         compact(
                             'job',
-                            'citations',
-                            'languages',
                             'project_levels',
+                            'english_levels',
                             'job_duration',
-                            'freelancer_levels',
-                            'skills',
+                            'freelancer_level_list',
+                            'languages',
                             'categories',
+                            'skills',
                             'locations',
+                            'attachments',
                             'currency',
-                            'existing_currency',
-                            'attachments'
+                            'existing_currency'
                         )
                     );
                 }
@@ -287,15 +269,12 @@ class JobController extends Controller
             $request,
             [
                 'title' => 'required',
-                'research_category' => 'required',
-                'research_field' => 'required',
-                'project_level' => 'required',
+                'project_levels' => 'required',
                 'job_duration' => 'required',
                 'freelancer_type' => 'required',
-                'citation' => 'required',
+                'english_level' => 'required',
+                'project_cost' => 'required',
                 'description' => 'required',
-                'currency' => 'required',
-                'project_cost' => 'required'
             ]
         );
         if (Auth::user()) {
@@ -309,11 +288,6 @@ class JobController extends Controller
                 $json['type'] = 'job_warning';
                 return $json;
             }
-            if (Auth::user()->getRoleNames()->first() === 'freelancer') {
-                $json['message'] = trans('lang.not_authorize');
-                return $json;
-            }
-            $user = User::find(Auth::user()->id);
             $package_item = Item::where('subscriber', Auth::user()->id)->first();
             $package = !empty($package_item) ? Package::find($package_item->product_id) : '';
             $option = !empty($package) ? unserialize($package->options) : '';
@@ -335,13 +309,13 @@ class JobController extends Controller
                     return $json;
                 }
                 if ($request['is_featured'] == 'true') {
-                    if (!empty($option['featured_jobs']) && $posted_featured_jobs >= intval($option['featured_jobs'])) {
+                    if ($posted_featured_jobs >= intval($option['featured_jobs'])) {
                         $json['type'] = 'error';
                         $json['message'] = trans('lang.sorry_can_only_feature')  .' '. $option['featured_jobs'] .' ' . trans('lang.jobs_acc_to_pkg');
                         return $json;
                     }
                 }
-                if (!empty($option['jobs']) && $posted_jobs >= intval($option['jobs'])) {
+                if ($posted_jobs >= intval($option['jobs'])) {
                     $json['type'] = 'error';
                     $json['message'] = trans('lang.sorry_cannot_submit') .' '. $option['jobs'] .' ' . trans('lang.jobs_acc_to_pkg');
                     return $json;
@@ -350,19 +324,17 @@ class JobController extends Controller
                     if ($job_post = 'success') {
                         $json['type'] = 'success';
                         $json['message'] = trans('lang.job_post_success');
-
                         // Send Email
+                        $user = User::find(Auth::user()->id);
+                        //send email to admin
                         if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
                             $job = $this->job::where('user_id', Auth::user()->id)->latest()->first();
                             $email_params = array();
                             $new_posted_job_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_new_job_posted')->get()->first();
                             $new_posted_job_template_employer = DB::table('email_types')->select('id')->where('email_type', 'employer_email_new_job_posted')->get()->first();
-                            $new_matched_job_template_freelancer = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_matched_latest_jobs')->get()->first();
-                            // if (!empty($new_posted_job_template->id) || !empty($new_posted_job_template_employer)) {
-                            if (!empty($new_posted_job_template->id) || !empty($new_posted_job_template_employer) || !empty($new_matched_job_template_freelancer)) {
+                            if (!empty($new_posted_job_template->id) || !empty(new_posted_job_template_employer)) {
                                 $template_data = EmailTemplate::getEmailTemplateByID($new_posted_job_template->id);
                                 $template_data_employer = EmailTemplate::getEmailTemplateByID($new_posted_job_template_employer->id);
-                                $template_data_freelancer = EmailTemplate::getEmailTemplateByID($new_matched_job_template_freelancer->id);
                                 $email_params['job_title'] = $job->title;
                                 $email_params['posted_job_link'] = url('/project/' . $job->slug);
                                 $email_params['name'] = Helper::getUserName(Auth::user()->id);
@@ -384,52 +356,6 @@ class JobController extends Controller
                                             $email_params
                                         )
                                     );
-                                    $email_params = array();
-                                    $user_id = array();
-                                    $skill = DB::table('job_skill')->where('job_id', $job->id)->latest();
-                                    $skill_id = !empty($skill) ? $skill->skill_id : '';
-                                    $skill_title = !empty($skill_id) ? Skill::find($skill_id)->title : '';
-                                    $category = DB::table('catables')->where('catable_id', $job->id)->where('catable_type', 'App\Job')->latest();
-                                    $category_id = !empty($category) ? $category->category_id : '';
-                                    $category_title = !empty($category_id) ? Category::find($category_id)->title : '';
-                                    $user_id1 = !empty($category_id) ? DB::table('catables')->where('category_id', $category_id)->where('catable_type', 'App\User')->get()->pluck('catable_id')->toArray() : array();
-                                    $user_id2 = !empty($skill_id) ? DB::table('skill_user')->where('skill_id', $skill_id)->get()->pluck('user_id')->toArray() : array();
-                                    if (!empty($user_id1) || !empty($user_id2)) {
-                                        $user_id[] = array_unique(array_merge($user_id1, $user_id2));
-                                    }
-                                    $email_params['job_title'] = $job->title;
-                                    $email_params['posted_job_link'] = url('/project/' . $job->slug);
-                                    
-                                    $email_params['skills'] = '';
-                                    if (!empty($category_title)) {
-                                        $email_params['skills'] = $category_title;
-                                        if (!empty($skill_title)) {
-                                            $email_params['skills'] = $category_title. ', '. $skill_title;
-                                        }
-                                    } else {
-                                        if (!empty($skill_title)) {
-                                            $email_params['skills'] = $skill_title;
-                                        }
-                                    }
-                                    $email_params['symbol'] = Helper::currencyList($job->currency)['symbol'];
-                                    $email_params['amount'] = $job->price;
-                                    $email_params['currency'] = $job->currency;
-                                    $email_params['date'] = 1;
-                                    $email_params['details'] = str_limit($job->description, 300);
-                                    if (!empty($user_id) && count($user_id) > 0) {
-                                        $freelancers = User::whereIn('id', $user_id)->orderBy('badge_id', 'asc')->get();
-                                        foreach ($freelancers as $freelancer) {
-                                            $email_params['freelancer_name'] = $freelancer->first_name. ' '. $freelancer->last_name;
-                                            Mail::to($freelancer->email)
-                                            ->send(
-                                                new FreelancerEmailMailable(
-                                                    'freelancer_email_matched_latest_jobs',
-                                                    $template_data_freelancer,
-                                                    $email_params
-                                                )
-                                            );
-                                        }
-                                    }
                                 }
                             }
                         }
@@ -442,17 +368,16 @@ class JobController extends Controller
                     $json['type'] = 'success';
                     $json['message'] = trans('lang.job_post_success');
                     // Send Email
+                    $user = User::find(Auth::user()->id);
+                    //send email to admin
                     if (!empty(config('mail.username')) && !empty(config('mail.password'))) {
                         $job = $this->job::where('user_id', Auth::user()->id)->latest()->first();
                         $email_params = array();
                         $new_posted_job_template = DB::table('email_types')->select('id')->where('email_type', 'admin_email_new_job_posted')->get()->first();
                         $new_posted_job_template_employer = DB::table('email_types')->select('id')->where('email_type', 'employer_email_new_job_posted')->get()->first();
-                        $new_matched_job_template_freelancer = DB::table('email_types')->select('id')->where('email_type', 'freelancer_email_matched_latest_jobs')->get()->first();
-                        // if (!empty($new_posted_job_template->id) || !empty($new_posted_job_template_employer)) {
-                        if (!empty($new_posted_job_template->id) || !empty($new_posted_job_template_employer) || !empty($new_matched_job_template_freelancer)) {
+                        if (!empty($new_posted_job_template->id) || !empty(new_posted_job_template_employer)) {
                             $template_data = EmailTemplate::getEmailTemplateByID($new_posted_job_template->id);
                             $template_data_employer = EmailTemplate::getEmailTemplateByID($new_posted_job_template_employer->id);
-                            $template_data_freelancer = EmailTemplate::getEmailTemplateByID($new_matched_job_template_freelancer->id);
                             $email_params['job_title'] = $job->title;
                             $email_params['posted_job_link'] = url('/project/' . $job->slug);
                             $email_params['name'] = Helper::getUserName(Auth::user()->id);
@@ -474,81 +399,17 @@ class JobController extends Controller
                                         $email_params
                                     )
                                 );
-                                $email_params = array();
-                                $user_id = array();
-                                $skill = DB::table('job_skill')->where('job_id', $job->id)->first();
-                                $skill_id = !empty($skill) ? $skill->skill_id : '';
-                                $skill_title = !empty($skill_id) ? Skill::find($skill_id)->title : '';
-                                $category = DB::table('catables')->where('catable_id', $job->id)->where('catable_type', 'App\Job')->first();
-                                $category_id = !empty($category) ? $category->category_id : '';
-                                $category_title = !empty($category_id) ? Category::find($category_id)->title : '';
-                                $user_id1 = !empty($category_id) ? DB::table('catables')->where('category_id', $category_id)->where('catable_type', 'App\User')->get()->pluck('catable_id')->toArray() : array();
-                                $user_id2 = array();
-                                $user_id2 = !empty($skill_id) ? DB::table('skill_user')->where('skill_id', $skill_id)->get()->pluck('user_id')->toArray() : array();
-                                if (!empty($user_id1) || !empty($user_id2)) {
-                                    $user_id[] = array_unique(array_merge($user_id1, $user_id2));
-                                }
-                                $email_params['job_title'] = $job->title;
-                                $email_params['posted_job_link'] = url('/project/' . $job->slug);
-                                
-                                $email_params['skills'] = '';
-                                if (!empty($category_title)) {
-                                    $email_params['skills'] = $category_title;
-                                    if (!empty($skill_title)) {
-                                        $email_params['skills'] = $category_title. ', '. $skill_title;
-                                    }
-                                } else {
-                                    if (!empty($skill_title)) {
-                                        $email_params['skills'] = $skill_title;
-                                    }
-                                }
-                                $email_params['symbol'] = Helper::currencyList($job->currency)['symbol'];
-                                $email_params['amount'] = $job->price;
-                                $email_params['currency'] = $job->currency;
-                                $email_params['details'] = str_limit($job->description, 300);
-                                $to = $job->created_at;
-                                if (!empty($user_id) && count($user_id) > 0) {
-                                    $freelancers = User::whereIn('id', $user_id)->orderBy('badge_id', 'asc')->get();
-                                    foreach ($freelancers as $freelancer) {
-                                        $email_params['freelancer_name'] = $freelancer->first_name. ' '. $freelancer->last_name;
-                                        $from = Carbon::now()->format('Y-m-d H:s:i');
-                                        $diff_in_hours = $to->diffInHours($from);
-                                        $diff_in_minutes = $to->diffInMinutes($from);
-                                        $diff_in_seconds = $to->diffInSeconds($from);
-                                        if (!empty($diff_in_hours)) {
-                                            $email_params['date'] = $diff_in_hours. 'hours ';
-                                            if (!empty($diff_in_minutes)) {
-                                                $email_params['date'] .= $diff_in_minutes. 'minutes ago';
-                                            } else {
-                                                $email_params['date'] .= 'ago';
-                                            }
-                                        } else {
-                                            if (!empty($diff_in_minutes)) {
-                                                $email_params['date'] = $diff_in_minutes. 'minutes ago';
-                                            } elseif (!empty($diff_in_seconds)) {
-                                                $email_params['date'] = $diff_in_seconds. 'seconds ago';
-                                            }
-                                        }
-                                        Mail::to($freelancer->email)
-                                        ->send(
-                                            new FreelancerEmailMailable(
-                                                'freelancer_email_matched_latest_jobs',
-                                                $template_data_freelancer,
-                                                $email_params
-                                            )
-                                        );
-                                    }
-                                }
                             }
                         }
                     }
+                    return $json;
                 }
             }
         } else {
             $json['type'] = 'error';
             $json['message'] = trans('lang.please_signin_register');
+            return $json;
         }
-        return $json;
     }
 
     /**
@@ -571,15 +432,10 @@ class JobController extends Controller
             $request,
             [
                 'title' => 'required',
-                'research_category' => 'required',
-                'research_field' => 'required',
-                'project_level' => 'required',
                 'job_duration' => 'required',
-                'freelancer_type' => 'required',
-                'citation' => 'required',
-                'description' => 'required',
-                'currency' => 'required',
-                'project_cost' => 'required'
+                'project_levels' => 'required',
+                'english_level' => 'required',
+                'project_cost' => 'required',
             ]
         );
         $id = $request['id'];
@@ -606,9 +462,6 @@ class JobController extends Controller
     public function show($slug)
     {
         $job = $this->job::all()->where('slug', $slug)->first();
-        if (!empty($job->currency)) {
-            $this->currency = $job->currency;
-        }
         if (!empty($job)) {
             $submitted_proposals = $job->proposals->where('status', '!=', 'cancelled')->pluck('freelancer_id')->toArray();
             $employer_id = $job->employer->id;
@@ -620,7 +473,7 @@ class JobController extends Controller
             $save_jobs = !empty($auth_profile->saved_jobs) ? unserialize($auth_profile->saved_jobs) : array();
             $save_employers = !empty($auth_profile->saved_employers) ? unserialize($auth_profile->saved_employers) : array();
             $attachments  = unserialize($job->attachments);
-            $symbol = Helper::currencyList($this->currency);
+            $symbol = !empty($this->payout_settings) && !empty($this->payout_settings[0]['currency']) ? Helper::currencyList($this->payout_settings[0]['currency']) : array();
             $project_type  = Helper::getProjectTypeList($job->project_type);
             $breadcrumbs_settings = SiteManagement::getMetaValue('show_breadcrumb');
             $show_breadcrumbs = !empty($breadcrumbs_settings) ? $breadcrumbs_settings : 'true';
@@ -710,7 +563,7 @@ class JobController extends Controller
         } else {
             $jobs = $this->job->latest()->paginate(6);
         }
-        $symbol = Helper::currencyList($this->currency);
+        $symbol = !empty($this->payout_settings) && !empty($this->payout_settings[0]['currency']) ? Helper::currencyList($this->payout_settings[0]['currency']) : array();
         $payment_methods = Arr::pluck(Helper::getPaymentMethodList(), 'title', 'value');
         if (file_exists(resource_path('views/extend/back-end/admin/jobs/index.blade.php'))) {
             return view(
@@ -737,21 +590,17 @@ class JobController extends Controller
         $locations = array();
         $languages = array();
         $jobs = $this->job->latest()->paginate(6);
-        $categories = Category::all()->sortBy('title');
-        $locations = Location::all()->sortBy('title');
-        $citations = Citation::all()->sortBy('title');
-        $languages = Language::all()->sortBy('title');
+        $categories = Category::all();
+        $locations = Location::all();
+        $languages = Language::all();
         $freelancer_skills = Helper::getFreelancerLevelList();
         $project_length = Helper::getJobDurationList();
-        $skills = Skill::all()->sortBy('title');
+        $skills = Skill::all();
         $keyword = '';
         $Jobs_total_records = '';
         $type = 'job';
         $inner_page  = SiteManagement::getMetaValue('inner_page_data');
-        if (!empty($job->currency)) {
-            $this->currency = $job->currency;
-        }
-        $symbol = Helper::currencyList($this->currency);
+        $symbol   = !empty($this->payout_settings) && !empty($this->payout_settings[0]['currency']) ? Helper::currencyList($this->payout_settings[0]['currency']) : array();
         $job_list_meta_title = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_title']) ? $inner_page[0]['job_list_meta_title'] : trans('lang.job_listing');
         $job_list_meta_desc = !empty($inner_page) && !empty($inner_page[0]['job_list_meta_desc']) ? $inner_page[0]['job_list_meta_desc'] : trans('lang.job_meta_desc');
         $show_job_banner = !empty($inner_page) && !empty($inner_page[0]['show_job_banner']) ? $inner_page[0]['show_job_banner'] : 'true';
@@ -763,7 +612,6 @@ class JobController extends Controller
                     'jobs',
                     'categories',
                     'locations',
-                    'citations',
                     'languages',
                     'freelancer_skills',
                     'project_length',
@@ -785,7 +633,6 @@ class JobController extends Controller
                     'jobs',
                     'categories',
                     'locations',
-                    'citations',
                     'languages',
                     'freelancer_skills',
                     'project_length',

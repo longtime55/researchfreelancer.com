@@ -26,7 +26,7 @@
                                 </ul>
                             @endif
                             <div class="wt-personalskillshold tab-pane active fade show">
-                                {!! Form::open(['url' => url('freelancer/store-payment-settings'), 'class' =>'wt-userform', 'id' => 'payment_settings', '@submit.prevent'=>'submitPaymentSettings']) !!}
+                                {!! Form::open(['url' => url('freelancer/store-payment-settings'), 'class' =>'wt-userform', 'id' => 'freelancer_payment', '@submit.prevent'=>'submitFreelancerPayment']) !!}
                                     <div class="wt-yourdetails wt-tabsinfo">
                                         <div class="wt-tabscontenttitle">
                                             <h2>{{{ trans('lang.trans_currency') }}}</h2>
@@ -53,18 +53,18 @@
                                             </fieldset>
                                         </div>
                                     </div>
-                                    <!--<div class="wt-yourdetails wt-tabsinfo">-->
-                                    <!--    <div class="wt-tabscontenttitle">-->
-                                    <!--        <h2>{{{ trans('lang.withdraw_details') }}}</h2>-->
-                                    <!--    </div>-->
-                                    <!--    <div class="wwt-divtheme wt-userform wt-userformvtwo">-->
-                                    <!--        <fieldset>-->
-                                    <!--            <div class="form-group">-->
-                                    <!--                {!! Form::text( 'withdraw_details', e($withd_details), ['class' =>'form-control', 'placeholder' => trans('lang.ph_withd_details')] ) !!}-->
-                                    <!--            </div>-->
-                                    <!--        </fieldset>-->
-                                    <!--    </div>-->
-                                    <!--</div>-->
+                                    <div class="wt-yourdetails wt-tabsinfo">
+                                        <div class="wt-tabscontenttitle">
+                                            <h2>{{{ trans('lang.withdraw_details') }}}</h2>
+                                        </div>
+                                        <div class="wwt-divtheme wt-userform wt-userformvtwo">
+                                            <fieldset>
+                                                <div class="form-group">
+                                                    {!! Form::text( 'withdraw_details', e($withd_details), ['class' =>'form-control', 'placeholder' => trans('lang.ph_withd_details')] ) !!}
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <div class="wt-updatall">
                                         <i class="ti-announcement"></i>
                                         <span>{{{ trans('lang.save_changes_note') }}}</span>

@@ -20,7 +20,6 @@ use App\Job;
 use App\EmailTemplate;
 use App\Mail\FreelancerEmailMailable;
 use App\User;
-use App\Milestone;
 
 /**
  * Class Proposal
@@ -58,16 +57,6 @@ class Proposal extends Model
     {
         return $this->belongsTo('App\User');
     }
-    
-    /**
-     * Get the milestone records associated with the user proposal.
-     *
-     * @return relation
-     */
-    public function milestones()
-    {
-        return $this->hasMany('App\Milestone');
-    }
 
     /**
      * Store Propsals.
@@ -87,7 +76,6 @@ class Proposal extends Model
             $this->content = filter_var($request['description'], FILTER_SANITIZE_STRING);
             $this->freelancer_id = intval($user_id);
             $job = Job::find($id);
-            $this->currency = $job->currency;
             $this->job()->associate($job);
             $old_path = 'uploads\proposals\temp';
             $proposal_attachments = array();
@@ -108,64 +96,12 @@ class Proposal extends Model
                 $this->attachments = serialize($proposal_attachments);
             }
             $this->save();
-            $result = Milestone::storeProposalMilestone($this->id, $request);
             $json['type'] = 'success';
+            return $json;
         } else {
             $json['type'] = 'error';
+            return $json;
         }
-        return $json;
-    }
-    
-    /**
-     * Update Propsals.
-     *
-     * @param string $request req->attributes
-     * @param string $id      ID
-     *
-     * @return proposal
-     */
-    public function updateProposal($request, $total, $proposal_id)
-    {
-        $json = array();
-        if (!empty($request) && !empty($total) && !empty($proposal_id) ) {
-            $proposal = self::find($proposal_id);
-            $proposal->amount = intval($total);
-            $proposal->save();
-            $descriptions = $request->desc;
-            $amounts = $request->ms_amount;
-            $result = Milestone::updateProposalMilestone($proposal_id, $descriptions, $amounts);
-            $json['type'] = 'success';
-        } else {
-            $json['type'] = 'error';
-        }
-        return $json;
-    }
-    
-    /**
-     * Update Proposal and Milestone.
-     *
-     * @param string $request req->attributes
-     * @param string $id      ID
-     *
-     * @return proposal
-     */
-    public static function updateStatus($milestone_id, $proposal_id)
-    {
-        if (!empty($milestone_id) && !empty($proposal_id) ) {
-            $proposal = self::find($proposal_id);
-            $proposal->hired = 1;
-            $proposal->status = 'hired';
-            $proposal->save();
-            $result = Milestone::updateMilestone($milestone_id);
-            if ($result) {
-                $status = 'success';
-            } else {
-                $status = 'error';
-            }
-        } else {
-            $status = 'error';
-        }
-        return $status;
     }
 
     /**

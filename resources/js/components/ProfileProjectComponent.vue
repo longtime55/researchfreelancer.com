@@ -15,13 +15,14 @@
                         :main_accordion_id="'projectaccordion['+index+']'"
                         :inner_accordion_id="'projectaccordioninner['+index+']'"
                         :stored_project_title="stored_project.project_title"
-                        :stored_project_date="stored_project.project_date"
+                        :stored_project_url="stored_project.project_url"
                         :stored_project_img="stored_project.project_hidden_image"
                         :project_title_name="'project['+[index]+'][project_title]'"
-                        :project_date_name="'project['+[index]+'][project_date]'"
+                        :project_url_name="'project['+[index]+'][project_url]'"
                         :remove_uploded_image_id="'upload_id-'+index"
                         :uploaded_image_remove_id="'remove_upload_id-'+index"
-                        :date_model="stored_project.project_date"
+                        :project_title="project.project_title"
+                        :project_url="project.project_url"
                         @removeElement="removeStoredProject(index)"
                     >
                     </updateProject>
@@ -32,7 +33,7 @@
                     <div class="wt-accordioninnertitle">
                         <div :id="'projectaccordion['+project.count+']'" class="wt-projecttitle collapsed" data-toggle="collapse" :data-target="'#projectaccordioninner['+project.count+']'">
                             <figure :class="project.preview_class"></figure>
-                            <h3>{{project.project_title}}<span>{{project.project_date}}</span></h3>
+                            <h3>{{project.project_title}}<span>{{project.project_url}}</span></h3>
                         </div>
                         <div class="wt-rightarea">
                             <a href="javascript:void(0);" class="wt-addinfo wt-skillsaddinfo" :id="'projectaccordion['+project.count+']'" data-toggle="collapse" :data-target="'#projectaccordioninner['+project.count+']'" aria-expanded="true"><i class="lnr lnr-pencil"></i></a>
@@ -45,8 +46,7 @@
                                 <input type="text" v-bind:name="'project['+[project.count]+'][project_title]'" class="form-control" :placeholder="ph_project_title" v-model="project.project_title">
                             </div>
                             <div class="form-group form-group-half">
-                                <date-pick v-model="project.project_date"></date-pick>
-                                <input type="hidden" v-bind:name="'project['+[project.count]+'][project_date]'" :value="project.project_date">
+                                <input type="text" v-bind:name="'project['+[project.count]+'][project_url]'" class="form-control" :placeholder="ph_project_url" v-model="project.project_url">
                             </div>
                             <div class="form-group image_uploaded_placeholder" style="display:none">
                             <ul class="wt-attachfile">
@@ -60,7 +60,7 @@
                             </ul>
                             </div>
                             <uploadimage :option="project.option" :id="project.img_id+'-'+project.count" :img_ref="project.img_ref+'_'+project.count"></uploadimage>
-                            <input type="hidden" v-bind:name="'project['+[project.count]+'][project_hidden_image]'" :id="'hidden_project_img-'+project.count">
+                            <input type="hidden" v-bind:name="'project['+[project.count]+'][project_hidden_image]'" :id="'hidden_banner-'+project.count">
                         </fieldset>
                     </div>
                 </li>
@@ -76,25 +76,25 @@ const getImageUploadTemplate = () => `
 </div>
 </div>
 `;
+import dateTime from './DateTimeComponent'
 import uploadimage from './ProjectAwardUploadComponent'
 import updateProject from './EditProjectComponent'
-import Event from '../event.js';
-import DatePick from 'vue-date-pick';
 export default{
-    components: {uploadimage, updateProject, DatePick},
-    props: ['widget_title', 'ph_project_title'],
+    components: {dateTime, uploadimage, updateProject},
+    props: ['widget_title', 'ph_project_title', 'ph_project_url', ],
         data(){
             return {
+                start_date: '',
+                end_date: '',
                 stored_projects:[],
                 project: {
                     image_uploaded: false,
-                    project_title: '',
+                    project_title: this.ph_project_title,
                     project_hidden_image:'',
-                    project_url:'Project url here',
-                    project_date: 'Select Project Date',
+                    project_url: this.ph_project_url,
                     count: 0,
-                    img_id: 'project_img',
-                    img_ref: 'project_img_ref',
+                    img_id: 'profile_banner',
+                    img_ref: 'profile_banner_ref',
                     preview_class:'dropzone-previews',
                     option:{
                         url: APP_URL+'/freelancer/upload-temp-image',
@@ -160,7 +160,14 @@ export default{
             }
         },
         mounted: function () {
-            Event.$emit('award-component-render', { error: this.error_message});
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            this.start_date = yyyy + '-' + mm + '-' + dd;
+            this.end_date = yyyy + '-' + mm + '-' + dd;
+            this.project.start_date = yyyy + '-' + mm + '-' + dd;
+            this.project.end_date = yyyy + '-' + mm + '-' + dd;
             jQuery(document).on('click', '.delete-project', function (e) {
                 e.preventDefault();
                 var _this = jQuery(this);

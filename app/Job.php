@@ -22,7 +22,6 @@ use App\Proposal;
 use App\Location;
 use App\Language;
 use App\Profile;
-use App\FreelancerLevel;
 
 /**
  * Class Job
@@ -38,36 +37,6 @@ class Job extends Model
     public function categories()
     {
         return $this->morphToMany('App\Category', 'catable');
-    }
-    
-    /**
-     * Get all of the citations for the job.
-     *
-     * @return relation
-     */
-    public function citations()
-    {
-        return $this->morphToMany('App\Citation', 'citable');
-    }
-    
-    /**
-     * Get all of the freelancer levels for the job.
-     *
-     * @return relation
-     */
-    public function flevels()
-    {
-        return $this->morphToMany('App\FreelancerLevel', 'flevable');
-    }
-    
-    /**
-     * Get all of the research levels for the job.
-     *
-     * @return relation
-     */
-    public function rlevels()
-    {
-        return $this->morphToMany('App\ResearchLevel', 'rlevable');
     }
 
     /**
@@ -192,25 +161,22 @@ class Job extends Model
             $code = strtoupper($random_number);
             $profile = Profile::find(Auth::user()->id);
             $profile->transaction_currency = filter_var($request['currency'], FILTER_SANITIZE_STRING);
-            $location = $request['location'];
+            $location = $request['locations'];
             $this->location()->associate($location);
             $this->employer()->associate(Auth::user()->id);
             $this->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
             $this->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $this->currency = filter_var($request['currency'], FILTER_SANITIZE_STRING);
             $this->price = filter_var($request['project_cost'], FILTER_SANITIZE_STRING);
-            // $this->project_level = filter_var($request['project_level'], FILTER_SANITIZE_STRING);
-            $this->description = filter_var($request['description'], FILTER_SANITIZE_STRING);
-            $this->english_level = 'fluent';
+            $this->project_level = filter_var($request['project_levels'], FILTER_SANITIZE_STRING);
+            $this->description = $request['description'];
+            $this->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
             $this->duration = filter_var($request['job_duration'], FILTER_SANITIZE_STRING);
             $this->freelancer_type = filter_var($request['freelancer_type'], FILTER_SANITIZE_STRING);
             $this->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $this->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $this->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
-            // $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
-            // $this->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
-            $this->longitude = '';
-            $this->latitude = '';
+            $this->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
+            $this->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
             $old_path = 'uploads\jobs\temp';
             $job_attachments = array();
             if (!empty($request['attachments'])) {
@@ -232,25 +198,24 @@ class Job extends Model
             $this->save();
             $profile->save();
             $job_id = $this->id;
-            $skill = $request['research_field'];
+            $skills = $request['skills'];
             $this->skills()->detach();
-            $this->skills()->attach($skill);
+            if (!empty($skills)) {
+                foreach ($skills as $skill) {
+                    $this->skills()->attach($skill['id']);
+                }
+            }
             $job = Job::find($job_id);
             $languages = $request['languages'];
             $job->languages()->sync($languages);
-            $categories = $request['research_category'];
+            $categories = $request['categories'];
             $job->categories()->sync($categories);
-            $citations = $request['citation'];
-            $job->citations()->sync($citations);
-            $research_levels = $request['project_level'];
-            $job->rlevels()->sync($research_levels);
-            $user = User::find(Auth::user()->id);
             $json['type'] = 'success';
+            return $json;
         } else {
             $json['type'] = 'error';
-            
+            return $json;
         }
-        return $json;
     }
 
     /**
@@ -270,27 +235,24 @@ class Job extends Model
             $profile->transaction_currency = filter_var($request['currency'], FILTER_SANITIZE_STRING);
             $random_number = Helper::generateRandomCode(8);
             $user_id = $job->user_id;
-            $location = $request['location'];
+            $location = $request['locations'];
             $job->location()->associate($location);
             $job->employer()->associate($user_id);
             if ($job->title != $request['title']) {
                 $job->slug = filter_var($request['title'], FILTER_SANITIZE_STRING);
             }
             $job->title = filter_var($request['title'], FILTER_SANITIZE_STRING);
-            $job->currency = filter_var($request['currency'], FILTER_SANITIZE_STRING);
             $job->price = filter_var($request['project_cost'], FILTER_SANITIZE_STRING);
-            // $job->project_level = filter_var($request['project_level'], FILTER_SANITIZE_STRING);
-            $job->description = filter_var($request['description'], FILTER_SANITIZE_STRING);
-            $job->english_level = 'fluent';
+            $job->project_level = filter_var($request['project_levels'], FILTER_SANITIZE_STRING);
+            $job->description = $request['description'];
+            $job->english_level = filter_var($request['english_level'], FILTER_SANITIZE_STRING);
             $job->duration = filter_var($request['job_duration'], FILTER_SANITIZE_STRING);
             $job->freelancer_type = filter_var($request['freelancer_type'], FILTER_SANITIZE_STRING);
             $job->is_featured = filter_var($request['is_featured'], FILTER_SANITIZE_STRING);
             $job->show_attachments = filter_var($request['show_attachments'], FILTER_SANITIZE_STRING);
             $job->address = filter_var($request['address'], FILTER_SANITIZE_STRING);
-            // $job->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
-            // $job->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
-            $this->longitude = '';
-            $this->latitude = '';
+            $job->longitude = filter_var($request['longitude'], FILTER_SANITIZE_STRING);
+            $job->latitude = filter_var($request['latitude'], FILTER_SANITIZE_STRING);
             $old_path = 'uploads\jobs\temp';
             $job_attachments = array();
             if (!empty($request['attachments'])) {
@@ -318,19 +280,18 @@ class Job extends Model
             $job->save();
             $profile->save();
             $job_id = $job->id;
-            $skill = $request['research_field'];
-            $categories = $request['research_category'];
+            $skills = $request['skills'];
             $job->skills()->detach();
-            $job->skills()->attach($skill);
+            if (!empty($skills)) {
+                foreach ($skills as $skill) {
+                    $job->skills()->attach($skill['id']);
+                }
+            }
             $job = Job::find($job_id);
             $languages = $request['languages'];
             $job->languages()->sync($languages);
-            $categories = $request['research_category'];
+            $categories = $request['categories'];
             $job->categories()->sync($categories);
-            $citations = $request['citation'];
-            $job->citations()->sync($citations);
-            $research_levels = $request['project_level'];
-            $job->rlevels()->sync($research_levels);
             $json['type'] = 'success';
             return $json;
         } else {
@@ -352,29 +313,21 @@ class Job extends Model
      * @return relation
      */
     public static function getSearchResult(
-        $type,
-        $keyword,
-        // $search_prices,
-        $search_categories,
-        $search_skills,
-        $search_levels,
-        $search_citations,
-        $search_freelancer_types,
-        $search_project_lengths,
-        $search_languages,
-        $search_locations
+        $keyword, $search_categories, $search_locations,
+        $search_skills, $search_project_lengths,
+        $search_languages
     ) {
         $json = array();
         $jobs = Job::select('*');
         $job_id = array();
         $filters = array();
-        $filters['type'] = $type;
+        $filters['type'] = 'job';
         if (!empty($keyword)) {
             $filters['s'] = $keyword;
             $jobs->where('title', 'like', '%' . $keyword . '%');
         };
         if (!empty($search_categories)) {
-            $filters['categories'] = $search_categories;
+            $filters['category'] = $search_categories;
             foreach ($search_categories as $key => $search_category) {
                 $categor_obj = Category::where('slug', $search_category)->first();
                 $category = Category::find($categor_obj->id);
@@ -387,6 +340,11 @@ class Job extends Model
             }
             $jobs->whereIn('id', $job_id);
         }
+        if (!empty($search_locations)) {
+            $filters['locations'] = $search_locations;
+            $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
+            $jobs->whereIn('location_id', $locations);
+        }
         if (!empty($search_skills)) {
             $filters['skills'] = $search_skills;
             foreach ($search_skills as $key => $search_skill) {
@@ -395,48 +353,6 @@ class Job extends Model
                 if (!empty($skill->jobs)) {
                     $skill_jobs = $skill->jobs->pluck('id')->toArray();
                     foreach ($skill_jobs as $id) {
-                        $job_id[] = $id;
-                    }
-                }
-            }
-            $jobs->whereIn('id', $job_id);
-        }
-        if (!empty($search_levels)) {
-            $filters['rlevels'] = $search_levels;
-            foreach ($search_levels as $key => $search_level) {
-                $level_obj = ResearchLevel::where('slug', $search_level)->first();
-                $level = ResearchLevel::find($level_obj->id);
-                if (!empty($level->jobs)) {
-                    $level_jobs = $level->jobs->pluck('id')->toArray();
-                    foreach ($level_jobs as $id) {
-                        $job_id[] = $id;
-                    }
-                }
-            }
-            $jobs->whereIn('id', $job_id);
-        }
-        if (!empty($search_citations)) {
-            $filters['citations'] = $search_citations;
-            foreach ($search_citations as $key => $search_citation) {
-                $citation_obj = Citation::where('slug', $search_citation)->first();
-                $citation = Citation::find($citation_obj->id);
-                if (!empty($citation->jobs)) {
-                    $citation_jobs = $citation->jobs->pluck('id')->toArray();
-                    foreach ($citation_jobs as $id) {
-                        $job_id[] = $id;
-                    }
-                }
-            }
-            $jobs->whereIn('id', $job_id);
-        }
-        if (!empty($search_freelancer_types)) {
-            $filters['freelancer_type'] = $search_freelancer_types;
-            foreach ($search_freelancer_types as $key => $freelancer_type) {
-                $flevel_obj = FreelancerLevel::where('slug', $freelancer_type)->first();
-                $flevel = FreelancerLevel::find($level_obj->id);
-                if (!empty($flevel->jobs)) {
-                    $flevel_jobs = $flevel->jobs->pluck('id')->toArray();
-                    foreach ($flevel_jobs as $id) {
                         $job_id[] = $id;
                     }
                 }
@@ -457,13 +373,7 @@ class Job extends Model
             }
             $jobs->whereIn('id', $job_id);
         }
-        if (!empty($search_locations)) {
-            $filters['locations'] = $search_locations;
-            $locations = Location::select('id')->whereIn('slug', $search_locations)->get()->pluck('id')->toArray();
-            $jobs->whereIn('location_id', $locations);
-        }
-        $jobs = $jobs->orderByRaw("updated_at DESC")->paginate(7)->setPath('');
-        // $jobs = $jobs->orderByRaw("is_featured DESC, updated_at DESC")->paginate(7)->setPath('');
+        $jobs = $jobs->orderByRaw("is_featured DESC, updated_at DESC")->paginate(7)->setPath('');
         foreach ($filters as $key => $filter ) {
             $pagination = $jobs->appends(
                 array(

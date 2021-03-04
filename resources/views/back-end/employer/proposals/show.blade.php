@@ -5,7 +5,6 @@
         $reviews = \App\Review::where('receiver_id', $accepted_proposal->freelancer_id)->count();
         $verified_user = \App\User::select('user_verified')->where('id', $job->employer->id)->pluck('user_verified')->first();
         $project_type  = Helper::getProjectTypeList($job->project_type);
-        $description = strip_tags(stripslashes($job->description));
     @endphp
     <section class="wt-haslayout wt-dbsectionspace" id="jobs">
         <div class="preloader-section" v-if="loading" v-cloak>
@@ -48,7 +47,8 @@
                                                     @endif
                                                 </div>
                                             @endif
-                                            @if (!empty($job->price) || !empty($job->location->title))
+                                            @if (!empty($job->price) ||
+                                                !empty($job->location->title))
                                                 <ul class="wt-saveitem-breadcrumb wt-userlisting-breadcrumb">
                                                     @if (!empty($job->price))
                                                         <li><span class="wt-dashboraddoller"><i>{{ !empty($symbol) ? $symbol['symbol'] : '$' }}</i> {{{ $job->price }}}</span></li>
@@ -63,27 +63,6 @@
                                                         <li><span class="wt-dashboradclock"><i class="far fa-clock"></i> {{ trans('lang.duration') }} {{{ $duration }}}</span></li>
                                                     @endif
                                                 </ul>
-                                            @endif
-                                            @if (!empty($description))
-                                                <div class="wt-description mt-3">
-                                                    <p>{{ str_limit($description, 300) }}</p>
-                                                </div>
-                                            @endif
-                                            @if ((!empty($job->categories) && $job->categories->count() > 0) || (!empty($job->skills) && $job->skills->count() > 0) || (!empty($job->rlevels) && $job->rlevels->count() > 0) || (!empty($job->citations) && $job->citations->count() > 0))
-                                                <div class="wt-tag wt-widgettag">
-                                                    @foreach ($job->categories as $category)
-                                                        <a href="{{{url('search-results?type=project&categories%5B%5D='.$category->slug)}}}">{{{ $category->title }}}</a>
-                                                    @endforeach
-                                                    @foreach ($job->skills as $skill)
-                                                        <a href="{{{url('search-results?type=project&skills%5B%5D='.$skill->slug)}}}">{{{ $skill->title }}}</a>
-                                                    @endforeach
-                                                    @foreach ($job->rlevels as $rlevel)
-                                                        <a href="{{{url('search-results?type=project&rlevels%5B%5D='.$rlevel->slug)}}}">{{{ $rlevel->title }}}</a>
-                                                    @endforeach
-                                                    @foreach ($job->citations as $citation)
-                                                        <a href="{{{url('search-results?type=project&citations%5B%5D='.$citation->slug)}}}">{{{ $citation->title }}}</a>
-                                                    @endforeach
-                                                </div>
                                             @endif
                                         </div>
                                         <div class="wt-rightarea">

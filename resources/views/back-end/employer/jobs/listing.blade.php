@@ -75,7 +75,7 @@
                                                             <i v-bind:class="saved_class"></i><span v-cloak>@{{ text }}</span>
                                                         </a>
                                                     </li>
-                                                    <li class="wt-btnarea"><a href="{{url('project/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
+                                                    <li class="wt-btnarea"><a href="{{url('job/'.$job->slug)}}" class="wt-btn">{{{ trans('lang.view_job') }}}</a></li>
                                                 </ul>
                                             </div>
                                         </div>

@@ -31,15 +31,24 @@ class EmailTemplateSeeder extends Seeder
                 [
                     'admin_email' => null,
                     'email_type_id' => '1',
-                    'title' => 'Verification Code',
-                    'subject' => 'Verification Code Received',
-                    'content' => '<p>Hi <strong>%name%!</strong> Thanks for registering at Research Freelancer.<br /> Here is your verification code to complete registration process<br /> <strong>Name :</strong> %name%<br /> <strong>Email :</strong> %email%<br /> <strong>Verification Code:</strong> %verification_code%<br /> %signature%</p>',
+                    'title' => 'Registration',
+                    'subject' => 'New User Registered',
+                    'content' => '<p>Hi <strong>%name%!</strong> Thanks for registering at Worketic. You can now login to manage your account using the following credentials:<br /> <strong>Username:</strong> %name%<br /> <strong>Password:</strong> %password%<br /> <strong>Email:</strong> %email%<br /> %signature%</p>',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
                     'admin_email' => null,
                     'email_type_id' => '2',
+                    'title' => 'Verification Code',
+                    'subject' => 'Verification Code Received',
+                    'content' => '<p>Hi <strong>%name%!</strong> Thanks for registering at Worketic.<br /> Here is your verification code to complete registration process<br /> <strong>Name :</strong> %name%<br /> <strong>Email :</strong> %email%<br /> <strong>Verification Code:</strong> %verification_code%<br /> %signature%</p>',
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                ],
+                [
+                    'admin_email' => null,
+                    'email_type_id' => '3',
                     'title' => 'Lost Password',
                     'subject' => 'Forgot Password',
                     'content' => '<p>Hi <strong>%name%!</strong> <strong>Lost Password reset</strong></p>
@@ -50,7 +59,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '3',
+                    'email_type_id' => '4',
                     'title' => 'Account Verification',
                     'subject' => 'Account Verification',
                     'content' => '<p>Hi <strong>%name%</strong>! <strong>Verify Your Account</strong></p>
@@ -65,7 +74,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '4',
+                    'email_type_id' => '5',
                     'title' => 'Invitation',
                     'subject' => 'Invitation',
                     'content' => '<p>Hi,</p>
@@ -78,7 +87,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '5',
+                    'email_type_id' => '6',
                     'title' => 'Contact Form Received',
                     'subject' => 'Contact Form Received',
                     'content' => '<p>Hi,</p>
@@ -95,8 +104,8 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 // Admin Email Templates
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '6',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '7',
                     'title' => 'Admin Email Content - Registration',
                     'subject' => 'New Registration!',
                     'content' => '<p>Hey!</p>
@@ -106,8 +115,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '7',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '8',
                     'title' => 'Admin Email Content - Account Delete',
                     'subject' => 'Account Delete',
                     'content' => '<p>Hi, An existing user has deleted account due to following</p>
@@ -117,8 +126,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '8',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '9',
                     'title' => 'Admin Email Content - Report Employer',
                     'subject' => 'Employer Reported',
                     'content' => '<p>Hello,</p>
@@ -130,8 +139,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '9',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '10',
                     'title' => 'Admin Email Content - Report Project',
                     'subject' => 'Project Reported',
                     'content' => '<p>Hello,</p>
@@ -143,8 +152,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '10',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '11',
                     'title' => 'Admin Email Content - Report Freelancer',
                     'subject' => 'A freelancer has been reported!',
                     'content' => '<p>Hello,</p>
@@ -156,8 +165,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '11',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '12',
                     'title' => 'Admin Email Content - Job Posted',
                     'subject' => 'New Job Posted',
                     'content' => '<p>Hello,</p>
@@ -169,8 +178,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '12',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '13',
                     'title' => 'Admin Email Content - Job Completed',
                     'subject' => 'Job Completed',
                     'content' => '<p>Hello,</p>
@@ -180,15 +189,6 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 // Employer Email Templates
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '13',
-                    'title' => 'Employer Registration',
-                    'subject' => 'New User Registered',
-                    'content' => '<p>Hi <strong>%name%!</strong></p><p>Thanks for registering at Research Freelancer. You can now login to manage your account using the following credentials:<br /> <strong>Username:</strong> %name%<br /> <strong>Password:</strong> %password%<br /> <strong>Email:</strong> %email%<br /> %signature%</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
                 [
                     'admin_email' => null,
                     'email_type_id' => '14',
@@ -233,19 +233,6 @@ class EmailTemplateSeeder extends Seeder
                 [
                     'admin_email' => null,
                     'email_type_id' => '17',
-                    'title' => 'Employer Email Content - Milestone Request Sent',
-                    'subject' => 'Milestone Request Sent',
-                    'content' => '<p>Hello <strong><a href="%employer_link%">%employer_name%</a></strong>,</p>
-                    <p>You have sent %count% milestone requests to <a href="%freelancer_link%"><strong>%freelancer_name%</strong></a> on this job <strong><a href="%project_link%">%project_title%</a></strong>.</p>
-                    <p>Login to view your milestone request you created.</p>
-                    <p><strong>Total amount: </strong>%amount% %currency%</p>
-                    <p>%signature%</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '18',
                     'title' => 'Employer Email Content - Package Purchased',
                     'subject' => 'Package Purchased',
                     'content' => '<p>Hello <a href="%employer_link%"><strong>%employer_name%</strong></a>,</p>
@@ -258,16 +245,7 @@ class EmailTemplateSeeder extends Seeder
                 //Freelancer Email Templates
                 [
                     'admin_email' => null,
-                    'email_type_id' => '19',
-                    'title' => 'Freelancer Registration',
-                    'subject' => 'New User Registered',
-                    'content' => '<p>Hi <strong>%name%!</strong></p><p>Thanks for registering at Research Freelancer. You can now login to manage your account using the following credentials:<br /> <strong>Username:</strong> %name%<br /> <strong>Password:</strong> %password%<br /> <strong>Email:</strong> %email%<br /> Please setup your Profile, Account Settings, and Payout, so you can start receiving Projects.<br /> Also read our <a href='%coc%'>Code of Conduct</a>, <a href='%ua%'>User Agreement</a>, and <a href='%fc%'>Fees &amp; Charges</a> to guide you.<br /> %signature%</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '20',
+                    'email_type_id' => '18',
                     'title' => 'Freelancer Email Content - New Proposal Submitted',
                     'subject' => 'New Proposal Submitted',
                     'content' => '<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -281,7 +259,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '21',
+                    'email_type_id' => '19',
                     'title' => 'Freelancer Email Content - Hire Freelancer',
                     'subject' => 'Congratulation You are hired!',
                     'content' => '<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -292,7 +270,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '22',
+                    'email_type_id' => '20',
                     'title' => 'Freelancer Email Content - Send Offer',
                     'subject' => 'Offer Received',
                     'content' => '<p>Hi <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -306,7 +284,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '23',
+                    'email_type_id' => '21',
                     'title' => 'Freelancer Email Content - Cancel Job',
                     'subject' => 'Job Cancelled',
                     'content' => '<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -320,12 +298,12 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '24',
+                    'email_type_id' => '22',
                     'title' => 'Freelancer Email Content - Proposal Message',
                     'subject' => 'Proposal Message',
                     'content' => '<p>Hello <strong><a href="%employer_link%">%employer_name%</a></strong>,</p>
                     <p>The <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>&nbsp;has submitted the proposal message on this job <strong><a href="%project_link%">%project_title%</a></strong>.</p>
-                    <p>Login to view your proposal message</p>
+                    <p>Login to view your proposal message.</p>
                     <p><strong>Message:</strong></p>
                     <p>%message%</p>
                     <p>%signature%</p>',
@@ -334,20 +312,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '25',
-                    'title' => 'Freelancer Email Content - Milestone Request Received',
-                    'subject' => 'Milestone Request Received',
-                    'content' => '<p>Hello <strong><a href="%employer_link%">%employer_name%</a></strong>,</p>
-                    <p>You have received %count% milestone requests from <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>&nbsp;on this job <strong><a href="%project_link%">%project_title%</a></strong>.</p>
-                    <p>Login to view the milestone requests more detail.</p>
-                    <p><strong>Total amount: </strong>%amount% %currency%</p>
-                    <p>%signature%</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '26',
+                    'email_type_id' => '23',
                     'title' => 'Freelancer Email Content - Package Subscribed',
                     'subject' => 'Package Purchased',
                     'content' => '<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -358,7 +323,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '27',
+                    'email_type_id' => '24',
                     'title' => 'Freelancer Email Content - Job Completed',
                     'subject' => 'Job Completed',
                     'content' => '<p>Hello <strong><a href="%freelancer_link%">%freelancer_name%</a></strong>,</p>
@@ -372,8 +337,8 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '28',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '25',
                     'title' => 'Admin Email Content - Dispute Raised',
                     'subject' => 'A dispute has been rasied',
                     'content' => '<p>Hello,</p>
@@ -387,7 +352,7 @@ class EmailTemplateSeeder extends Seeder
                 ],
                 [
                     'admin_email' => null,
-                    'email_type_id' => '29',
+                    'email_type_id' => '26',
                     'title' => 'Password Reset',
                     'subject' => 'Password Reset',
                     'content' => '<p>Hello <strong>%name%</strong>,</p>
@@ -400,110 +365,15 @@ class EmailTemplateSeeder extends Seeder
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
                 [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '30',
+                    'admin_email' => 'info@yourdomain.com',
+                    'email_type_id' => '27',
                     'title' => 'Admin Email Content - Job Cancelled',
                     'subject' => 'Job Cancelled',
-                    'content' => '<p>Hello,</p>
-                    <p>An Employer <a href="%employer_link%">%employer_name%</a> has cancelled his ongoing project <a href="%project_link%">%project_title%</a> assigned to <a href="%freelancer_link%"> %freelancer_name% </a></p>
-                    <p>Job Cancel Reason is given below.</p>
-                    <p>%message%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '31',
-                    'title' => 'Freelancer Email Content - Matched Latest Jobs',
-                    'subject' => 'Matched Latest Jobs',
-                    'content' => '<p>Hi %freelancer_name%,</p>
-                    <p>As a freelancer with a good reputation we are sending you a special notification of projects which have not yet received high quality proposals. If you propose now you have a much higher chance of being awarded one of these projects: </p>
-                    <p><strong>Title: </strong><a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Skills: </strong>%skills%</p>
-                    <p><strong>Budget: </strong>%symbol%%amount% %currency%</p>
-                    <p><strong>Posted: </strong>%date%</p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Propose on this project </strong><a href="%project_link%">%project_link%</a></p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '32',
-                    'title' => 'Freelancer Email Content - Milestone Released',
-                    'subject' => 'Milestone Released',
-                    'content' => '<p>Hi %freelancer_name%,</p>
-                    <p>Good news! <a href="%employer_link"><strong>%employer_name% </strong></a>has released a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '33',
-                    'title' => 'Freelancer Email Content - Milestone Canceled',
-                    'subject' => 'Milestone Canceled',
-                    'content' => '<p>Hi %freelancer_name%,</p>
-                    <p><a href="%employer_link"><strong>%employer_name% </strong></a>has canceled a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '34',
-                    'title' => 'Employer Email Content - Milestone Released',
-                    'subject' => 'Milestone Released',
-                    'content' => '<p>Hi %employer_name%,</p>
-                    <p>Thanks! You have released a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => null,
-                    'email_type_id' => '35',
-                    'title' => 'Employer Email Content - Milestone Canceled',
-                    'subject' => 'Milestone Canceled',
-                    'content' => '<p>Hi %employer_name%,</p>
-                    <p>You have canceled a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '36',
-                    'title' => 'Admin Email Content - Milestone Released',
-                    'subject' => 'Milestone Released',
-                    'content' => '<p>Hello,</p>
-                    <p>Good news! <a href="%employer_link"><strong>%employer_name% </strong></a>has released a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ],
-                [
-                    'admin_email' => 'server@researchfreelancer.com',
-                    'email_type_id' => '37',
-                    'title' => 'Admin Email Content - Milestone Canceled',
-                    'subject' => 'Milestone Canceled',
-                    'content' => '<p>Hello,</p>
-                    <p><a href="%employer_link"><strong>%employer_name% </strong></a>has canceled a Milestone Payment of %symbol%%amount% %currency% for <a href="%project_link%">%project_title%</a></p>
-                    <p><strong>Details: </strong>%details%</p>
-                    <p><strong>Date: </strong>%date%</p>
-                    <p>%signature%,</p>',
+                    'content' => '  <p>Hello,</p>
+                                    <p>An Employer <a href="%employer_link%">%employer_name%</a> has cancelled his ongoing project <a href="%project_link%">%project_title%</a> assigned to <a href="%freelancer_link%"> %freelancer_name% </a></p>
+                                    <p>Job Cancel Reason is given below.</p>
+                                    <p>%message%</p>
+                                    <p>%signature%,</p>',
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ],
